@@ -6,106 +6,168 @@
   <title>Punjab Schemes & Updates Portal</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Orbitron:wght@600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-start: #1c0f2b;
-      --bg-end: #0a0b1c;
-      --card-bg: rgba(255, 255, 255, 0.03);
-      --border-color: rgba(255, 255, 255, 0.08);
+      --bg-color: #0c0c1a;
+      --accent-color: #00e5e5;
+      --accent-secondary: #00aaff;
+      --border-color: rgba(0, 229, 229, 0.2);
       --text-light: #e0e0f0;
-      --text-muted: #a0a0c0;
-      --glow-accent-1: #6d42d6; /* Purple */
-      --glow-accent-2: #42b6d6; /* Teal */
-      --glow-accent-3: #d642b6; /* Magenta */
     }
 
     body {
       margin: 0;
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, var(--bg-start), var(--bg-end), var(--bg-start));
+      background-color: var(--bg-color);
       color: var(--text-light);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      line-height: 1.7;
+      line-height: 1.6;
       overflow-x: hidden;
-      background-size: 400% 400%;
-      animation: bg-gradient-animation 15s ease infinite;
-    }
-
-    @keyframes bg-gradient-animation {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+      position: relative;
     }
 
     header {
       padding: 60px 20px 40px;
       text-align: center;
-      background: rgba(0, 0, 0, 0.2);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--border-color);
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(8px);
+      border-bottom: 2px solid var(--accent-color);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
     }
 
     h1 {
+      font-family: 'Orbitron', sans-serif;
       font-size: 3.5em;
-      font-weight: 700;
-      color: var(--text-light);
-      text-shadow: 0 0 10px var(--glow-accent-1), 0 0 20px var(--glow-accent-2);
+      font-weight: 600;
+      color: var(--accent-color);
+      text-shadow: 0 0 15px var(--accent-color), 0 0 25px var(--accent-secondary);
       margin: 0;
-      letter-spacing: -1.5px;
+      letter-spacing: -1px;
     }
 
     p.sub {
-      font-size: 1.3em;
-      color: var(--text-muted);
+      font-size: 1.2em;
+      color: var(--text-light);
       margin-top: 10px;
       font-weight: 400;
       text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+    }
+
+    .digital-clock {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 1.5em;
+        color: var(--accent-secondary);
+        margin-top: 20px;
+        text-shadow: 0 0 10px var(--accent-secondary);
     }
 
     .content {
       max-width: 950px;
       margin: 50px auto;
       padding: 40px;
-      background: var(--card-bg);
-      border-radius: 25px;
-      backdrop-filter: blur(25px);
-      box-shadow: 
-        0 0 20px rgba(var(--glow-accent-1), 0.3),
-        0 0 40px rgba(var(--glow-accent-2), 0.2),
-        0 10px 40px rgba(0, 0, 0, 0.6);
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 20px;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), inset 0 0 10px rgba(0, 229, 229, 0.15);
       flex-grow: 1;
       border: 1px solid var(--border-color);
       transition: all 0.5s ease;
     }
-    
+
+    .advanced-features {
+      margin-bottom: 30px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 15px;
+      border: 1px solid var(--border-color);
+    }
+
+    .feature-widget {
+      background: rgba(0, 0, 0, 0.2);
+      padding: 15px;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transition: all 0.3s ease;
+    }
+
+    .feature-widget:hover {
+      box-shadow: 0 0 15px var(--accent-color);
+      transform: scale(1.03);
+    }
+
+    .feature-widget p {
+      margin: 0;
+      font-size: 0.9em;
+      color: var(--text-light);
+    }
+
+    .feature-widget h3 {
+        font-family: 'Orbitron', sans-serif;
+        margin: 5px 0 0;
+        font-size: 2em;
+        color: var(--accent-color);
+        text-shadow: 0 0 10px var(--accent-color);
+    }
+
+    .filter-buttons {
+        grid-column: 1 / 3;
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 10px;
+    }
+
+    .filter-buttons button {
+        background: transparent;
+        border: 1px solid var(--accent-color);
+        color: var(--accent-color);
+        font-family: 'Poppins', sans-serif;
+        padding: 8px 15px;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-shadow: 0 0 5px var(--accent-color);
+    }
+
+    .filter-buttons button:hover {
+        background: var(--accent-color);
+        color: var(--bg-color);
+        box-shadow: 0 0 15px var(--accent-color);
+    }
+
     .update {
-      padding: 30px;
-      margin: 25px 0;
-      background: rgba(255, 255, 255, 0.02);
-      border-right: 4px solid var(--glow-accent-3);
-      border-radius: 18px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), inset 0 0 10px rgba(255, 255, 255, 0.05);
-      font-size: 1.1em;
-      line-height: 1.8;
+      padding: 25px;
+      margin: 20px 0;
+      background: rgba(0, 0, 0, 0.2);
+      border-right: 4px solid var(--accent-secondary);
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      font-size: 1em;
+      line-height: 1.7;
       text-align: right;
       direction: rtl;
       unicode-bidi: isolate;
-      transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
       cursor: pointer;
     }
 
     .update:hover {
       transform: translateY(-5px);
-      box-shadow: 
-        0 0 10px var(--glow-accent-3), 
-        0 8px 25px rgba(0, 0, 0, 0.4);
-      background: rgba(255, 255, 255, 0.04);
+      box-shadow: 0 0 15px var(--accent-secondary), 0 8px 25px rgba(0, 0, 0, 0.4);
+      background: rgba(0, 0, 0, 0.4);
     }
-    
+
     .side-buttons {
       position: fixed;
       right: 30px;
@@ -118,23 +180,23 @@
 
     .side-buttons a {
       background: transparent;
-      border: 2px solid var(--glow-accent-2);
-      color: var(--glow-accent-2);
+      border: 2px solid var(--accent-color);
+      color: var(--accent-color);
       text-decoration: none;
       padding: 18px 22px;
       border-radius: 40px;
       font-weight: 700;
       font-size: 1.1em;
-      box-shadow: 0 0 10px var(--glow-accent-2);
+      box-shadow: 0 0 10px var(--accent-color);
       transition: all 0.3s ease;
       text-align: center;
     }
 
     .side-buttons a:hover {
-      background: var(--glow-accent-2);
-      color: var(--bg-start);
+      background: var(--accent-color);
+      color: var(--bg-color);
       transform: translateY(-3px);
-      box-shadow: 0 0 20px var(--glow-accent-2), 0 8px 25px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 0 20px var(--accent-color);
     }
 
     @media (max-width: 768px) {
@@ -145,16 +207,25 @@
         font-size: 2.5em;
       }
       p.sub {
-        font-size: 1.1em;
+        font-size: 1em;
+      }
+      .digital-clock {
+        font-size: 1.2em;
       }
       .content {
         margin: 25px 15px;
-        padding: 25px;
-        border-radius: 15px;
+        padding: 20px;
+      }
+      .advanced-features {
+          grid-template-columns: 1fr;
+          gap: 15px;
+      }
+      .filter-buttons {
+          grid-column: 1 / 2;
       }
       .update {
-        font-size: 1em;
-        padding: 20px;
+        font-size: 0.95em;
+        padding: 18px;
         margin: 15px 0;
       }
       .side-buttons {
@@ -166,9 +237,8 @@
       }
       .side-buttons a {
         flex: 1;
-        font-size: 0.95em;
+        font-size: 0.9em;
         padding: 15px;
-        border-radius: 35px;
       }
     }
   </style>
@@ -183,10 +253,32 @@
   <header>
     <h1>PUNJAB GOVT SCHEMES & UPDATES</h1>
     <p class="sub">سرکاری اعلانات۔ تیز، شفاف، مستند خبریں</p>
+    <div id="pakistan-clock" class="digital-clock"></div>
   </header>
 
-  <div class="content" id="updates">
-    Loading updates...
+  <div class="content">
+
+    <div class="advanced-features">
+        <div class="feature-widget">
+            <p>Total Beneficiaries (Live)</p>
+            <h3 class="live-data">2.4M</h3>
+        </div>
+        <div class="feature-widget">
+            <p>Active Schemes</p>
+            <h3 class="live-data">157</h3>
+        </div>
+        <div class="filter-buttons">
+            <button data-filter="all">All</button>
+            <button data-filter="agriculture">Agriculture</button>
+            <button data-filter="education">Education</button>
+            <button data-filter="health">Health</button>
+        </div>
+    </div>
+
+    <div id="updates">
+      Loading updates...
+    </div>
+
   </div>
 
   <script>
@@ -199,6 +291,25 @@
       .catch(() => {
         document.getElementById('updates').innerHTML = "<div class='update'>❌ Could not load updates.</div>";
       });
+
+    // JavaScript to display the clock for Pakistan Standard Time
+    function updateClock() {
+      const now = new Date();
+      const options = {
+        timeZone: 'Asia/Karachi',
+        hour12: true,
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric'
+      };
+      const formattedTime = now.toLocaleTimeString('en-US', options);
+      document.getElementById('pakistan-clock').textContent = formattedTime + ' PKT';
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
   </script>
 </body>
 </html>
+
+  
