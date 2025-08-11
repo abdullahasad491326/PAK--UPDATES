@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Jazz Giveaway</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-bg: #e2e8f0;
+            --container-bg: rgba(255, 255, 255, 0.9);
+            --text-dark: #2d3748;
+            --text-light: #4a5568;
+            --accent-green: #38a169;
+            --accent-gold: #FFD700;
+            --box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08), 0 6px 6px rgba(0, 0, 0, 0.05);
+            --border-radius-large: 16px;
+        }
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #f7fafc 0%, #cbd5e0 100%);
+            color: var(--text-dark);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .container {
+            background-color: var(--container-bg);
+            border-radius: var(--border-radius-large);
+            padding: 40px;
+            box-shadow: var(--box-shadow);
+            max-width: 800px;
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: all 0.4s ease-out;
+            text-align: center;
+        }
+        .header {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5em;
+            font-weight: 700;
+            color: var(--accent-green);
+            margin-bottom: 10px;
+        }
+        .subheader {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.2em;
+            font-weight: 400;
+            color: var(--text-light);
+            margin-bottom: 30px;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .stat-card {
+            background: #fff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid var(--accent-green);
+            text-align: left;
+        }
+        .stat-card h3 {
+            margin: 0 0 5px;
+            font-size: 1em;
+            color: var(--text-light);
+        }
+        .stat-card .value {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5em;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+        .numbers-list {
+            text-align: left;
+        }
+        .numbers-list h3 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-dark);
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .numbers-list ul {
+            list-style-type: none;
+            padding: 0;
+            background: #f7fafc;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .numbers-list li {
+            padding: 12px 20px;
+            border-bottom: 1px solid #e2e8f0;
+            font-weight: 500;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .numbers-list li:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1 class="header">Giveaway Admin Dashboard</h1>
+        <h2 class="subheader">Simulated Data - Not a Real Connection</h2>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Total Visitors (Today)</h3>
+                <div class="value" id="total-visitors">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Total Shares</h3>
+                <div class="value" id="total-shares">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Confirmed Entries</h3>
+                <div class="value" id="confirmed-entries">0</div>
+            </div>
+        </div>
+
+        <div class="numbers-list">
+            <h3>Confirmed Numbers (Shared 5+ times)</h3>
+            <ul id="confirmed-list">
+                </ul>
+        </div>
+    </div>
+    
+    <script>
+        // This script attempts to fetch data from a server and display it.
+        // It is a SIMULATION. It will only work if a real server is running.
+        document.addEventListener('DOMContentLoaded', async function() {
+            const totalVisitorsElement = document.getElementById('total-visitors');
+            const totalSharesElement = document.getElementById('total-shares');
+            const confirmedEntriesElement = document.getElementById('confirmed-entries');
+            const confirmedListElement = document.getElementById('confirmed-list');
+            
+            try {
+                const response = await fetch('http://localhost:3000/api/admin');
+                const data = await response.json();
+                
+                totalVisitorsElement.textContent = data.totalVisitors;
+                totalSharesElement.textContent = data.totalShares;
+                confirmedEntriesElement.textContent = data.confirmedNumbers.length;
+                
+                confirmedListElement.innerHTML = '';
+                data.confirmedNumbers.forEach(number => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<span>${number}</span>`;
+                    confirmedListElement.appendChild(li);
+                });
+                
+            } catch (error) {
+                console.error('Error fetching data from server:', error);
+                // Fallback to static data if the server is not running
+                totalVisitorsElement.textContent = 'N/A';
+                totalSharesElement.textContent = 'N/A';
+                confirmedEntriesElement.textContent = 'N/A';
+                confirmedListElement.innerHTML = '<li><span>Could not load data. Is the server running?</span></li>';
+            }
+        });
+    </script>
+</body>
+</html>
