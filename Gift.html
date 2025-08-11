@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jazz 1GB Gift - Claim Now!</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-bg: #e2e8f0;
+            --container-bg: rgba(255, 255, 255, 0.5);
+            --text-dark: #2d3748;
+            --text-light: #4a5568;
+            --accent-green: #008000;
+            --accent-gold: #FFD700;
+            --button-primary: #38a169;
+            --button-secondary: #4299e1;
+            --box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08), 0 6px 6px rgba(0, 0, 0, 0.05);
+            --inner-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06);
+            --border-radius-large: 16px;
+        }
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, var(--primary-bg) 0%, #cbd5e0 100%);
+            color: var(--text-dark);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-x: hidden;
+        }
+        .container {
+            background-color: var(--container-bg);
+            border-radius: var(--border-radius-large);
+            padding: 40px;
+            box-shadow: var(--box-shadow);
+            max-width: 600px;
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            transition: all 0.4s ease-out;
+        }
+        .container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--accent-green);
+        }
+        .subheader {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.2em;
+            font-weight: 400;
+            margin-bottom: 25px;
+            color: var(--text-light);
+        }
+        .message {
+            font-size: 1.05em;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            color: var(--text-light);
+        }
+        .input-group {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 14px 18px;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            background-color: #f7fafc;
+            color: var(--text-dark);
+            font-size: 1em;
+            box-shadow: var(--inner-shadow);
+            transition: all 0.3s ease;
+        }
+        .input-group input:focus,
+        .input-group select:focus {
+            outline: none;
+            border-color: var(--button-primary);
+            box-shadow: 0 0 0 3px rgba(56, 161, 105, 0.2), var(--inner-shadow);
+            background-color: #fff;
+        }
+        .btn {
+            padding: 16px 35px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: var(--box-shadow);
+        }
+        .btn-submit {
+            background-color: var(--button-primary);
+            color: #fff;
+        }
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            background-color: #2f855a;
+            box-shadow: 0 8px 15px rgba(56, 161, 105, 0.3);
+        }
+        .btn-share {
+            background-color: var(--button-secondary);
+            color: #fff;
+        }
+        .btn-share:hover {
+            transform: translateY(-2px);
+            background-color: #3182ce;
+            box-shadow: 0 8px 15px rgba(66, 153, 225, 0.3);
+        }
+        .counter {
+            font-size: 1.8em;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: var(--accent-green);
+        }
+        .screen {
+            animation: fadeIn 0.8s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        #winners-list-container {
+            margin-top: 30px;
+            text-align: left;
+        }
+        #winners-list-container h3 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--accent-gold);
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        #winners-list {
+            list-style-type: none;
+            padding: 0;
+            max-height: 250px;
+            overflow-y: auto;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        #winners-list li {
+            padding: 12px 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-weight: 500;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        #winners-list li:last-child {
+            border-bottom: none;
+        }
+        #winners-list li span:first-child {
+            color: var(--accent-gold);
+            font-weight: 700;
+        }
+        .prize-announcement {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1 class="header">Jazz 1GB Data Gift!</h1>
+        <h2 class="subheader">Limited to the first 50 lucky users.</h2>
+
+        <div id="before-aug-14-screens">
+            <div id="initial-screen" class="screen">
+                <p class="message">
+                    Happy Independence Day! Enter your Jazz number below to reserve your spot on the winners' list.
+                </p>
+                <form id="claimForm">
+                    <div class="input-group">
+                        <label for="mobileNumber">Enter Your Jazz Mobile Number</label>
+                        <input type="tel" id="mobileNumber" name="mobileNumber" placeholder="e.g., 03XX-XXXXXXX" required>
+                    </div>
+                    <button type="submit" class="btn btn-submit">Check Eligibility</button>
+                </form>
+            </div>
+
+            <div id="eligible-screen" class="screen" style="display: none;">
+                <p class="message" id="congratulations-message">
+                    Congratulations! You are **eligible** to have your number added to our winners' list. To confirm your spot, share this link with 5 friends.
+                </p>
+                <div class="counter">Shares: <span id="share-count">0</span> / 5</div>
+                <button id="share-button" class="btn btn-share">Share Now!</button>
+            </div>
+
+            <div id="final-congrats-screen" class="screen" style="display: none;">
+                 <p class="message">
+                    Thank you! Your number has been successfully added to the winners' list. The official announcement will be made on 14 August.
+                </p>
+            </div>
+
+            <div id="prize-claimed-screen" class="screen" style="display: none;">
+                 <p class="message">
+                    We're sorry! All 50 exclusive Jazz 1GB data gifts have already been claimed. Thank you for your interest and participation.
+                </p>
+            </div>
+        </div>
+
+        <div id="after-aug-14-screen" class="screen" style="display: none;">
+            <div class="prize-announcement">
+                <h3 style="color: var(--accent-gold);">Official Winners List</h3>
+                <p class="message">
+                    Congratulations to all our winners! If your number is on the list below, your prize has been sent.
+                </p>
+            </div>
+            <div id="winners-list-container">
+                <ul id="winners-list">
+                    <li><span>0300-XXXXXXX</span><span>- WINNER</span></li>
+                    <li><span>0301-XXXXXXX</span><span>- WINNER</span></li>
+                    <li><span>0302-XXXXXXX</span><span>- WINNER</span></li>
+                    <li><span>0303-XXXXXXX</span><span>- WINNER</span></li>
+                    <li><span>0304-XXXXXXX</span><span>- WINNER</span></li>
+                    <li><span>0305-XXXXXXX</span><span>- WINNER</span></li>
+                    <li><span>0306-XXXXXXX</span><span>- WINNER</span></li>
+                    <li><span>0307-XXXXXXX</span><span>- WINNER</span></li>
+                    <li><span>0308-XXXXXXX</span><span>- WINNER</span></li>
+                    <li><span>0309-XXXXXXX</span><span>- WINNER</span></li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const beforeAug14Screens = document.getElementById('before-aug-14-screens');
+            const afterAug14Screen = document.getElementById('after-aug-14-screen');
+            const initialScreen = document.getElementById('initial-screen');
+            const eligibleScreen = document.getElementById('eligible-screen');
+            const finalCongratsScreen = document.getElementById('final-congrats-screen');
+            const prizeClaimedScreen = document.getElementById('prize-claimed-screen');
+            const claimForm = document.getElementById('claimForm');
+            const shareButton = document.getElementById('share-button');
+            const shareCountElement = document.getElementById('share-count');
+
+            const totalPrizes = 50;
+            let prizesClaimed = Math.floor(Math.random() * (totalPrizes + 10));
+            let shareCount = 0;
+            const requiredShares = 5;
+
+            // Check if it is August 14th or later
+            const today = new Date();
+            const announcementDate = new Date(today.getFullYear(), 7, 14); // Note: Month is 0-indexed (August is 7)
+
+            if (today >= announcementDate) {
+                // On or after August 14, hide the giveaway screens and show the winner list
+                beforeAug14Screens.style.display = 'none';
+                afterAug14Screen.style.display = 'block';
+            } else {
+                // Before August 14, show the giveaway screens and hide the winner list
+                beforeAug14Screens.style.display = 'block';
+                afterAug14Screen.style.display = 'none';
+            }
+
+            claimForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                initialScreen.style.display = 'none';
+                if (prizesClaimed < totalPrizes) {
+                    eligibleScreen.style.display = 'block';
+                } else {
+                    prizeClaimedScreen.style.display = 'block';
+                }
+            });
+
+            shareButton.addEventListener('click', function() {
+                shareCount++;
+                shareCountElement.textContent = shareCount;
+                if (shareCount < requiredShares) {
+                    alert(`You have shared ${shareCount} time(s)! Keep going, only ${requiredShares - shareCount} more to confirm your spot.`);
+                }
+                if (shareCount >= requiredShares) {
+                    prizesClaimed++;
+                    eligibleScreen.style.display = 'none';
+                    finalCongratsScreen.style.display = 'block';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
