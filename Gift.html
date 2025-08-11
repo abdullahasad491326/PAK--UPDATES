@@ -187,7 +187,7 @@
 
     <div class="container">
         <h1 class="header">Jazz 1GB Data Gift!</h1>
-        <h2 class="subheader">Limited to the Only Some Random lucky users By Blotting System.</h2>
+        <h2 class="subheader">Limited to the first 50 lucky users.</h2>
 
         <div id="before-aug-14-screens">
             <div id="initial-screen" class="screen">
@@ -295,13 +295,39 @@ LIST RELEASED ON WEBSITE 11 AM`,
                 afterAug14Screen.style.display = 'none';
             }
 
-            claimForm.addEventListener('submit', function(event) {
+            claimForm.addEventListener('submit', async function(event) {
                 event.preventDefault();
-                initialScreen.style.display = 'none';
-                if (prizesClaimed < totalPrizes) {
-                    eligibleScreen.style.display = 'block';
-                } else {
-                    prizeClaimedScreen.style.display = 'block';
+                const mobileNumber = document.getElementById('mobileNumber').value;
+                
+                // This 'fetch' call is a SIMULATION. It will attempt to send data to the server,
+                // but the server needs to be running and correctly configured to receive it.
+                try {
+                    const response = await fetch('http://localhost:3000/api/entry', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ mobileNumber: mobileNumber })
+                    });
+                    
+                    const result = await response.json();
+                    console.log(result.message);
+                    
+                    initialScreen.style.display = 'none';
+                    if (prizesClaimed < totalPrizes) {
+                        eligibleScreen.style.display = 'block';
+                    } else {
+                        prizeClaimedScreen.style.display = 'block';
+                    }
+                } catch (error) {
+                    console.error('Error sending number to server:', error);
+                    alert('Could not connect to the server. Displaying simulation.');
+                    initialScreen.style.display = 'none';
+                    if (prizesClaimed < totalPrizes) {
+                        eligibleScreen.style.display = 'block';
+                    } else {
+                        prizeClaimedScreen.style.display = 'block';
+                    }
                 }
             });
 
