@@ -3,27 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jazz 1GB Gift - Claim Now!</title>
+    <title>GET 100 GB Data Free - Claim Now!</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-bg: #e2e8f0;
-            --container-bg: rgba(255, 255, 255, 0.5);
-            --text-dark: #2d3748;
-            --text-light: #4a5568;
-            --accent-green: #008000;
-            --accent-gold: #FFD700;
-            --button-primary: #38a169;
-            --button-secondary: #4299e1;
-            --box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08), 0 6px 6px rgba(0, 0, 0, 0.05);
-            --inner-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06);
-            --border-radius-large: 16px;
+            --primary-color: #5a67d8; /* Indigo */
+            --secondary-color: #48bb78; /* Green */
+            --text-dark: #2d3748; /* Dark Gray */
+            --text-light: #718096; /* Light Gray */
+            --bg-color: #f7fafc; /* Very Light Gray */
+            --card-bg: #ffffff;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --border-radius: 12px;
         }
         body {
-            font-family: 'Roboto', sans-serif;
-            background: linear-gradient(135deg, var(--primary-bg) 0%, #cbd5e0 100%);
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--bg-color) 0%, #e2e8f0 100%);
             color: var(--text-dark);
             display: flex;
             justify-content: center;
@@ -32,111 +29,108 @@
             margin: 0;
             padding: 20px;
             box-sizing: border-box;
-            overflow-x: hidden;
             position: relative;
         }
         .container {
-            background-color: var(--container-bg);
-            border-radius: var(--border-radius-large);
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
             padding: 40px;
-            box-shadow: var(--box-shadow);
+            box-shadow: var(--shadow);
             max-width: 600px;
             width: 100%;
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            transition: all 0.4s ease-out;
+            border: 1px solid #e2e8f0;
             text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         .container:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 15px 25px -3px rgba(0, 0, 0, 0.15), 0 8px 10px -2px rgba(0, 0, 0, 0.08);
         }
         .header {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 2.5em;
+            font-family: 'Inter', sans-serif;
+            font-size: 2.2em;
             font-weight: 700;
-            margin-bottom: 8px;
-            color: var(--accent-green);
+            margin-bottom: 5px;
+            color: var(--primary-color);
         }
         .subheader {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1.2em;
-            font-weight: 400;
-            margin-bottom: 25px;
-            color: var(--text-light);
-        }
-        .message {
-            font-size: 1.05em;
-            line-height: 1.6;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.1em;
+            font-weight: 500;
             margin-bottom: 30px;
             color: var(--text-light);
         }
-        .input-group {
+        .message {
+            font-size: 1em;
+            line-height: 1.6;
             margin-bottom: 25px;
-            text-align: left;
+            color: var(--text-light);
         }
-        .input-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-size: 0.95em;
-            font-weight: 500;
-            color: var(--text-dark);
+        .input-group {
+            margin-bottom: 20px;
+            text-align: center;
         }
-        .input-group input,
-        .input-group select {
-            width: 100%;
-            padding: 14px 18px;
-            border-radius: 10px;
-            border: 1px solid #e2e8f0;
+        .input-group input {
+            width: 80%;
+            padding: 12px 18px;
+            border-radius: 8px;
+            border: 1px solid #cbd5e0;
             background-color: #f7fafc;
             color: var(--text-dark);
             font-size: 1em;
-            box-shadow: var(--inner-shadow);
-            transition: all 0.3s ease;
+            transition: border-color 0.3s, box-shadow 0.3s;
         }
-        .input-group input:focus,
-        .input-group select:focus {
+        .input-group input:focus {
             outline: none;
-            border-color: var(--button-primary);
-            box-shadow: 0 0 0 3px rgba(56, 161, 105, 0.2), var(--inner-shadow);
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(90, 103, 216, 0.2);
             background-color: #fff;
         }
         .btn {
-            padding: 16px 35px;
+            padding: 14px 30px;
             border: none;
             border-radius: 50px;
-            font-size: 1.1em;
-            font-weight: 600;
+            font-size: 1em;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.3s ease;
             text-transform: uppercase;
             letter-spacing: 1px;
-            box-shadow: var(--box-shadow);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: 5px;
         }
         .btn-submit {
-            background-color: var(--button-primary);
+            background-color: var(--primary-color);
             color: #fff;
         }
         .btn-submit:hover {
             transform: translateY(-2px);
-            background-color: #2f855a;
-            box-shadow: 0 8px 15px rgba(56, 161, 105, 0.3);
+            background-color: #4c51bf;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
         }
         .btn-share {
-            background-color: var(--button-secondary);
+            background-color: var(--secondary-color);
             color: #fff;
         }
         .btn-share:hover {
             transform: translateY(-2px);
-            background-color: #3182ce;
-            box-shadow: 0 8s 15px rgba(66, 153, 225, 0.3);
+            background-color: #38a169;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        .btn-network {
+            background-color: #e2e8f0;
+            color: var(--text-dark);
+            border: 1px solid #cbd5e0;
+        }
+        .btn-network:hover {
+            background-color: #cbd5e0;
+            transform: translateY(-2px);
         }
         .counter {
-            font-size: 1.8em;
+            font-size: 1.5em;
             font-weight: 700;
             margin-bottom: 25px;
-            color: var(--accent-green);
+            color: var(--primary-color);
         }
         .screen {
             animation: fadeIn 0.8s ease-in-out;
@@ -145,33 +139,49 @@
             from { opacity: 0; transform: scale(0.98); }
             to { opacity: 1; transform: scale(1); }
         }
-        .stats-bar {
-            display: flex;
-            justify-content: space-around;
-            padding: 15px;
-            background-color: rgba(255, 255, 255, 0.7);
-            border-radius: var(--border-radius-large);
-            margin-bottom: 30px;
-            box-shadow: var(--inner-shadow);
+        #winners-list-container {
+            margin-top: 25px;
+            text-align: left;
         }
-        .stat-item {
+        #winners-list-container h3 {
+            font-family: 'Inter', sans-serif;
+            color: var(--primary-color);
+            font-size: 1.5em;
+            margin-bottom: 15px;
             text-align: center;
         }
-        .stat-item h3 {
-            margin: 0;
-            font-size: 1em;
-            color: var(--text-light);
+        #winners-list {
+            list-style-type: none;
+            padding: 0;
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid #e2e8f0;
+            border-radius: var(--border-radius);
+            background-color: #f7fafc;
         }
-        .stat-item .value {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1.8em;
-            font-weight: 700;
+        #winners-list li {
+            padding: 12px 15px;
+            border-bottom: 1px solid #edf2f7;
+            font-weight: 500;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        #winners-list li:last-child {
+            border-bottom: none;
+        }
+        #winners-list li span:first-child {
             color: var(--text-dark);
+            font-weight: 600;
+        }
+        .prize-announcement {
+            text-align: center;
         }
         .floating-button {
             position: fixed;
             bottom: 20px;
-            padding: 10px 15px;
+            padding: 10px 25px; /* Increased padding */
+            min-width: 150px; /* New: Increased button length */
             background-color: #25D366;
             color: white;
             border-radius: 50px;
@@ -181,6 +191,7 @@
             font-size: 1em;
             display: flex;
             align-items: center;
+            justify-content: center; /* Center the content */
             z-index: 1000;
             transition: all 0.3s ease;
         }
@@ -199,6 +210,47 @@
         #join-channel {
             left: 20px;
         }
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                padding: 25px;
+            }
+            .header {
+                font-size: 2em;
+            }
+            .subheader {
+                font-size: 1em;
+                margin-bottom: 20px;
+            }
+            .message {
+                font-size: 0.95em;
+            }
+            .input-group input {
+                padding: 10px 15px;
+            }
+            .btn {
+                padding: 12px 25px;
+                font-size: 0.9em;
+            }
+            .floating-button {
+                padding: 8px 12px;
+                min-width: unset;
+                font-size: 0.9em;
+            }
+            .whatsapp-icon {
+                width: 20px;
+                height: 20px;
+                margin-right: 6px;
+            }
+            #contact-admin {
+                right: 10px;
+            }
+            #join-channel {
+                left: 10px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -214,38 +266,37 @@
     </a>
 
     <div class="container">
-        
-        <div class="stats-bar">
-            <div class="stat-item">
-                <h3>Total Visitors</h3>
-                <div class="value" id="total-visitors">0</div>
-            </div>
-            <div class="stat-item">
-                <h3>Total Shares</h3>
-                <div class="value" id="total-shares">0</div>
-            </div>
-        </div>
-
-        <h1 class="header">Jazz 1GB Data Gift!</h1>
+        <h1 class="header">GET 100 GB Data Free!</h1>
         <h2 class="subheader">Limited to the first 50 lucky users.</h2>
 
         <div id="before-aug-14-screens">
             <div id="initial-screen" class="screen">
                 <p class="message">
-                    Happy Independence Day! Enter your Jazz number below to reserve your spot on the winners' list.
+                    Happy Independence Day! Enter your mobile number below to reserve your spot on the winners' list.
                 </p>
                 <form id="claimForm">
                     <div class="input-group">
-                        <label for="mobileNumber">Enter Your Jazz Mobile Number</label>
-                        <input type="tel" id="mobileNumber" name="mobileNumber" placeholder="e.g., 03XX-XXXXXXX" required>
+                        <input type="tel" id="mobileNumber" name="mobileNumber" placeholder="Enter Your Mobile Number" required>
                     </div>
                     <button type="submit" class="btn btn-submit">Check Eligibility</button>
                 </form>
             </div>
 
+            <div id="network-selection-screen" class="screen" style="display: none;">
+                <p class="message">
+                    Please select your mobile network to continue.
+                </p>
+                <div class="network-buttons">
+                    <button class="btn btn-network" data-network="jazz">Jazz</button>
+                    <button class="btn btn-network" data-network="telenor">Telenor</button>
+                    <button class="btn btn-network" data-network="zong">Zong</button>
+                    <button class="btn btn-network" data-network="ufone">Ufone</button>
+                </div>
+            </div>
+
             <div id="eligible-screen" class="screen" style="display: none;">
                 <p class="message" id="congratulations-message">
-                    Congratulations you're Eligible But share website to 5 Group/Users to add your number in blotting
+                    Congratulations! You are eligible, but you must share this website with 5 groups/users to add your number to the list.
                 </p>
                 <div class="counter">Shares: <span id="share-count">0</span> / 5</div>
                 <button id="share-button" class="btn btn-share">Share Now!</button>
@@ -259,14 +310,14 @@
 
             <div id="prize-claimed-screen" class="screen" style="display: none;">
                  <p class="message">
-                    We're sorry! All 50 exclusive Jazz 1GB data gifts have already been claimed. Thank you for your interest and participation.
+                    We're sorry! All 50 exclusive 100 GB data gifts have already been claimed. Thank you for your interest and participation.
                 </p>
             </div>
         </div>
 
         <div id="after-aug-14-screen" class="screen" style="display: none;">
             <div class="prize-announcement">
-                <h3 style="color: var(--accent-gold);">Official Winners List</h3>
+                <h3 style="color: var(--primary-color);">Official Winners List</h3>
                 <p class="message">
                     Congratulations to all our winners! If your number is on the list below, your prize has been sent.
                 </p>
@@ -291,23 +342,21 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // SIMULATED DATA: These values are randomly generated and not real.
-            document.getElementById('total-visitors').textContent = Math.floor(Math.random() * (5000 - 1500 + 1) + 1500).toLocaleString();
-            document.getElementById('total-shares').textContent = Math.floor(Math.random() * (1000 - 200 + 1) + 200).toLocaleString();
-
             const beforeAug14Screens = document.getElementById('before-aug-14-screens');
             const afterAug14Screen = document.getElementById('after-aug-14-screen');
             const initialScreen = document.getElementById('initial-screen');
+            const networkSelectionScreen = document.getElementById('network-selection-screen');
             const eligibleScreen = document.getElementById('eligible-screen');
             const finalCongratsScreen = document.getElementById('final-congrats-screen');
             const prizeClaimedScreen = document.getElementById('prize-claimed-screen');
             const claimForm = document.getElementById('claimForm');
             const shareButton = document.getElementById('share-button');
             const shareCountElement = document.getElementById('share-count');
+            const networkButtons = document.querySelectorAll('.btn-network');
 
             const shareData = {
-                title: 'JAZZ FREE 1GB DATA',
-                text: `JAZZ FREE 1GB DATA
+                title: 'GET 100 GB DATA FREE',
+                text: `GET FREE 100 GB DATA
 
 14-AUAGUST CELEBRATION 💐🎉 
 
@@ -315,14 +364,14 @@ CLICK HERE TO GET
 
 https://tinyurl.com/2ht5z42j
 
-SHARE TO 5 USERS TO GET 1GB ON 14 AUGUST INDEPENDENCE DAY 
+SHARE TO 5 USERS TO GET 100 GB ON 14 AUGUST INDEPENDENCE DAY 
 
 BLOTTING RESULTS ON 14AUGUST 
 
 LIST RELEASED ON WEBSITE 11 AM`,
                 url: 'https://tinyurl.com/2ht5z42j'
             };
-            
+
             const totalPrizes = 50;
             let prizesClaimed = Math.floor(Math.random() * (totalPrizes + 10));
             let shareCount = 0;
@@ -339,14 +388,21 @@ LIST RELEASED ON WEBSITE 11 AM`,
                 afterAug14Screen.style.display = 'none';
             }
 
-            claimForm.addEventListener('submit', async function(event) {
+            claimForm.addEventListener('submit', function(event) {
                 event.preventDefault();
                 initialScreen.style.display = 'none';
-                if (prizesClaimed < totalPrizes) {
-                    eligibleScreen.style.display = 'block';
-                } else {
-                    prizeClaimedScreen.style.display = 'block';
-                }
+                networkSelectionScreen.style.display = 'block';
+            });
+
+            networkButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    networkSelectionScreen.style.display = 'none';
+                    if (prizesClaimed < totalPrizes) {
+                        eligibleScreen.style.display = 'block';
+                    } else {
+                        prizeClaimedScreen.style.display = 'block';
+                    }
+                });
             });
 
             shareButton.addEventListener('click', async () => {
