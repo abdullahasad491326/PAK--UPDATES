@@ -154,7 +154,7 @@
     }
     .features-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjusted for smaller cards */
       gap: 0;
       border-radius: 0 0 12px 12px;
       overflow: hidden;
@@ -163,7 +163,7 @@
     }
     .feature-card, .coming-soon-card {
       background-color: var(--card-bg);
-      padding: 25px;
+      padding: 20px; /* Reduced padding */
       text-decoration: none;
       border: 1px solid var(--border-color);
       transition: all 0.3s ease;
@@ -179,19 +179,20 @@
     }
 
     .feature-card .icon, .coming-soon-card .icon {
-        font-size: 1.5rem;
+        font-size: 1.2rem; /* Reduced icon size */
         color: var(--primary-accent);
-        margin-bottom: 10px;
+        margin-bottom: 8px; /* Reduced margin */
         transition: transform 0.3s ease;
     }
     .feature-card:hover .icon {
         transform: scale(1.1);
     }
     .feature-card h3 {
-      font-size: clamp(1rem, 3vw, 1.15rem);
+      font-size: clamp(0.9rem, 2.5vw, 1.1rem); /* Reduced heading size */
     }
     .feature-card p {
-      font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+      font-size: clamp(0.75rem, 2vw, 0.85rem); /* Reduced paragraph size */
+      line-height: 1.4;
     }
 
     /* COMING SOON SECTION */
@@ -204,7 +205,7 @@
         border-radius: 12px;
         text-align: center;
         transition: all 0.3s ease;
-        padding: 25px;
+        padding: 20px; /* Reduced padding */
     }
     .coming-soon-card:hover {
         border-color: var(--primary-accent);
@@ -222,12 +223,12 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 8px 16px;
-      margin-top: 15px;
+      padding: 7px 14px; /* Reduced button padding */
+      margin-top: 10px; /* Reduced button margin */
       border-radius: 5px;
       font-weight: 600;
       text-decoration: none;
-      font-size: 0.85rem;
+      font-size: 0.8rem; /* Reduced button font size */
       transition: all 0.3s ease;
       border: 1px solid var(--primary-accent);
       background: var(--primary-accent);
@@ -277,6 +278,13 @@
 
     <section class="features-section">
       <div class="features-grid">
+        <div class="feature-card">
+          <div class="icon">📰</div>
+          <h3 data-lang-en="Latest Schemes News" data-lang-ur="تازہ ترین اسکیموں کی خبریں">Latest Schemes News</h3>
+          <p data-lang-en="Get the newest updates and news on government schemes as they are announced." data-lang-ur="سرکاری اسکیموں کے بارے میں تازہ ترین معلومات اور خبریں جیسے ہی وہ جاری ہوں حاصل کریں۔">Get the newest updates and news on government schemes as they are announced.</p>
+          <a href="https://www.pak--updates.xyz/Updates.html" class="btn" data-lang-en="Read News" data-lang-ur="خبریں پڑھیں">Read News</a>
+        </div>
+        
         <div class="feature-card">
           <div class="icon">✨</div>
           <h3 data-lang-en="Official Schemes" data-lang-ur="سرکاری اسکیمیں">Official Schemes</h3>
