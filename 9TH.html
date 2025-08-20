@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>9th Class Result Gazette 2025</title>
+  <link rel="icon" type="image/png" href="https://example.com/favicon.png"> <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color-start: #1e3c72;
+      --bg-color-end: #2a5298;
+      --card-bg: rgba(255, 255, 255, 0.08);
+      --primary-glow: #00e5ff;
+      --secondary-glow: #ffcc70;
+      --button-bg: linear-gradient(45deg, #e33d7b, #ff7b00);
+      --whatsapp-bg: #25d366;
+      --major-board-color: #6a11cb;
+      --minor-board-color: #2575fc;
+    }
+
+    * { 
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box; 
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      color: #fff;
+      min-height: 100vh;
+      background: linear-gradient(-45deg, var(--bg-color-start), var(--bg-color-end), #1b1c2b, #2c3e50);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-x: hidden;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
+    @keyframes shimmer {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.01); }
+        100% { transform: scale(1); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    header {
+      width: 100%;
+      padding: 30px 20px;
+      text-align: center;
+      backdrop-filter: blur(15px);
+      background: rgba(255, 255, 255, 0.05);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      animation: shimmer 5s ease-in-out infinite;
+    }
+
+    header h1 {
+      font-size: clamp(24px, 5vw, 36px);
+      font-weight: 700;
+      color: var(--primary-glow);
+      text-shadow: 0 0 15px var(--primary-glow);
+    }
+    
+    .search-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 90%;
+        max-width: 500px;
+        margin: 30px auto 15px;
+        position: relative;
+    }
+
+    .search-box {
+      width: 100%;
+      position: relative;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 15px 20px;
+      border-radius: 40px;
+      border: none;
+      outline: none;
+      font-size: 16px;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 20px rgba(0, 255, 229, 0.3);
+      transition: box-shadow 0.3s ease;
+      color: #333;
+    }
+
+    .search-box input:focus {
+      box-shadow: 0 0 30px rgba(0, 255, 229, 0.6);
+    }
+
+    #result-count {
+        font-size: 14px;
+        color: #ccc;
+        margin-top: 10px;
+    }
+
+    main {
+      width: 100%;
+      max-width: 1200px;
+      padding: 20px;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      animation: fadeIn 1.5s ease-in-out;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 25px;
+      padding: 30px;
+      text-align: center;
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 0 15px rgba(0, 255, 229, 0.2);
+      transition: 0.4s ease;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    
+    .card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: rgba(255, 255, 255, 0.05);
+      transform: rotate(45deg);
+      transition: transform 0.4s ease;
+    }
+    
+    .card:hover::before {
+      transform: rotate(0deg);
+    }
+
+    .card:hover {
+      transform: translateY(-10px) scale(1.03);
+      box-shadow: 0 0 30px rgba(0, 255, 229, 0.5);
+    }
+
+    .card h2 {
+      font-size: 20px;
+      margin-bottom: 20px;
+      color: var(--secondary-glow);
+      text-shadow: 0 0 8px rgba(255,204,112,0.8);
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    
+    .card h2 .icon {
+        font-size: 24px;
+        text-shadow: none;
+    }
+    .major .icon { color: #8C52FF; } /* A deeper purple for verified */
+    .minor .icon { color: #00D2FF; } /* A brighter blue for minor */
+
+    .card a {
+      display: inline-block;
+      padding: 12px 25px;
+      border-radius: 30px;
+      background: var(--button-bg);
+      color: white;
+      font-weight: 600;
+      text-decoration: none;
+      transition: 0.3s ease;
+      position: relative;
+      z-index: 1;
+    }
+
+    .card a:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(255, 0, 102, 0.4);
+    }
+
+    .channel-btn {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      background: var(--whatsapp-bg);
+      color: white;
+      padding: 15px 25px;
+      border-radius: 50px;
+      font-weight: bold;
+      box-shadow: 0 0 20px rgba(37,211,102,0.7);
+      text-decoration: none;
+      transition: 0.3s;
+      z-index: 1000;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); box-shadow: 0 0 25px rgba(37,211,102,0.9); }
+      100% { transform: scale(1); }
+    }
+
+    .channel-btn:hover {
+      background: #1ebd5a;
+      box-shadow: 0 0 25px rgba(37,211,102,1);
+    }
+
+    footer {
+      margin: 40px 0 80px;
+      font-size: 14px;
+      color: #ccc;
+      text-shadow: 0 0 6px rgba(0,0,0,0.6);
+      text-align: center;
+    }
+
+    /* Toast Notification */
+    .toast-container {
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 2000;
+    }
+
+    .toast {
+        background: rgba(0, 255, 229, 0.9);
+        color: #1e3c72;
+        padding: 15px 25px;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        animation: toast-in 0.5s ease-out, toast-out 0.5s 4s ease-in forwards;
+        font-weight: 600;
+        text-align: center;
+    }
+
+    @keyframes toast-in {
+        from { transform: translateY(-50px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes toast-out {
+        from { transform: translateY(0); opacity: 1; }
+        to { transform: translateY(-50px); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>📘 9th Class Result Gazette 2025</h1>
+  </header>
+
+  <main>
+    <div class="search-container">
+      <div class="search-box">
+        <input type="text" id="search" placeholder="🔍 Search Board e.g. Lahore, Multan...">
+      </div>
+      <span id="result-count"></span>
+    </div>
+
+    <div class="container" id="cards">
+      <div class="card major">
+        <h2><span class="icon">✅</span>BISE Lahore Gazette</h2>
+        <a href="https://drive.google.com/file/d/1RXa3QUbdQ-SmBV4p_WW8TWmQbwPap8RJ/view?usp=drivesdk">View Gazette</a>
+      </div>
+      <div class="card major">
+        <h2><span class="icon">✅</span>BISE Lahore (2nd Link)</h2>
+        <a href="https://drive.google.com/file/d/1QY79Yk_m__ijLbBHoNGntR8Wz3V6UKtM/view?usp=drivesdk">View Gazette</a>
+      </div>
+      <div class="card minor">
+        <h2><span class="icon">🔗</span>BISE Sahiwal Gazette</h2>
+        <a href="https://drive.google.com/drive/folders/1IyL3oMG4RBT2yRodWriSg4tV678FSv2u">View Gazette</a>
+      </div>
+      <div class="card major">
+        <h2><span class="icon">✅</span>BISE Multan Gazette</h2>
+        <a href="https://drive.google.com/file/d/1_HAefwIeXJXC5hXU-FHy77qg8IMpyBPP/view?usp=drivesdk">View Gazette</a>
+      </div>
+      <div class="card major">
+        <h2><span class="icon">✅</span>BISE Bahawalpur Gazette</h2>
+        <a href="https://drive.google.com/file/d/19zamP0nmIEZ0Zl4fqWeJKtX_a2qXKuFh/view?usp=drivesdk">View Gazette</a>
+      </div>
+      <div class="card minor">
+        <h2><span class="icon">🔗</span>BISE Sargodha Gazette</h2>
+        <a href="https://drive.google.com/file/d/1QOrVr4m30YajU61CdjPP1y2JD9G9lmc3/view?usp=drivesdk">View Gazette</a>
+      </div>
+      <div class="card major">
+        <h2><span class="icon">✅</span>BISE Faisalabad Gazette</h2>
+        <a href="https://drive.google.com/file/d/11icEtZPUO89IfPB_NEjr-OAp-IYb47q4/view?usp=drivesdk">View Gazette</a>
+      </div>
+      <div class="card major">
+        <h2><span class="icon">✅</span>BISE Rawalpindi Gazette</h2>
+        <a href="https://drive.google.com/file/d/1wexLHtIKi0Wnivirls28mVvzdnBc4gpL/view?usp=drivesdk">View Gazette</a>
+      </div>
+      <div class="card minor">
+        <h2><span class="icon">🔗</span>BISE D.G. Khan Gazette</h2>
+        <a href="https://drive.google.com/file/d/1bQwyHbxuEPtNexqVgX851CHojXdSwojA/view?usp=drivesdk">View Gazette</a>
+      </div>
+      <div class="card major">
+        <h2><span class="icon">✅</span>BISE Bahawalpur (2nd Link)</h2>
+        <a href="https://drive.google.com/file/d/1w2Zq1IT9BqoY2jeU7fLUNtXEn-g63JHF/view?usp=sharing">View Gazette</a>
+      </div>
+    </div>
+  </main>
+
+  <a href="https://whatsapp.com/channel/0029Vb9shWp4o7qPSrCXS603" class="channel-btn">📢 Join Channel</a>
+  
+  <div class="toast-container" id="toast-container"></div>
+
+  <footer>
+    Developed by <b>@CYBEREXPERTPK</b>
+  </footer>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const searchInput = document.getElementById("search");
+      const cardsContainer = document.getElementById("cards");
+      const resultCount = document.getElementById("result-count");
+      const allCards = cardsContainer.querySelectorAll('.card');
+
+      // Function to update the visible card count
+      const updateCount = () => {
+        const visibleCards = cardsContainer.querySelectorAll('.card[style*="block"]');
+        resultCount.textContent = `Showing ${visibleCards.length} of ${allCards.length} results`;
+      };
+
+      // Search filter with live count update
+      searchInput.addEventListener("input", function() {
+        const filter = this.value.toLowerCase();
+        let visibleCount = 0;
+        
+        allCards.forEach(card => {
+          const text = card.textContent.toLowerCase();
+          const isVisible = text.includes(filter);
+          card.style.display = isVisible ? 'flex' : 'none';
+          if (isVisible) {
+            visibleCount++;
+          }
+        });
+        resultCount.textContent = `Showing ${visibleCount} of ${allCards.length} results`;
+      });
+
+      // Initial count display
+      updateCount();
+
+      // Toast notification function
+      const showToast = (message) => {
+        const toastContainer = document.getElementById("toast-container");
+        const toast = document.createElement("div");
+        toast.className = "toast";
+        toast.textContent = message;
+        toastContainer.appendChild(toast);
+        
+        // Remove toast after animation
+        toast.addEventListener('animationend', (event) => {
+            if (event.animationName === 'toast-out') {
+                toast.remove();
+            }
+        });
+      };
+
+      // Show a welcome toast on page load
+      showToast("Welcome! Find your 9th Class result gazette.");
+    });
+  </script>
+</body>
+    </html>
+      
