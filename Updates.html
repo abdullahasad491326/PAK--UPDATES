@@ -19,20 +19,26 @@
 
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
 
-body{
+html,body{
+  height:100%;
   background: linear-gradient(135deg,#0b0f1e,#1a1f2b);
-  min-height:100vh;
-  overflow:hidden;
   color:var(--text-light);
   display:flex;
   flex-direction:column;
 }
 
+body{
+  overflow:hidden;
+}
+
+/* Header */
 header{
-  position:sticky;top:0;z-index:100;
+  position:sticky;
+  top:0;
+  z-index:100;
   background: rgba(15,18,28,0.7);
   backdrop-filter: blur(12px);
-  padding:15px 20px;
+  padding:10px 20px;
   display:flex;
   justify-content:space-between;
   align-items:center;
@@ -80,17 +86,18 @@ header p.sub{font-size:0.65em;color:var(--text-muted);margin-top:3px;}
 
 /* Content */
 .content{
-  flex-grow:1;
+  flex:1;                 /* fill remaining space below header */
   display:flex;
   flex-direction:column;
   max-width:900px;
-  margin:20px auto;
+  margin:10px auto;
   background:var(--card-bg);
   border-radius:20px;
   backdrop-filter:blur(20px);
   box-shadow:0 8px 30px rgba(0,0,0,0.8);
   padding:15px;
   gap:15px;
+  overflow:hidden;
 }
 
 /* Search */
@@ -160,10 +167,10 @@ header p.sub{font-size:0.65em;color:var(--text-muted);margin-top:3px;}
 }
 @keyframes rotateCircle{0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}
 
-/* Updates feed - FULL HEIGHT */
+/* Updates feed - FULL SCREEN */
 .updates{
-  flex-grow:1;           /* take remaining content space */
-  overflow-y:auto;       /* scroll if too many updates */
+  flex:1;              /* take all remaining content space */
+  overflow-y:auto;
   padding-right:5px;
   scrollbar-width: thin;
   scrollbar-color: var(--accent2) transparent;
@@ -180,13 +187,9 @@ header p.sub{font-size:0.65em;color:var(--text-muted);margin-top:3px;}
   cursor:pointer;
   transition: all 0.3s ease;
   position:relative;
-  opacity:0;
-  transform:translateX(-15px);
-  animation:fadeInUpdate 0.5s forwards;
 }
 .update::before{content:"⚡";position:absolute;left:6px;top:50%;transform:translateY(-50%);}
-.update:hover{border-left-color: var(--accent2);transform:translateY(-2px) translateX(0) scale(1.01);box-shadow:0 6px 15px rgba(0,0,0,0.3);}
-@keyframes fadeInUpdate{0%{opacity:0;transform:translateX(-15px);}100%{opacity:1;transform:translateX(0);}}
+.update:hover{border-left-color: var(--accent2);transform:translateY(-2px) scale(1.01);box-shadow:0 6px 15px rgba(0,0,0,0.3);}
 
 /* Buttons */
 .load-btn{
