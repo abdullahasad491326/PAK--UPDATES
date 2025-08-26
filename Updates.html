@@ -1,495 +1,359 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Punjab Schemes & Updates Portal</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg-color: #1a1a2e;
-      --card-bg: rgba(255, 255, 255, 0.05);
-      --accent-color: #4e79ff;
-      --accent-secondary: #00e5e5;
-      --border-color: rgba(255, 255, 255, 0.1);
-      --text-light: #e0e0f0;
-      --text-muted: #a0a0c0;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Punjab Govt. Portal - Compact</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0f1e;
+  --card-bg: rgba(255,255,255,0.03);
+  --accent1:#ff4d6d;
+  --accent2:#6d4dff;
+  --accent3:#00e5e5;
+  --text-light:#f0f0f0;
+  --text-muted:#aaaaaa;
+  --border:rgba(255,255,255,0.1);
+}
 
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background-color: var(--bg-color);
-      color: var(--text-light);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
 
-    /* Mobile-first styles (default) */
-    header {
-      padding: 15px 15px;
-      text-align: center;
-      background: rgba(0, 0, 0, 0.4);
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid var(--border-color);
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-    }
-    
-    .header-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
+body{
+  background: linear-gradient(135deg,#0b0f1e,#1a1f2b);
+  min-height:100vh;
+  overflow-x:hidden;
+  color:var(--text-light);
+  position:relative;
+}
 
-    .title-line {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 5px;
-    }
+canvas#bgParticles{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;}
 
-    h1 {
-      font-family: 'Inter', sans-serif;
-      font-size: 1.5em;
-      font-weight: 700;
-      color: var(--text-light);
-      text-shadow: 0 0 5px var(--accent-color);
-      margin: 0;
-      letter-spacing: -1px;
-    }
+/* Header */
+header{
+  position:sticky;top:0;z-index:100;
+  background: rgba(15,18,28,0.7);
+  backdrop-filter: blur(12px);
+  padding:15px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  box-shadow:0 4px 15px rgba(0,0,0,0.7);
+}
 
-    p.sub {
-      font-size: 0.7em;
-      color: var(--text-muted);
-      margin: 5px 0 0;
-      font-weight: 400;
-    }
-    
-    .header-info {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        margin-top: 5px;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-    
-    .digital-clock, .network-status {
-        font-family: 'Inter', sans-serif;
-        font-size: 0.9em;
-        font-weight: 600;
-        color: var(--accent-secondary);
-        text-shadow: 0 0 5px var(--accent-secondary);
-    }
+header h1{
+  font-family:'Orbitron',sans-serif;
+  font-size:1.4em;
+  background: linear-gradient(45deg,var(--accent1),var(--accent2),var(--accent3));
+  background-size:300% 300%;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation: gradientText 5s ease infinite;
+}
 
-    .network-status span {
-        display: inline-block;
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background-color: var(--accent-secondary);
-        box-shadow: 0 0 5px var(--accent-secondary);
-        animation: pulse 1.5s infinite ease-in-out;
-        margin-right: 5px;
-    }
+@keyframes gradientText{
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
+}
 
-    @keyframes pulse {
-        0% { transform: scale(0.8); opacity: 0.7; }
-        50% { transform: scale(1); opacity: 1; }
-        100% { transform: scale(0.8); opacity: 0.7; }
-    }
+header p.sub{font-size:0.65em;color:var(--text-muted);margin-top:3px;}
 
-    .content {
-      max-width: 950px;
-      margin: 25px 15px;
-      padding: 20px;
-      background: var(--card-bg);
-      border-radius: 20px;
-      backdrop-filter: blur(20px);
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-      flex-grow: 1;
-      border: 1px solid var(--border-color);
-    }
+/* Header info */
+.header-info{display:flex;gap:15px;align-items:center;flex-wrap:wrap;}
+.digital-clock,.network-status{
+  font-weight:700;
+  font-family:'Orbitron',sans-serif;
+  font-size:0.75em;
+  color:var(--accent3);
+  text-shadow:0 0 8px var(--accent3);
+}
 
-    .advanced-features {
-      margin-bottom: 30px;
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 15px;
-      padding: 20px;
-      background: rgba(0, 0, 0, 0.2);
-      border-radius: 15px;
-      border: 1px solid var(--border-color);
-    }
-    
-    .search-container {
-        grid-column: 1 / 2;
-        position: relative;
-    }
+.network-status span{
+  display:inline-block;
+  width:10px;height:10px;
+  border-radius:50%;
+  background:var(--accent1);
+  animation:pulse 1.2s infinite ease-in-out;
+  margin-right:5px;
+}
 
-    .search-container input {
-        width: 100%;
-        padding: 12px 20px;
-        font-size: 1em;
-        font-family: 'Inter', sans-serif;
-        color: var(--text-light);
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid var(--border-color);
-        border-radius: 10px;
-        transition: all 0.3s ease;
-        box-sizing: border-box;
-    }
+@keyframes pulse{0%,100%{transform:scale(0.8);opacity:0.7;}50%{transform:scale(1);opacity:1;}}
 
-    .search-container input::placeholder {
-        color: var(--text-muted);
-    }
-    
-    .search-container input:focus {
-        outline: none;
-        border-color: var(--accent-color);
-        box-shadow: 0 0 10px rgba(78, 121, 255, 0.5);
-    }
+/* Content */
+.content{
+  flex-grow:1;
+  max-width:900px;
+  margin:30px auto;
+  padding:20px;
+  background:var(--card-bg);
+  border-radius:20px;
+  backdrop-filter:blur(20px);
+  box-shadow:0 8px 30px rgba(0,0,0,0.8);
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+  animation:fadeInUp 0.8s ease forwards;
+}
 
-    .feature-widget {
-      background: rgba(255, 255, 255, 0.05);
-      /* Even smaller padding */
-      padding: 4px;
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      transition: all 0.3s ease;
-    }
+@keyframes fadeInUp{0%{opacity:0;transform:translateY(15px);}100%{opacity:1;transform:translateY(0);}}
 
-    .feature-widget:hover {
-      box-shadow: 0 0 15px rgba(78, 121, 255, 0.3);
-      transform: translateY(-3px);
-    }
-    
-    .feature-widget p {
-      margin: 0;
-      /* Even smaller font size */
-      font-size: 0.5em;
-      color: var(--text-muted);
-    }
+/* Search */
+.search-container input{
+  width:100%;
+  padding:10px 15px;
+  border-radius:20px;
+  border:1px solid var(--border);
+  background: rgba(255,255,255,0.05);
+  color: var(--text-light);
+  font-size:0.85em;
+  transition: all 0.3s ease;
+}
 
-    .feature-widget h3 {
-        font-family: 'Inter', sans-serif;
-        margin: 2px 0 0;
-        /* Even smaller font size */
-        font-size: 0.8em;
-        font-weight: 700;
-        color: var(--text-light);
-    }
-    
-    .progress-bar-container {
-        /* Even smaller size */
-        width: 25px;
-        height: 25px;
-        border-radius: 50%;
-        background: conic-gradient(var(--accent-color) 75%, transparent 75%);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-top: 2px;
-    }
+.search-container input:focus{
+  outline:none;
+  border-color: var(--accent1);
+  box-shadow:0 0 15px var(--accent1);
+}
 
-    .progress-bar-inner {
-        /* Even smaller size */
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        background-color: var(--bg-color);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 600;
-        color: var(--text-light);
-        /* Even smaller font size */
-        font-size: 0.4em;
-    }
+/* Features Grid */
+.features-grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fit,minmax(140px,1fr));
+  gap:15px;
+}
 
-    .filter-buttons {
-        grid-column: 1 / 2;
-        display: flex;
-        gap: 10px;
-        justify-content: center;
-        flex-wrap: wrap;
-        margin-top: 10px;
-    }
+.feature-card{
+  background: var(--card-bg);
+  padding:18px 12px;
+  border-radius:18px;
+  text-align:center;
+  border:1px solid var(--border);
+  transition: all 0.4s ease;
+  position:relative;
+  overflow:hidden;
+  cursor:pointer;
+  transform-style: preserve-3d;
+}
 
-    .filter-buttons button {
-        background: var(--card-bg);
-        border: 1px solid var(--border-color);
-        color: var(--text-light);
-        font-family: 'Inter', sans-serif;
-        padding: 8px 15px;
-        border-radius: 20px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-    }
+.feature-card::before{
+  content:"";
+  position:absolute;
+  top:-50%;left:-50%;
+  width:200%;height:200%;
+  background: linear-gradient(120deg,var(--accent1),var(--accent2),var(--accent3));
+  opacity:0.1;
+  transform: rotate(45deg);
+  transition: all 0.4s ease;
+}
 
-    .filter-buttons button:hover {
-        background: var(--accent-color);
-        color: white;
-        border-color: var(--accent-color);
-        box-shadow: 0 0 10px rgba(78, 121, 255, 0.4);
-    }
+.feature-card:hover::before{opacity:0.25;transform:rotate(45deg) translate(0,0);}
+.feature-card:hover{transform: translateY(-5px) rotateX(3deg) rotateY(3deg);box-shadow:0 12px 25px rgba(0,0,0,0.5);}
 
-    .update {
-      padding: 18px;
-      margin: 15px 0;
-      background: rgba(255, 255, 255, 0.05);
-      border-left: 4px solid var(--accent-secondary);
-      border-radius: 15px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-      font-size: 0.95em;
-      line-height: 1.7;
-      text-align: right;
-      direction: rtl;
-      unicode-bidi: isolate;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      cursor: pointer;
-    }
+.feature-card h3{margin:10px 0 0;font-size:1.1em;font-weight:700;background: linear-gradient(45deg,var(--accent1),var(--accent2),var(--accent3));-webkit-background-clip: text;-webkit-text-fill-color: transparent;background-size:300% 300%;animation: gradientText 6s ease infinite;}
+.feature-card p{font-size:0.75em;color:var(--text-muted);}
 
-    .update:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-      background: rgba(255, 255, 255, 0.08);
-    }
+/* Circular progress */
+.progress-circle{
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  background: conic-gradient(var(--accent2) 70%, rgba(255,255,255,0.05) 0);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin:10px auto 0;
+  font-weight:700;
+  color: var(--text-light);
+  font-family:'Orbitron',sans-serif;
+  text-shadow:0 0 8px var(--accent3);
+  animation:rotateCircle 3s linear infinite;
+}
+@keyframes rotateCircle{0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}
 
-    .load-more-btn {
-        display: block;
-        width: 180px;
-        margin: 30px auto 0;
-        background: var(--accent-color);
-        border: 2px solid var(--accent-color);
-        color: white;
-        font-family: 'Inter', sans-serif;
-        font-weight: 600;
-        padding: 15px 25px;
-        border-radius: 30px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-    }
-    
-    .load-more-btn:hover {
-        background: var(--accent-secondary);
-        border-color: var(--accent-secondary);
-        box-shadow: 0 0 20px rgba(0, 229, 229, 0.5);
-    }
+/* Updates feed */
+.updates{
+  max-height:300px;
+  overflow-y:auto;
+  padding-right:5px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent2) transparent;
+}
+.updates::-webkit-scrollbar{width:8px;}
+.updates::-webkit-scrollbar-thumb{background: var(--accent2);border-radius:4px;}
 
-    .side-buttons {
-      position: fixed;
-      right: 15px;
-      left: 15px;
-      bottom: 15px;
-      z-index: 1000;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      gap: 10px;
-    }
+.update{
+  background: rgba(255,255,255,0.05);
+  padding:10px 15px;
+  margin-bottom:10px;
+  border-radius:15px;
+  border-left:4px solid var(--accent1);
+  cursor:pointer;
+  transition: all 0.3s ease;
+  position:relative;
+  opacity:0;
+  transform:translateX(-20px);
+  animation:fadeInUpdate 0.6s forwards;
+}
+.update::before{content:"⚡";position:absolute;left:8px;top:50%;transform:translateY(-50%);}
+.update:hover{border-left-color: var(--accent2);transform:translateY(-2px) translateX(0) scale(1.01);box-shadow:0 8px 20px rgba(0,0,0,0.4);}
+@keyframes fadeInUpdate{0%{opacity:0;transform:translateX(-20px);}100%{opacity:1;transform:translateX(0);}}
 
-    .side-buttons a {
-      background: var(--accent-color);
-      color: white;
-      text-decoration: none;
-      padding: 15px;
-      border-radius: 40px;
-      font-weight: 700;
-      font-size: 0.9em;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-      transition: all 0.3s ease;
-      text-align: center;
-      flex: 1;
-    }
+/* Buttons */
+.load-btn{
+  display:block;
+  margin:20px auto 0;
+  padding:12px 25px;
+  border:none;
+  border-radius:25px;
+  background: linear-gradient(45deg,var(--accent1),var(--accent2),var(--accent3));
+  color:white;
+  font-weight:700;
+  cursor:pointer;
+  font-size:0.85em;
+  letter-spacing:1px;
+  transition: all 0.3s ease;
+  box-shadow:0 6px 20px rgba(0,0,0,0.4);
+}
+.load-btn:hover{
+  background: linear-gradient(45deg,var(--accent3),var(--accent1),var(--accent2));
+  transform: translateY(-3px);
+  box-shadow:0 10px 25px var(--accent3);
+}
 
-    .side-buttons a:hover {
-      background: var(--accent-secondary);
-      color: black;
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-    }
+/* Side button */
+.side-buttons{position:fixed;bottom:20px;right:20px;display:flex;flex-direction:column;gap:15px;z-index:1000;}
+.side-buttons a{
+  background: linear-gradient(45deg,var(--accent1),var(--accent2));
+  color:white;
+  padding:10px 18px;
+  border-radius:30px;
+  font-weight:700;
+  font-size:0.8em;
+  text-decoration:none;
+  text-align:center;
+  box-shadow:0 5px 15px rgba(0,0,0,0.3);
+  transition: all 0.3s ease;
+}
+.side-buttons a:hover{
+  background: linear-gradient(45deg,var(--accent3),var(--accent1),var(--accent2));
+  transform: translateY(-2px);
+  box-shadow:0 8px 20px var(--accent3);
+}
 
-    /* Desktop styles */
-    @media (min-width: 769px) {
-        header {
-            padding: 15px 20px;
-        }
-        .title-line {
-            flex-direction: row;
-        }
-        h1 {
-            font-size: 1.8em;
-        }
-        p.sub {
-            font-size: 0.8em;
-            margin: 0 0 0 10px;
-        }
-        .digital-clock, .network-status {
-            font-size: 1em;
-        }
-        .content {
-            margin: 50px auto;
-            padding: 40px;
-        }
-        .advanced-features {
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-        }
-        .search-container {
-            grid-column: 1 / 4;
-        }
-        .filter-buttons {
-            grid-column: 1 / 4;
-        }
-        .feature-widget {
-            /* Even smaller padding for desktop */
-            padding: 6px;
-        }
-        .feature-widget h3 {
-            /* Even smaller font size for desktop */
-            font-size: 1em;
-        }
-        .feature-widget p {
-            font-size: 0.6em;
-        }
-        .progress-bar-container {
-            /* Even smaller size for desktop */
-            width: 40px;
-            height: 40px;
-        }
-        .progress-bar-inner {
-            /* Even smaller size for desktop */
-            width: 32px;
-            height: 32px;
-            font-size: 0.5em;
-        }
-        .update {
-            padding: 25px;
-            margin: 20px 0;
-            font-size: 1em;
-        }
-        .side-buttons {
-            flex-direction: column;
-            right: 30px;
-            left: unset;
-            bottom: 30px;
-            gap: 18px;
-        }
-        .side-buttons a {
-            flex: unset;
-            font-size: 1.1em;
-            padding: 18px 22px;
-        }
-    }
-  </style>
+/* Responsive */
+@media(max-width:768px){
+  header h1{font-size:1.2em;}
+  .features-grid{grid-template-columns: repeat(auto-fit,minmax(120px,1fr));}
+  .progress-circle{width:50px;height:50px;}
+}
+</style>
 </head>
 <body>
 
-  <div class="side-buttons">
-    <a href="https://whatsapp.com/channel/0029Vb9shWp4o7qPSrCXS603" target="_blank">✅ Channel</a>
-    <a href="https://wa.me/message/BA2N27WR6CF7F1" target="_blank">📩 Admin</a>
+<canvas id="bgParticles"></canvas>
+
+<div class="side-buttons">
+  <a href="https://whatsapp.com/channel/0029Vb9shWp4o7qPSrCXS603" target="_blank">✅ Channel</a>
+</div>
+
+<header>
+  <div>
+    <h1>PUNJAB GOVT PORTAL</h1>
+    <p class="sub">سرکاری اعلانات۔ تیز، شفاف، مستند خبریں</p>
+  </div>
+  <div class="header-info">
+    <div id="pakistan-clock" class="digital-clock"></div>
+    <div class="network-status"><span></span>SYSTEM ONLINE</div>
+  </div>
+</header>
+
+<div class="content">
+  <div class="search-container">
+    <input type="text" placeholder="Search for schemes, updates...">
   </div>
 
-  <header>
-    <div class="header-container">
-      <div class="title-line">
-        <h1>PUNJAB GOVT SCHEMES & UPDATES</h1>
-        <p class="sub">سرکاری اعلانات۔ تیز، شفاف، مستند خبریں</p>
-      </div>
-      <div class="header-info">
-        <div id="pakistan-clock" class="digital-clock"></div>
-        <div class="network-status"><span></span>SYSTEM ONLINE</div>
-      </div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <p>Total Beneficiaries</p>
+      <h3>2.4M</h3>
     </div>
-  </header>
-
-  <div class="content">
-    <div class="advanced-features">
-        <div class="search-container">
-            <input type="text" placeholder="Search for schemes, updates...">
-        </div>
-        <div class="feature-widget">
-            <p>Total Beneficiaries (Live)</p>
-            <h3>2.4M</h3>
-        </div>
-        <div class="feature-widget">
-            <p>Active Schemes</p>
-            <h3>157</h3>
-        </div>
-        <div class="feature-widget">
-            <p>Completion Rate</p>
-            <div class="progress-bar-container">
-                <div class="progress-bar-inner">75%</div>
-            </div>
-        </div>
-        <div class="filter-buttons">
-            <button data-filter="all">All</button>
-            <button data-filter="agriculture">Agriculture</button>
-            <button data-filter="education">Education</button>
-            <button data-filter="health">Health</button>
-        </div>
+    <div class="feature-card">
+      <p>Active Schemes</p>
+      <h3>157</h3>
     </div>
-
-    <div id="updates">
-      Loading updates...
-      <div class="update-placeholder" style="display:none;">
-          <div class="update">🔹 Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div>
-          <div class="update">🔹 Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
-          <div class="update">🔹 Ut enim ad minim veniam, quis nostrud exercitation ullamco.</div>
-          <div class="update">🔹 Duis aute irure dolor in reprehenderit in voluptate velit esse.</div>
-      </div>
+    <div class="feature-card">
+      <p>Completion Rate</p>
+      <div class="progress-circle">75%</div>
     </div>
-
-    <button id="load-more-btn" class="load-more-btn">Load More Updates</button>
-
   </div>
 
-  <script>
-    fetch('updates.json')
-      .then(res => res.json())
-      .then(data => {
-        const updates = data.updates.map(u => `<div class="update">🔹 ${u}</div>`).join('');
-        document.getElementById('updates').innerHTML = updates;
-      })
-      .catch(() => {
-        document.getElementById('updates').innerHTML = "<div class='update'>❌ Could not load updates.</div>";
-      });
+  <div class="updates" id="updates">
+    Loading updates...
+  </div>
 
-    function updateClock() {
-      const now = new Date();
-      const options = {
-        timeZone: 'Asia/Karachi',
-        hour12: true,
-        hour: 'numeric',
-        minute: 'numeric',
-        second: 'numeric'
-      };
-      const formattedTime = now.toLocaleTimeString('en-US', options);
-      document.getElementById('pakistan-clock').textContent = formattedTime + ' PKT';
-    }
+  <button id="load-btn" class="load-btn">Load More Updates</button>
+</div>
 
-    setInterval(updateClock, 1000);
-    updateClock();
-    
-    document.getElementById('load-more-btn').addEventListener('click', function() {
-        const placeholder = document.querySelector('.update-placeholder');
-        const updatesContainer = document.getElementById('updates');
-        if (placeholder.style.display !== 'none') {
-            updatesContainer.innerHTML += placeholder.innerHTML;
-            placeholder.style.display = 'none';
-        }
-        this.style.display = 'none';
-    });
-  </script>
+<script>
+// Digital Clock
+function updateClock(){
+  const now=new Date();
+  const options={timeZone:'Asia/Karachi',hour12:true,hour:'numeric',minute:'numeric',second:'numeric'};
+  document.getElementById('pakistan-clock').textContent=now.toLocaleTimeString('en-US',options)+' PKT';
+}
+setInterval(updateClock,1000);
+updateClock();
+
+// Load updates
+fetch('updates.json')
+.then(res=>res.json())
+.then(data=>{
+  const updatesHTML=data.updates.map(u=>`<div class="update">${u}</div>`).join('');
+  document.getElementById('updates').innerHTML=updatesHTML;
+})
+.catch(()=>{document.getElementById('updates').innerHTML="<div class='update'>❌ Could not load updates.</div>";});
+
+document.getElementById('load-btn').addEventListener('click',function(){
+  const updatesDiv=document.getElementById('updates');
+  updatesDiv.innerHTML+=`
+    <div class="update">🔹 New update 1</div>
+    <div class="update">🔹 New update 2</div>
+    <div class="update">🔹 New update 3</div>
+    <div class="update">🔹 New update 4</div>
+  `;
+  this.style.display='none';
+});
+
+// Background Particles
+const canvas=document.getElementById('bgParticles');
+const ctx=canvas.getContext('2d');
+let w=canvas.width=window.innerWidth;
+let h=canvas.height=window.innerHeight;
+window.addEventListener('resize',()=>{w=canvas.width=window.innerWidth;h=canvas.height=window.innerHeight;});
+let particles=[];
+for(let i=0;i<80;i++){particles.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*2+0.5,d:Math.random()*2});}
+function draw(){
+  ctx.clearRect(0,0,w,h);
+  for(let p of particles){
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2,false);
+    ctx.fillStyle='rgba(255,255,255,0.08)';
+    ctx.fill();
+  }
+  updateParticles();
+}
+function updateParticles(){
+  for(let p of particles){
+    p.y+=Math.cos(p.d)+0.3;
+    p.x+=Math.sin(p.d)*0.3;
+    if(p.y>h){p.y=0;p.x=Math.random()*w;}
+    if(p.x>w){p.x=0;p.y=Math.random()*h;}
+  }
+}
+setInterval(draw,33);
+</script>
+
 </body>
 </html>
