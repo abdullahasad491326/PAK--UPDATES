@@ -3,391 +3,230 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title data-lang-en="PAK UPDATES" data-lang-ur="پاک اپڈیٹس">PAK UPDATES</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Jameel+Noori+Nastaleeq&display=swap" rel="stylesheet">
+  <title data-lang-en="PUNJAB GOVT. PORTAL" data-lang-ur="پنجاب گورنمنٹ پورٹل">PUNJAB GOVT. PORTAL</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Jameel+Noori+Nastaleeq&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'dark-bg': '#0a0a14',
+            'card-bg': 'rgba(25, 25, 40, 0.6)',
+            'primary-neon': '#00dfff',
+            'secondary-neon': '#ff00ff',
+            'text-light': '#e0e0e0',
+            'text-muted': '#9ca3af',
+          },
+        },
+      },
+    }
+  </script>
   <style>
-    /* VARIABLES */
-    :root {
-      --bg-dark: #0F0F1A;
-      --card-bg: #1B1B2A;
-      --border-color: #3C3C5A;
-      --text-color-light: #F0F0F8;
-      --text-color-medium: #A0A0B0;
-      --primary-accent: #6C63FF; /* Violet-Blue */
-      --secondary-accent: #4B45A8; /* Darker Violet */
-    }
-
-    /* BASE STYLES */
     body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background-color: var(--bg-dark);
-      color: var(--text-color-light);
-      text-align: center;
-      line-height: 1.6;
+      font-family: 'Poppins', sans-serif;
       overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      transition: font-family 0.4s ease, background-color 0.4s ease;
+      background-color: #0a0a14;
+      color: #e0e0e0;
+      perspective: 1px;
+      transform-style: preserve-3d;
+      min-height: 100vh;
     }
 
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 30px 20px;
-    }
-
-    /* URDU STYLES */
     body.lang-ur {
       font-family: 'Jameel Noori Nastaleeq', serif;
       direction: rtl;
     }
 
-    /* TYPOGRAPHY */
-    h1, h2, h3 {
-      font-weight: 700;
-      line-height: 1.2;
-      margin-top: 0;
-    }
-    .main-title-card {
-      background-color: var(--card-bg);
-      border: 1px solid var(--border-color);
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-      padding: 40px 30px;
-      max-width: 700px;
-      margin: 0 auto;
-      text-align: center;
-      border-radius: 12px 12px 0 0;
-    }
-    .main-title {
-      font-size: clamp(2.2rem, 8vw, 3.5rem);
-      color: var(--primary-accent);
-      margin: 0;
-      letter-spacing: 1.5px;
-    }
-    h2.section-title {
-      font-size: clamp(1.5rem, 5vw, 2.2rem);
-      color: var(--text-color-light);
-      margin-bottom: 20px;
-    }
-    h3 {
-      font-size: clamp(1rem, 3vw, 1.2rem);
-      color: var(--text-color-light);
-      margin-bottom: 5px;
-    }
-    p {
-      font-size: clamp(0.85rem, 2.5vw, 0.95rem);
-      color: var(--text-color-medium);
-      line-height: 1.5;
-    }
-
-    /* CONTROLS (BOTTOM-RIGHT) */
-    .controls {
+    /* Parallax Background */
+    .parallax-bg {
       position: fixed;
-      bottom: 20px;
-      right: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 15px;
-      z-index: 100;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      transform-origin: center center;
+      transform: translateZ(-1px) scale(2);
+      background-image: radial-gradient(circle, rgba(0, 223, 255, 0.05) 1px, transparent 1px),
+                        radial-gradient(circle, rgba(255, 0, 255, 0.05) 1px, transparent 1px);
+      background-size: 30px 30px;
+      animation: neon-pulse 10s infinite alternate;
+      z-index: -10;
+    }
+    @keyframes neon-pulse {
+      from { background-position: 0 0; }
+      to { background-position: 100% 100%; }
     }
 
-    .language-buttons {
-      display: flex;
-      background-color: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 5px;
+    /* Text & UI Effects */
+    .text-neon-glow {
+      text-shadow: 0 0 8px #00dfff, 0 0 16px #00dfff, 0 0 24px #ff00ff, 0 0 32px #ff00ff;
+      transition: text-shadow 0.3s ease;
+    }
+
+    .btn-3d-neon {
+      position: relative;
+      background: linear-gradient(45deg, #00dfff, #ff00ff);
+      padding: 0.75rem 2rem;
+      border-radius: 9999px;
       overflow: hidden;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    }
-    .language-buttons button {
-      background-color: transparent;
-      color: var(--text-color-medium);
-      border: none;
-      padding: 8px 16px;
-      cursor: pointer;
-      font-weight: 500;
+      z-index: 1;
       transition: all 0.3s ease;
-      font-size: 0.8rem;
+      box-shadow: 0 0 8px rgba(0, 223, 255, 0.5);
     }
-    .language-buttons button:hover {
-      background: rgba(255, 255, 255, 0.05);
-      color: var(--primary-accent);
+    .btn-3d-neon::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, #ff00ff, #00dfff);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: -1;
     }
-    .language-buttons button.active {
-      background: var(--primary-accent);
-      color: var(--text-color-light);
+    .btn-3d-neon:hover::before {
+      opacity: 1;
     }
-    .join-channel-btn {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 16px;
-      background: var(--primary-accent);
-      color: var(--text-color-light);
-      border: 1px solid var(--primary-accent);
-      border-radius: 5px;
-      font-weight: 600;
-      text-decoration: none;
-      font-size: 0.8rem;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 10px rgba(108, 99, 255, 0.4);
-    }
-    .join-channel-btn:hover {
-      background: var(--secondary-accent);
-      box-shadow: 0 6px 15px rgba(108, 99, 255, 0.6);
-    }
-
-    /* SECTIONS & CARDS */
-    .features-section {
-      padding: 0 0 60px 0;
-      margin-top: -30px;
-    }
-    .section-separator {
-      max-width: 700px;
-      margin: 40px auto;
-      border-top: 1px solid var(--border-color);
-    }
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjusted for smaller cards */
-      gap: 0;
-      border-radius: 0 0 12px 12px;
-      overflow: hidden;
-      max-width: 700px;
-      margin: 0 auto;
-    }
-    .feature-card, .coming-soon-card {
-      background-color: var(--card-bg);
-      padding: 20px; /* Reduced padding */
-      text-decoration: none;
-      border: 1px solid var(--border-color);
-      transition: all 0.3s ease;
-      text-align: left;
-    }
-    .lang-ur .feature-card, .lang-ur .coming-soon-card { text-align: right; }
-
-    .feature-card:hover {
-      background-color: #2D2D40;
-      border-color: var(--primary-accent);
-      transform: translateY(-5px);
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-    }
-
-    .feature-card .icon, .coming-soon-card .icon {
-        font-size: 1.2rem; /* Reduced icon size */
-        color: var(--primary-accent);
-        margin-bottom: 8px; /* Reduced margin */
-        transition: transform 0.3s ease;
-    }
-    .feature-card:hover .icon {
-        transform: scale(1.1);
-    }
-    .feature-card h3 {
-      font-size: clamp(0.9rem, 2.5vw, 1.1rem); /* Reduced heading size */
-    }
-    .feature-card p {
-      font-size: clamp(0.75rem, 2vw, 0.85rem); /* Reduced paragraph size */
-      line-height: 1.4;
-    }
-
-    /* COMING SOON SECTION */
-    .coming-soon-section {
-        margin-top: 60px;
-    }
-    .coming-soon-card {
-        background-color: var(--card-bg);
-        border: 1px dashed var(--border-color);
-        border-radius: 12px;
-        text-align: center;
-        transition: all 0.3s ease;
-        padding: 20px; /* Reduced padding */
-    }
-    .coming-soon-card:hover {
-        border-color: var(--primary-accent);
-        transform: translateY(-5px);
-    }
-    .coming-soon-card h3 {
-        color: var(--secondary-accent);
-    }
-    .coming-soon-card p {
-        font-style: italic;
+    .btn-3d-neon:hover {
+      box-shadow: 0 0 12px #00dfff, 0 0 20px #ff00ff;
+      transform: scale(1.03);
     }
     
-    /* BUTTONS */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 7px 14px; /* Reduced button padding */
-      margin-top: 10px; /* Reduced button margin */
-      border-radius: 5px;
-      font-weight: 600;
-      text-decoration: none;
-      font-size: 0.8rem; /* Reduced button font size */
-      transition: all 0.3s ease;
-      border: 1px solid var(--primary-accent);
-      background: var(--primary-accent);
-      color: var(--text-color-light);
+    .card-glitch-effect {
+      position: relative;
+      border-radius: 0.75rem;
+      backdrop-filter: blur(8px);
+      background-color: rgba(25, 25, 40, 0.6);
+      border: 1px solid rgba(0, 223, 255, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      overflow: hidden;
     }
-    .btn:hover {
-      background: transparent;
-      color: var(--primary-accent);
-      box-shadow: inset 0 0 5px var(--primary-accent);
+    .card-glitch-effect::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 223, 255, 0.05);
+      transition: opacity 0.3s ease;
+      opacity: 0;
     }
-
-    /* FOOTER */
-    .footer {
-      padding: 25px;
-      background-color: var(--card-bg);
-      font-size: 0.8rem;
-      color: var(--text-color-medium);
-      border-top: 1px solid var(--border-color);
+    .card-glitch-effect:hover::before {
+      opacity: 1;
     }
-    .footer a {
-      color: var(--primary-accent);
-      text-decoration: none;
-      font-weight: 500;
-    }
-    .footer a:hover {
-      color: var(--text-color-light);
+    .card-glitch-effect:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 6px 20px rgba(0, 223, 255, 0.3), 0 0 16px rgba(255, 0, 255, 0.2);
     }
   </style>
 </head>
-<body class="lang-en">
-  <div class="controls">
-    <div class="language-buttons">
-      <button id="lang-en" class="active" data-lang-en="English" data-lang-ur="انگریزی">English</button>
-      <button id="lang-ur" data-lang-en="Urdu" data-lang-ur="اردو">اردو</button>
-    </div>
-    <a href="https://whatsapp.com/channel/0029Vb9shWp4o7qPSrCXS603" target="_blank" class="join-channel-btn">
-      <span class="icon">💬</span> <span data-lang-en="Join Channel" data-lang-ur="چینل جوائن کریں">Join Channel</span>
-    </a>
-  </div>
 
-  <main class="container">
-    <header>
-      <div class="main-title-card">
-        <h1 class="main-title" data-lang-en="PAK UPDATES" data-lang-ur="پاک اپڈیٹس">PAK UPDATES</h1>
+<body class="lang-en">
+
+  <div class="parallax-bg"></div>
+
+  <div class="relative z-10">
+    <div class="fixed bottom-4 right-4 flex flex-col items-end gap-2 z-50">
+      <div class="flex rounded-full overflow-hidden shadow-lg">
+        <button id="lang-en" class="px-3 py-1.5 text-xs font-medium transition-colors duration-300 bg-primary-neon text-dark-bg">English</button>
+        <button id="lang-ur" class="px-3 py-1.5 text-xs font-medium transition-colors duration-300 bg-card-bg text-text-light">اردو</button>
       </div>
+      <a href="https://whatsapp.com/channel/0029Vb9shWp4o7qPSrCXS603" target="_blank" class="flex items-center justify-center px-4 py-2 rounded-full text-white font-semibold text-sm transition-transform duration-300 hover:scale-105 bg-green-600 hover:bg-green-700 shadow-md">
+        💬 <span data-lang-en="Join Channel" data-lang-ur="چینل جوائن کریں">Join Channel</span>
+      </a>
+    </div>
+
+    <header class="text-center py-12 px-2">
+      <h1 class="text-4xl md:text-5xl font-extrabold tracking-wide mb-1 text-neon-glow" data-lang-en="PUNJAB GOVT. PORTAL" data-lang-ur="پنجاب گورنمنٹ پورٹل">PUNJAB GOVT. PORTAL</h1>
+      <p class="text-sm text-text-muted" data-lang-en="Your gateway to government services and information." data-lang-ur="حکومتی خدمات اور معلومات تک آپ کی رسائی۔">Your gateway to government services and information.</p>
     </header>
 
-    <section class="features-section">
-      <div class="features-grid">
-        <div class="feature-card">
-          <div class="icon">📰</div>
-          <h3 data-lang-en="Latest Schemes News" data-lang-ur="تازہ ترین اسکیموں کی خبریں">Latest Schemes News</h3>
-          <p data-lang-en="Get the newest updates and news on government schemes as they are announced." data-lang-ur="سرکاری اسکیموں کے بارے میں تازہ ترین معلومات اور خبریں جیسے ہی وہ جاری ہوں حاصل کریں۔">Get the newest updates and news on government schemes as they are announced.</p>
-          <a href="https://www.pak--updates.xyz/Updates.html" class="btn" data-lang-en="Read News" data-lang-ur="خبریں پڑھیں">Read News</a>
-        </div>
-        
-        <div class="feature-card">
-          <div class="icon">✨</div>
-          <h3 data-lang-en="Official Schemes" data-lang-ur="سرکاری اسکیمیں">Official Schemes</h3>
-          <p data-lang-en="Access verified and up-to-date information on government initiatives." data-lang-ur="حکومتی اقدامات پر تصدیق شدہ اور تازہ ترین معلومات تک رسائی حاصل کریں۔">Access verified and up-to-date information on government initiatives.</p>
-          <a href="https://www.pak--updates.xyz/" class="btn" data-lang-en="Visit" data-lang-ur="وزٹ کریں">Visit</a>
-        </div>
-        <div class="feature-card">
-          <div class="icon">☀️</div>
-          <h3 data-lang-en="Real-Time Weather" data-lang-ur="حقیقی وقت کا موسم">Real-Time Weather</h3>
-          <p data-lang-en="Get precise, location-based weather forecasts for your region." data-lang-ur="اپنے علاقے کے لیے درست، مقام پر مبنی موسم کی پیش گوئی حاصل کریں۔">Get precise, location-based weather forecasts for your region.</p>
-          <a href="https://www.pak--updates.xyz/Weather.html" class="btn" data-lang-en="Check" data-lang-ur="چیک کریں">Check</a>
-        </div>
-        <div class="feature-card">
-          <div class="icon">🎵</div>
-          <h3 data-lang-en="Audio Identifier" data-lang-ur="آڈیو شناخت کنندہ">Audio Identifier</h3>
-          <p data-lang-en="Instantly recognize any song playing around you with our advanced audio recognition." data-lang-ur="ہماری جدید آڈیو شناخت کے ساتھ آپ کے ارد گرد بجنے والے کسی بھی گانے کو فوری طور پر پہچانیں۔">Instantly recognize any song playing around you with our advanced audio recognition.</p>
-          <a href="https://www.pak--updates.xyz/Song.html" class="btn" data-lang-en="Identify" data-lang-ur="شناخت کریں">Identify</a>
-        </div>
-        <div class="feature-card">
-          <div class="icon">📋</div>
-          <h3 data-lang-en="PMT Score Verification" data-lang-ur="پی ایم ٹی سکور کی تصدیق">PMT Score Verification</h3>
-          <p data-lang-en="Securely and quickly verify academic scores directly from the source." data-lang-ur="ماخذ سے براہ راست تعلیمی نتائج کو محفوظ اور جلدی سے تصدیق کریں۔">Securely and quickly verify academic scores directly from the source.</p>
-          <a href="https://texify.xyz/pmt-score" class="btn" data-lang-en="Verify" data-lang-ur="تصدیق کریں">Verify</a>
-        </div>
-        <div class="feature-card">
-          <div class="icon">📂</div>
-          <h3 data-lang-en="Centralized Schemes Directory" data-lang-ur="مرکزی اسکیموں کی ڈائریکٹری">Centralized Schemes Directory</h3>
-          <p data-lang-en="A comprehensive database of all official schemes and portals." data-lang-ur="تمام سرکاری اسکیموں اور پورٹلز کا ایک جامع ڈیٹا بیس۔">A comprehensive database of all official schemes and portals.</p>
-          <a href="https://texify.xyz/" class="btn" data-lang-en="Visit" data-lang-ur="وزٹ کریں">Visit</a>
-        </div>
-      </div>
-    </section>
+    <main class="container mx-auto px-4 py-8">
+      <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4" id="updates-container">
+        </section>
+    </main>
 
-    <hr class="section-separator">
-
-    <section class="coming-soon-section">
-        <h2 class="section-title" data-lang-en="Coming Soon" data-lang-ur="جلد آرہا ہے">Coming Soon</h2>
-        <div class="features-grid">
-            <div class="coming-soon-card">
-                <div class="icon">💼</div>
-                <h3 data-lang-en="Government Job Alerts" data-lang-ur="سرکاری نوکریوں کی اطلاع">Government Job Alerts</h3>
-                <p data-lang-en="Receive instant notifications for new job openings and application deadlines." data-lang-ur="نئی نوکریوں اور درخواست جمع کروانے کی آخری تاریخ کی فوری اطلاعات حاصل کریں۔">Receive instant notifications for new job openings and application deadlines.</p>
-            </div>
-            <div class="coming-soon-card">
-                <div class="icon">🚦</div>
-                <h3 data-lang-en="Real-time Traffic Updates" data-lang-ur="حقیقی وقت کی ٹریفک اپڈیٹس">Real-time Traffic Updates</h3>
-                <p data-lang-en="Get up-to-the-minute traffic information for major cities and highways." data-lang-ur="بڑے شہروں اور شاہراہوں کے لیے تازہ ترین ٹریفک کی معلومات حاصل کریں۔">Get up-to-the-minute traffic information for major cities and highways.</p>
-            </div>
-            <div class="coming-soon-card">
-                <div class="icon">💹</div>
-                <h3 data-lang-en="Live Exchange Rates" data-lang-ur="لائیو ایکسچینج ریٹ">Live Exchange Rates</h3>
-                <p data-lang-en="Stay informed with live currency exchange rates and historical data." data-lang-ur="کرنسی کے لائیو ایکسچینج ریٹس اور تاریخی ڈیٹا سے باخبر رہیں۔">Stay informed with live currency exchange rates and historical data.</p>
-            </div>
-        </div>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <p data-lang-en="&copy; 2025 PAK UPDATES | Powered by @CYBEREXPERTPK" data-lang-ur="&copy; 2025 پاک اپڈیٹس | پاورڈ بائے @CYBEREXPERTPK">&copy; 2025 PAK UPDATES | Powered by @CYBEREXPERTPK</p>
-  </footer>
+    <footer class="text-center py-4 px-2 border-t border-gray-700 bg-dark-bg">
+      <p class="text-xs text-text-muted" data-lang-en="© 2025 Punjab Govt. Portal | Developed by @CYBEREXPERTPK" data-lang-ur="© 2025 پنجاب گورنمنٹ پورٹل | ڈویلپڈ بائے @CYBEREXPERTPK">© 2025 Punjab Govt. Portal | Developed by @CYBEREXPERTPK</p>
+    </footer>
+  </div>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const langEnBtn = document.getElementById('lang-en');
-      const langUrBtn = document.getElementById('lang-ur');
-      const body = document.body;
+      // Language switching module
+      const languageModule = (() => {
+        const langBtns = {
+          en: document.getElementById('lang-en'),
+          ur: document.getElementById('lang-ur')
+        };
+        const body = document.body;
+        const setLanguage = (lang) => {
+          body.lang = lang;
+          body.classList.toggle('lang-ur', lang === 'ur');
+          
+          langBtns.en.classList.toggle('bg-primary-neon', lang === 'en');
+          langBtns.en.classList.toggle('bg-card-bg', lang === 'ur');
+          langBtns.en.classList.toggle('text-dark-bg', lang === 'en');
+          langBtns.en.classList.toggle('text-text-light', lang === 'ur');
+          
+          langBtns.ur.classList.toggle('bg-primary-neon', lang === 'ur');
+          langBtns.ur.classList.toggle('bg-card-bg', lang === 'en');
+          langBtns.ur.classList.toggle('text-dark-bg', lang === 'ur');
+          langBtns.ur.classList.toggle('text-text-light', lang === 'en');
 
-      const setLanguage = (lang) => {
-        if (lang === 'ur') {
-          body.classList.remove('lang-en');
-          body.classList.add('lang-ur');
-          langEnBtn.classList.remove('active');
-          langUrBtn.classList.add('active');
-        } else {
-          body.classList.remove('lang-ur');
-          body.classList.add('lang-en');
-          langEnBtn.classList.add('active');
-          langUrBtn.classList.remove('active');
-        }
+          document.querySelectorAll('[data-lang-en], [data-lang-ur]').forEach(el => {
+            const langText = el.getAttribute(`data-lang-${lang}`);
+            if (langText) {
+              el.textContent = langText;
+            }
+          });
+          document.title = document.querySelector('title').getAttribute(`data-lang-${lang}`);
+          localStorage.setItem('portal-lang', lang);
+        };
 
-        const elements = document.querySelectorAll('[data-lang-en], [data-lang-ur]');
-        elements.forEach(el => {
-          const enText = el.getAttribute('data-lang-en');
-          const urText = el.getAttribute('data-lang-ur');
-          if (el.tagName === 'TITLE') {
-              el.textContent = lang === 'en' ? enText : urText;
-          } else {
-              el.innerHTML = lang === 'en' ? enText : urText;
-          }
+        langBtns.en.addEventListener('click', () => setLanguage('en'));
+        langBtns.ur.addEventListener('click', () => setLanguage('ur'));
+
+        const preferredLang = localStorage.getItem('portal-lang') || (navigator.language.startsWith('ur') ? 'ur' : 'en');
+        setLanguage(preferredLang);
+      })();
+
+      // Dynamic content for service cards
+      const updatesModule = (() => {
+        const updatesData = [
+          { icon: "📰", title: { en: "Latest News", ur: "تازہ خبریں" }, text: { en: "Stay updated with official government announcements.", ur: "سرکاری اعلانات سے باخبر رہیں۔" }, link: "https://www.pak--updates.xyz/Updates.html" },
+          { icon: "📊", title: { en: "PTM Score Checker", ur: "پی ٹی ایم سکور چیکر" }, text: { en: "Check your academic scores easily and securely.", ur: "اپنے تعلیمی نتائج آسانی اور محفوظ طریقے سے چیک کریں۔" }, link: "https://texify.xyz/pmt-score" },
+          { icon: "🌦️", title: { en: "Weather Update", ur: "موسم کی صورتحال" }, text: { en: "Get real-time weather forecasts for major cities.", ur: "بڑے شہروں کے لیے حقیقی وقت کی موسم کی پیش گوئی حاصل کریں۔" }, link: "https://www.pak--updates.xyz/Weather.html" },
+          { icon: "🤖", title: { en: "AI Chatbot", ur: "اے آئی چیٹ بوٹ" }, text: { en: "Talk with our AI assistant for instant answers.", ur: "فوری جوابات کے لیے ہمارے AI اسسٹنٹ سے بات کریں۔" }, link: "https://pak-updates.xyz/Ai.html" },
+          { icon: "📱", title: { en: "SIM Database", ur: "سم ڈیٹا بیس" }, text: { en: "Verify SIM ownership information instantly.", ur: "سم کی ملکیت کی معلومات کی فوری تصدیق کریں۔" }, link: "https://pak-updates.xyz/Sim.html" },
+          { icon: "📡", title: { en: "Operator Checker", ur: "آپریٹر چیکر" }, text: { en: "Check which network operator a number belongs to.", ur: "چیک کریں کہ کوئی نمبر کس نیٹ ورک آپریٹر کا ہے۔" }, link: "https://pak-updates.xyz/Operator.html" },
+          { icon: "✉️", title: { en: "SMS Sender", ur: "ایس ایم ایس سینڈر" }, text: { en: "Send quick messages from our online portal.", ur: "ہمارے آن لائن پورٹل سے فوری پیغامات بھیجیں۔" }, link: "https://pak-updates.xyz/sms.html" },
+          { icon: "👤", title: { en: "WhatsApp Profile Viewer", ur: "واٹس ایپ پروفائل ویوئر" }, text: { en: "View WhatsApp profiles easily and privately.", ur: "واٹس ایپ پروفائلز آسانی اور پرائیویٹ طریقے سے دیکھیں۔" }, link: "https://pak-updates.xyz/Profile.html" }
+        ];
+
+        const container = document.getElementById("updates-container");
+
+        updatesData.forEach(u => {
+          const card = document.createElement("a");
+          card.href = u.link;
+          card.target = "_blank";
+          card.className = "card-glitch-effect p-4 flex flex-col items-center text-center backdrop-blur-xl hover:text-primary-neon transition-all duration-300";
+          card.innerHTML = `
+            <div class="text-5xl mb-3 text-primary-neon">${u.icon}</div>
+            <h3 class="text-xl font-bold text-light mb-1" data-lang-en="${u.title.en}" data-lang-ur="${u.title.ur}">${u.title.en}</h3>
+            <p class="text-xs text-text-muted flex-grow mb-3" data-lang-en="${u.text.en}" data-lang-ur="${u.text.ur}">${u.text.en}</p>
+            <div class="w-full">
+              <span class="inline-block px-4 py-2 rounded-full font-semibold text-sm btn-3d-neon text-dark-bg">
+                <span data-lang-en="View" data-lang-ur="دیکھیں">View</span>
+              </span>
+            </div>
+          `;
+          container.appendChild(card);
         });
-
-        document.title = document.querySelector('title').getAttribute('data-lang-' + lang);
-      };
-
-      langEnBtn.addEventListener('click', () => setLanguage('en'));
-      langUrBtn.addEventListener('click', () => setLanguage('ur'));
-
-      const userLang = navigator.language || navigator.userLanguage;
-      if (userLang.startsWith('ur')) {
-        setLanguage('ur');
-      } else {
-        setLanguage('en');
-      }
+      })();
     });
   </script>
 </body>
