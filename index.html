@@ -3,256 +3,398 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SIM DATABASE AI</title>
+<title>SIM DB AI // Advanced Toolkit</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --aurora-color-1: rgba(0, 255, 255, 0.3);
-    --aurora-color-2: rgba(126, 87, 194, 0.4);
+    --bg-color: #f4f7fa;
+    --card-bg: rgba(255, 255, 255, 0.7);
+    --text-color: #1a202c;
+    --text-muted-color: #4a5568;
+    --border-color: rgba(0, 0, 0, 0.08);
+    --aurora-color-1: rgba(59, 130, 246, 0.2);
+    --aurora-color-2: rgba(147, 51, 234, 0.2);
+    --accent-color: #3b82f6;
+    --accent-glow: rgba(59, 130, 246, 0.4);
   }
-  body { font-family: 'Poppins', sans-serif; background-color: #0d1117; color: #e6edf3; overflow-x: hidden; }
-  #aurora-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; overflow: hidden; }
-  #aurora-container::before, #aurora-container::after { content: ''; position: absolute; top: 50%; left: 50%; width: 150vmax; height: 150vmax; background: radial-gradient(circle, var(--aurora-color-1), transparent 60%); border-radius: 50%; transform: translate(-50%, -50%); animation: aurora-move 25s infinite linear; }
-  #aurora-container::after { background: radial-gradient(circle, var(--aurora-color-2), transparent 60%); animation: aurora-move-2 25s infinite linear; animation-delay: -12.5s; }
-  @keyframes aurora-move { 0%, 100% { transform: translate(-55%, -60%) rotate(0deg) scale(1); } 25% { transform: translate(-45%, -40%) rotate(90deg) scale(1.1); } 50% { transform: translate(-50%, -55%) rotate(180deg) scale(1); } 75% { transform: translate(-60%, -50%) rotate(270deg) scale(1.2); } }
-  @keyframes aurora-move-2 { 0%, 100% { transform: translate(-45%, -40%) rotate(0deg) scale(1); } 25% { transform: translate(-55%, -50%) rotate(-90deg) scale(1.2); } 50% { transform: translate(-50%, -45%) rotate(-180deg) scale(1); } 75% { transform: translate(-40%, -55%) rotate(-270deg) scale(1.1); } }
-  .glass-card { background: rgba(13, 17, 23, 0.65); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); animation: fadeIn 1s ease-out; }
-  .typewriter h1 { overflow: hidden; border-right: .15em solid cyan; white-space: nowrap; letter-spacing: .05em; animation: typing 3.5s steps(30, end), blink-caret .75s step-end infinite; }
-  @keyframes typing { from { width: 0 } to { width: 100% } }
-  @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: cyan; } }
+  html.dark {
+    --bg-color: #0b1120;
+    --card-bg: rgba(15, 23, 42, 0.5);
+    --text-color: #e2e8f0;
+    --text-muted-color: #94a3b8;
+    --border-color: rgba(255, 255, 255, 0.1);
+    --aurora-color-1: rgba(22, 163, 74, 0.25);
+    --aurora-color-2: rgba(34, 211, 238, 0.25);
+    --accent-color: #22d3ee;
+    --accent-glow: rgba(34, 211, 238, 0.4);
+  }
+  body { 
+    font-family: 'Inter', sans-serif; 
+    background-color: var(--bg-color); 
+    color: var(--text-color); 
+    overflow-x: hidden; 
+    transition: background-color 0.3s ease;
+    background-image: linear-gradient(rgba(128,128,128,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(128,128,128,0.03) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
   
-  /* Server Selector Styles */
-  .server-toggle-bg { background-color: rgba(0,0,0,0.2); border: 1px solid rgba(255, 255, 255, 0.1); }
-  .server-toggle-btn.active { color: #ffffff; }
-  #server-glider { position: absolute; height: 100%; background-color: #00c6ff; border-radius: 0.5rem; transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1); z-index: 0; }
-  
-  /* WhatsApp Ghost Button */
-  .btn-ghost-neon { background: transparent; border: 1px solid rgba(0, 255, 255, 0.4); color: rgba(0, 255, 255, 0.8); transition: all 0.3s ease; box-shadow: 0 0 5px rgba(0, 255, 255, 0.2); animation: pulse-glow 3s infinite ease-in-out; }
-  .btn-ghost-neon:hover { background: rgba(0, 255, 255, 0.1); color: white; border-color: rgba(0, 255, 255, 0.8); box-shadow: 0 0 20px rgba(0, 255, 255, 0.5); animation: none; }
-  @keyframes pulse-glow { 0%, 100% { box-shadow: 0 0 8px rgba(0, 255, 255, 0.3); } 50% { box-shadow: 0 0 16px rgba(0, 255, 255, 0.6); } }
-  
-  /* Copy Button */
-  .copy-btn { background: transparent; border: none; cursor: pointer; opacity: 0.6; transition: all 0.2s; }
-  .copy-btn:hover { opacity: 1; color: #00c6ff; }
-
-  /* Toast Notification */
-  #toast-notification { position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%); background-color: #00ff00; color: #0d1117; padding: 10px 20px; border-radius: 8px; z-index: 100; transition: bottom 0.5s ease-in-out; font-weight: 600; }
-  #toast-notification.show { bottom: 30px; }
-
-  /* Input Error */
-  .input-error { border-color: #ff3860 !important; box-shadow: 0 0 15px rgba(255, 56, 96, 0.5) !important; }
-
-  @keyframes slideUpFadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-  .result-card { animation: slideUpFadeIn 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
-  .skeleton-loader .line { background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent); background-size: 200% 100%; animation: skeleton-shine 1.5s infinite linear; }
-  @keyframes skeleton-shine { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+  /* Background & Cards */
+  #aurora-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -2; overflow: hidden; }
+  #aurora-container::before, #aurora-container::after { content: ''; position: absolute; top: 50%; left: 50%; width: 120vmax; height: 120vmax; background: radial-gradient(circle, var(--aurora-color-1), transparent 50%); border-radius: 50%; transform: translate(-50%, -50%); animation: aurora-move 20s infinite linear alternate; }
+  #aurora-container::after { background: radial-gradient(circle, var(--aurora-color-2), transparent 50%); animation: aurora-move-2 20s infinite linear alternate; animation-delay: -10s; }
+  @keyframes aurora-move { from { transform: translate(-55%, -60%) rotate(0deg); } to { transform: translate(-45%, -40%) rotate(360deg); } }
+  @keyframes aurora-move-2 { from { transform: translate(-45%, -40%) rotate(0deg); } to { transform: translate(-55%, -50%) rotate(-360deg); } }
+  .glass-card { background: var(--card-bg); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid var(--border-color); animation: fadeIn 1s ease-out; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-  .input-futuristic { background: rgba(0, 0, 0, 0.2); border: 1px solid rgba(0, 255, 255, 0.3); transition: all 0.3s ease; }
-  .input-futuristic:focus { box-shadow: 0 0 20px rgba(0, 255, 255, 0.4); }
-  .btn-neon { position: relative; overflow: hidden; background: linear-gradient(90deg, #00c6ff, #0072ff); color: white; font-weight: 600; border: none; transition: all 0.3s ease; }
-  .btn-neon:hover { transform: translateY(-2px); box-shadow: 0 0 25px rgba(0, 198, 255, 0.6), 0 0 40px rgba(0, 114, 255, 0.4); }
+  
+  /* Input & Server Status */
+  .input-wrapper .validation-icon { position: absolute; right: 0.75rem; top: 50%; transform: translateY(-50%) scale(0); transition: transform 0.2s ease; }
+  .input-wrapper.valid .icon-valid, .input-wrapper.invalid .icon-invalid { transform: translateY(-50%) scale(1); }
+  .status-dot { height: 8px; width: 8px; border-radius: 50%; transition: background-color 0.3s; }
+  .status-dot.online { background-color: #22c55e; box-shadow: 0 0 6px #22c55e; animation: pulse-green 2s infinite; }
+  .status-dot.slow { background-color: #f59e0b; box-shadow: 0 0 6px #f59e0b; }
+  .status-dot.offline { background-color: #ef4444; }
+  @keyframes pulse-green { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+
+  /* Utilities */
+  .btn-primary { background-color: var(--accent-color); color: white; transition: all 0.2s ease; }
+  .btn-primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 4px 20px var(--accent-glow); }
+  .btn-primary:disabled { cursor: not-allowed; background-color: var(--text-muted-color); opacity: 0.7; }
+  .spinner { border: 2px solid #ffffff30; border-top: 2px solid #fff; border-radius: 50%; width: 1.25rem; height: 1.25rem; animation: spin 1s linear infinite; }
+  @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+  #toast-notification { position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%); z-index: 100; transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); }
+  #toast-notification.show { bottom: 30px; }
+  .result-card { animation: fadeIn 0.5s ease; }
 </style>
 </head>
-<body class="flex items-center justify-center min-h-screen p-4">
+<body class="p-4 sm:p-6">
 
 <div id="aurora-container"></div>
-<div id="toast-notification">Copied to clipboard!</div>
+<div id="toast-notification"></div>
 
-<main class="w-full max-w-lg p-6 sm:p-8 rounded-2xl glass-card z-10">
+<div class="container mx-auto max-w-2xl space-y-6">
   
-  <div class="text-center mb-6">
-    <div class="typewriter inline-block max-w-full">
-      <h1 class="text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-500">
-        SIM DATABASE AI
-      </h1>
-    </div>
-    <p class="text-gray-300 mt-2 text-sm sm:text-base">Real-time SIM Data Checker</p>
-  </div>
+  <header class="flex justify-between items-center">
+    <h1 class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-cyan-400 dark:from-cyan-300 dark:to-green-400">SIM Database AI</h1>
+    <button id="theme-toggle" class="p-2 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-500/10" title="Toggle Theme"></button>
+  </header>
 
-  <div class="relative mb-4">
-    <input id="numberInput" type="tel" placeholder="03xxxxxxxxx" class="w-full p-4 pl-12 rounded-xl input-futuristic text-white placeholder-gray-400">
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 absolute left-4 top-1/2 -translate-y-1/2 text-cyan-400 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
-  </div>
-  
-  <div class="mb-4">
-      <label class="block mb-2 text-sm text-gray-400">Select Server:</label>
-      <div id="server-selector" class="relative flex w-full p-1 rounded-lg server-toggle-bg">
-          <div id="server-glider" class="absolute h-full rounded-md z-0"></div>
-          <button data-server="1" class="server-toggle-btn active flex-1 py-2 text-center z-10 font-semibold text-sm">Server 1</button>
-          <button data-server="2" class="server-toggle-btn flex-1 py-2 text-center z-10 font-semibold text-sm">Server 2</button>
-          <button data-server="3" class="server-toggle-btn flex-1 py-2 text-center z-10 font-semibold text-sm">Server 3</button>
+  <main class="glass-card rounded-2xl p-6 shadow-lg">
+    <div class="input-wrapper relative mb-4">
+      <input id="search-input" type="tel" placeholder="Enter number or CNIC..." class="w-full p-4 pl-5 pr-12 rounded-xl border bg-white/50 dark:bg-black/20 border-[var(--border-color)] focus:ring-2 focus:ring-[var(--accent-color)] outline-none transition">
+      <div class="validation-icon">
+        <svg class="icon-valid h-6 w-6 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+        <svg class="icon-invalid h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
       </div>
-  </div>
+    </div>
 
-  <button onclick="checkSim()" class="w-full py-3 rounded-xl btn-neon flex items-center justify-center gap-2 mb-6">
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" /></svg>
-    <span>Search</span>
-  </button>
-
-  <a href="https://whatsapp.com/channel/0029Vb9shWp4o7qPSrCXS603" target="_blank" rel="noopener noreferrer" class="w-full py-3 rounded-xl btn-ghost-neon flex items-center justify-center gap-3">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.894 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.886-.001 2.267.655 4.398 1.908 6.161l.216.324-1.256 4.587 4.672-1.225.308.212z"/></svg>
-      <span>Join WhatsApp Channel</span>
-  </a>
+    <div class="grid sm:grid-cols-2 gap-4 mt-4">
+      <div id="server-selector" class="p-1 rounded-lg flex justify-between bg-gray-500/10">
+        <button data-server="1" class="server-btn flex-1 py-2 text-sm font-semibold rounded-md flex items-center justify-center gap-2"><div class="status-dot"></div><span>S1</span></button>
+        <button data-server="2" class="server-btn flex-1 py-2 text-sm font-semibold rounded-md flex items-center justify-center gap-2"><div class="status-dot"></div><span>S2</span></button>
+        <button data-server="3" class="server-btn flex-1 py-2 text-sm font-semibold rounded-md flex items-center justify-center gap-2"><div class="status-dot"></div><span>S3</span></button>
+      </div>
+      <button id="search-btn" class="w-full py-3 rounded-xl btn-primary flex items-center justify-center gap-2 font-semibold">
+        <span id="search-btn-text">Search</span>
+        <div id="search-btn-spinner" class="spinner hidden"></div>
+      </button>
+    </div>
+  </main>
   
-  <div id="result" class="mt-6"></div>
-</main>
+  <section class="grid md:grid-cols-2 gap-6">
+    <div id="dashboard-card" class="glass-card rounded-2xl p-6 shadow-lg">
+      <h2 class="font-bold mb-4 text-lg">Session Analytics</h2>
+      <div class="grid grid-cols-2 gap-4 text-center">
+        <div class="bg-gray-500/5 p-4 rounded-lg">
+          <div id="stats-total" class="text-3xl font-bold text-[var(--accent-color)]">0</div>
+          <p class="text-sm text-muted-color">Total Searches</p>
+        </div>
+        <div class="bg-gray-500/5 p-4 rounded-lg">
+          <div id="stats-success" class="text-3xl font-bold text-[var(--accent-color)]">0%</div>
+          <p class="text-sm text-muted-color">Success Rate</p>
+        </div>
+      </div>
+    </div>
+    <div id="history-panel" class="glass-card rounded-2xl p-6 shadow-lg hidden">
+      <div class="flex justify-between items-center mb-2">
+        <h3 class="font-bold text-lg">Search History</h3>
+        <button id="clear-history-btn" class="text-sm text-blue-500 hover:underline">Clear</button>
+      </div>
+      <div id="history-list" class="space-y-1 text-sm max-h-24 overflow-y-auto pr-2"></div>
+    </div>
+  </section>
 
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const ICONS = {
-        user: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-cyan-400 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" /></svg>`,
-        card: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-cyan-400 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor"><path d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V8a2 2 0 00-2-2h-5L9 4H4z" /></svg>`,
-        location: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-cyan-400 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" /></svg>`,
-        phone: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-cyan-400 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" /></svg>`,
-        copy: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>`
-    };
+  <div id="result-container" class="mt-4"></div>
+            </div>
+  <script>
+document.addEventListener('DOMContentLoaded', () => {
+  // --- STATE MANAGEMENT ---
+  const state = {
+    isLoading: false,
+    selectedServer: '1',
+    servers: {
+      '1': { status: 'unknown', url: 'https://texify.xyz/api/check' },
+      '2': { status: 'unknown', url: 'https://livetrackersimdata.online/sim-owner-check.php' },
+      '3': { status: 'unknown', url: 'https://simownershipdata.info/sim-owner-check.php' }
+    },
+    analytics: JSON.parse(localStorage.getItem('simDbAnalytics')) || { total: 0, success: 0 },
+    history: JSON.parse(localStorage.getItem('simDbHistory')) || []
+  };
 
-    const numberInput = document.getElementById('numberInput');
-    const resultDiv = document.getElementById('result');
-    const serverSelector = document.getElementById('server-selector');
-    const serverGlider = document.getElementById('server-glider');
-    const serverButtons = serverSelector.querySelectorAll('.server-toggle-btn');
-    const toast = document.getElementById('toast-notification');
+  // --- DOM ELEMENT SELECTORS ---
+  const DOMElements = {
+    themeToggle: document.getElementById('theme-toggle'),
+    searchInput: document.getElementById('search-input'),
+    serverSelector: document.getElementById('server-selector'),
+    searchBtn: document.getElementById('search-btn'),
+    searchBtnText: document.getElementById('search-btn-text'),
+    searchBtnSpinner: document.getElementById('search-btn-spinner'),
+    resultContainer: document.getElementById('result-container'),
+    statsTotal: document.getElementById('stats-total'),
+    statsSuccess: document.getElementById('stats-success'),
+    historyPanel: document.getElementById('history-panel'),
+    historyList: document.getElementById('history-list'),
+    clearHistoryBtn: document.getElementById('clear-history-btn'),
+    toast: document.getElementById('toast-notification')
+  };
+
+  // --- CORE FUNCTIONS ---
+
+  /** Manages the main loading state of the UI */
+  const setLoading = (isLoading) => {
+    state.isLoading = isLoading;
+    DOMElements.searchBtn.disabled = isLoading;
+    DOMElements.searchBtnText.classList.toggle('hidden', isLoading);
+    DOMElements.searchBtnSpinner.classList.toggle('hidden', !isLoading);
+  };
+  
+  /** Shows a toast notification */
+  const showToast = (message, type = 'info') => {
+    DOMElements.toast.textContent = message;
+    DOMElements.toast.className = `py-3 px-6 rounded-lg z-50 shadow-lg font-semibold ${type === 'error' ? 'bg-red-500 text-white' : 'bg-[var(--accent-color)] text-white'}`;
+    DOMElements.toast.classList.add('show');
+    setTimeout(() => DOMElements.toast.classList.remove('show'), 3000);
+  };
+  
+  /** Updates the analytics dashboard */
+  const updateAnalytics = (isSuccess = null) => {
+    if (isSuccess !== null) {
+      state.analytics.total++;
+      if (isSuccess) state.analytics.success++;
+      localStorage.setItem('simDbAnalytics', JSON.stringify(state.analytics));
+    }
+    const successRate = state.analytics.total > 0 ? Math.round((state.analytics.success / state.analytics.total) * 100) : 0;
+    animateCounter(DOMElements.statsTotal, state.analytics.total);
+    animateCounter(DOMElements.statsSuccess, successRate, '%');
+  };
+  
+  /** Animates a number counting up */
+  const animateCounter = (el, to, suffix = '') => {
+      const from = parseInt(el.textContent.replace(suffix, '')) || 0;
+      if (from === to) return;
+      const duration = 1000;
+      let start = null;
+      const step = timestamp => {
+          if (!start) start = timestamp;
+          const progress = Math.min((timestamp - start) / duration, 1);
+          el.textContent = Math.floor(progress * (to - from) + from) + suffix;
+          if (progress < 1) window.requestAnimationFrame(step);
+      };
+      window.requestAnimationFrame(step);
+  };
+
+  /** Handles the main search logic */
+  const handleSearch = async () => {
+    const query = DOMElements.searchInput.value.trim();
+    if (!validateQuery(query)) {
+      showToast('Invalid input format. Use 03xxxxxxxxx or a 13-digit CNIC.', 'error');
+      return;
+    }
     
-    // Make checkSim globally accessible for the onclick attribute
-    window.checkSim = async function() {
-      const number = numberInput.value.trim();
-      if (number) numberInput.classList.remove('input-error');
-      const selectedServer = serverSelector.querySelector('.active').dataset.server;
-      if (!number) { showError("Please enter a phone number first!"); return; }
-      showLoader();
+    setLoading(true);
+    // This try...finally block is crucial. The 'finally' part will run
+    // whether the search succeeds or fails, ensuring the loading state is always reset.
+    try {
+      DOMElements.resultContainer.innerHTML = '';
+      const result = await fetchApi(query);
+      updateAnalytics(result.success);
+      renderResult(result);
+      if (result.success) updateHistory(query);
+    } catch (error) {
+      console.error("An unexpected error occurred during search:", error);
+      showToast("An unexpected error occurred.", "error");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  /** Generic API fetch function for the selected server */
+  const fetchApi = async (query) => {
+    const server = state.servers[state.selectedServer];
+    let url = server.url;
+    let options = { method: 'GET' };
+
+    if (state.selectedServer === '1') {
+      url = `${url}?q=${query}`;
+    } else {
+      options.method = 'POST';
+      const formData = new FormData();
+      formData.append('searchNumber', query);
+      options.body = formData;
+    }
+
+    try {
+      const response = await fetch(`https://corsproxy.io/?${encodeURIComponent(url)}`, options);
+      if (!response.ok) throw new Error('Network error');
+      const data = await response.json();
+      if ((data.success || data.status === 'success') && (data.data?.length > 0 || data.total > 0)) {
+        return { success: true, data: data.data[0] };
+      }
+      return { success: false, error: 'No data found' };
+    } catch (error) {
+      console.error(`API Error on Server ${state.selectedServer}:`, error);
+      return { success: false, error: 'Failed to fetch data' };
+    }
+  };
+
+  /** Renders a single result card to the DOM */
+  const renderResult = (result) => {
+    if (!result.success) {
+      DOMElements.resultContainer.innerHTML = `<div class="result-card glass-card text-center p-6 rounded-xl text-red-500">${result.error || 'An unknown error occurred.'}</div>`;
+      return;
+    }
+    const data = result.data;
+    const cardHTML = `
+      <div class="result-card glass-card rounded-xl p-6 border shadow-sm">
+        <h3 class="text-lg font-bold mb-4 border-b border-[var(--border-color)] pb-2">Search Result</h3>
+        <div class="space-y-3 text-sm">
+          <p><strong>Name:</strong> ${data.name || 'N/A'}</p>
+          <p><strong>Number:</strong> ${data.number || data.phone || 'N/A'}</p>
+          <p><strong>CNIC:</strong> ${data.cnic || 'N/A'}</p>
+          <p><strong>Address:</strong> ${data.address || 'N/A'}</p>
+        </div>
+      </div>
+    `;
+    DOMElements.resultContainer.innerHTML = cardHTML;
+  };
+  
+  // --- UI & EVENT HANDLERS ---
+  const setupEventListeners = () => {
+    DOMElements.themeToggle.addEventListener('click', toggleTheme);
+    DOMElements.serverSelector.addEventListener('click', handleServerSelect);
+    DOMElements.searchBtn.addEventListener('click', handleSearch);
+    DOMElements.searchInput.addEventListener('input', (e) => validateInput(e.target));
+    DOMElements.searchInput.addEventListener('keyup', (e) => { if (e.key === 'Enter') handleSearch(); });
+    DOMElements.clearHistoryBtn.addEventListener('click', clearHistory);
+    DOMElements.historyList.addEventListener('click', handleHistoryClick);
+  };
+  
+  const handleServerSelect = (e) => {
+      const btn = e.target.closest('.server-btn');
+      if (!btn) return;
+      document.querySelectorAll('.server-btn').forEach(b => b.classList.remove('bg-black/10', 'dark:bg-white/10'));
+      btn.classList.add('bg-black/10', 'dark:bg-white/10');
+      state.selectedServer = btn.dataset.server;
+  };
+
+  const validateInput = (input) => {
+    const value = input.value.trim();
+    const isValid = validateQuery(value);
+    const wrapper = input.parentElement;
+    wrapper.classList.toggle('valid', isValid);
+    wrapper.classList.toggle('invalid', value.length > 0 && !isValid);
+  };
+
+  const validateQuery = (query) => /^(03\d{9})$|^\d{13}$/.test(query);
+
+  // --- HISTORY FUNCTIONS ---
+  const updateHistory = (query) => {
+      state.history = state.history.filter(item => item !== query);
+      state.history.unshift(query);
+      if (state.history.length > 5) state.history.pop();
+      localStorage.setItem('simDbHistory', JSON.stringify(state.history));
+      renderHistory();
+  };
+  
+  const renderHistory = () => {
+      if (state.history.length === 0) {
+          DOMElements.historyPanel.classList.add('hidden');
+          return;
+      }
+      DOMElements.historyPanel.classList.remove('hidden');
+      DOMElements.historyList.innerHTML = state.history.map(item =>
+          `<div class="history-item p-2 rounded-md hover:bg-gray-500/10 cursor-pointer">${item}</div>`
+      ).join('');
+  };
+  
+  const clearHistory = () => {
+      state.history = [];
+      localStorage.removeItem('simDbHistory');
+      renderHistory();
+  };
+
+  const handleHistoryClick = (e) => {
+      const item = e.target.closest('.history-item');
+      if (item) {
+          DOMElements.searchInput.value = item.textContent;
+          validateInput(DOMElements.searchInput);
+          handleSearch();
+      }
+  };
+
+  // --- SERVER STATUS PINGER ---
+  const pingAllServers = async () => {
+    for (const id in state.servers) {
+      const serverUrl = state.servers[id].url;
+      const statusEl = document.querySelector(`.server-btn[data-server='${id}'] .status-dot`);
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 3000);
       try {
-          if (selectedServer === '1') await queryServer1(number);
-          else if (selectedServer === '2') await queryServer2(number);
-          else await queryServer3(number);
+        const startTime = performance.now();
+        await fetch(`https://corsproxy.io/?${encodeURIComponent(serverUrl)}`, { method: 'HEAD', signal: controller.signal });
+        const endTime = performance.now();
+        clearTimeout(timeoutId);
+        const duration = endTime - startTime;
+        statusEl.classList.remove('offline');
+        statusEl.classList.add(duration > 1500 ? 'slow' : 'online');
       } catch (error) {
-          console.error("General Error:", error);
-          showError("An unexpected error occurred.");
+        clearTimeout(timeoutId);
+        statusEl.className = 'status-dot offline';
       }
     }
+  };
 
-    function updateGlider() {
-      const activeButton = serverSelector.querySelector('.active');
-      if (activeButton) {
-          serverGlider.style.width = `${activeButton.offsetWidth}px`;
-          serverGlider.style.transform = `translateX(${activeButton.offsetLeft - serverButtons[0].offsetLeft}px)`;
-      }
-    }
-    serverButtons.forEach(button => {
-      button.addEventListener('click', () => {
-          serverSelector.querySelector('.active')?.classList.remove('active');
-          button.classList.add('active');
-          updateGlider();
-      });
-    });
-    
-    updateGlider(); // Initial position
+  // --- THEME ---
+  const toggleTheme = () => {
+    const isDark = document.documentElement.classList.toggle('dark');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    updateThemeUI(isDark);
+  };
+  const updateThemeUI = (isDark) => {
+    DOMElements.themeToggle.innerHTML = isDark 
+      ? `<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>`
+      : `<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>`;
+  };
+  
+  // --- INITIALIZATION ---
+  const init = () => {
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const isDark = savedTheme === 'dark' || (savedTheme === null && prefersDark);
+    if (isDark) document.documentElement.classList.add('dark');
+    updateThemeUI(isDark);
+    document.querySelector('.server-btn[data-server="1"]').classList.add('bg-black/10', 'dark:bg-white/10');
+    updateAnalytics();
+    renderHistory();
+    setupEventListeners();
+    pingAllServers();
+  };
 
-    function showToast(message) {
-        toast.textContent = message;
-        toast.classList.add('show');
-        setTimeout(() => { toast.classList.remove('show'); }, 2500);
-    }
-
-    window.copyToClipboard = function(text) {
-        navigator.clipboard.writeText(text).then(() => { showToast('Copied to clipboard!'); })
-        .catch(err => { console.error('Failed to copy text: ', err); showToast('Failed to copy!'); });
-    }
-    
-    function showLoader() { resultDiv.innerHTML = `<div class="skeleton-loader p-4 rounded-xl space-y-3 border border-gray-700/50"><div class="line h-6 w-3/4 rounded"></div><div class="line h-6 w-full rounded"></div><div class="line h-6 w-5/6 rounded"></div></div>`; }
-    
-    function showError(message) { 
-        resultDiv.innerHTML = `<div class="result-card bg-red-500/10 text-red-300 p-4 rounded-xl border border-red-500/30 flex items-center gap-3"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg><span>${message}</span></div>`; 
-        numberInput.classList.add('input-error');
-        setTimeout(() => numberInput.classList.remove('input-error'), 2500);
-    }
-    
-    function renderSuccessResult(info, serverName) {
-        return `
-          <div class="result-card p-5 rounded-2xl bg-black/20 border border-cyan-500/20">
-              <h3 class="text-xl font-semibold text-white mb-4 border-b border-gray-600/50 pb-2">Result from ${serverName}</h3>
-              <div class="space-y-4 text-gray-200">
-                  <div class="flex items-center justify-between gap-3"> <div class="flex items-start gap-3"> ${ICONS.phone} <div class="min-w-0"><strong>Number:</strong> <span class="text-white break-words">${info.number || info.phone || 'N/A'}</span></div></div> <button class="copy-btn" onclick="copyToClipboard('${info.number || info.phone || ''}')">${ICONS.copy}</button> </div>
-                  <div class="flex items-center justify-between gap-3"> <div class="flex items-start gap-3"> ${ICONS.user} <div class="min-w-0"><strong>Name:</strong> <span class="text-white break-words">${info.name || 'N/A'}</span></div></div> <button class="copy-btn" onclick="copyToClipboard('${info.name || ''}')">${ICONS.copy}</button> </div>
-                  <div class="flex items-center justify-between gap-3"> <div class="flex items-start gap-3"> ${ICONS.card} <div class="min-w-0"><strong>CNIC:</strong> <span class="text-white break-words">${info.cnic || 'N/A'}</span></div></div> <button class="copy-btn" onclick="copyToClipboard('${info.cnic || ''}')">${ICONS.copy}</button> </div>
-                  <div class="flex items-center justify-between gap-3"> <div class="flex items-start gap-3"> ${ICONS.location} <div class="min-w-0"><strong>Address:</strong> <span class="text-white break-words">${info.address || 'N/A'}</span></div></div> <button class="copy-btn" onclick="copyToClipboard('${info.address || ''}')">${ICONS.copy}</button> </div>
-              </div>
-          </div>`;
-    }
-
-    // --- SERVER FUNCTIONS ---
-    async function queryServer1(number) {
-      try {
-        const response = await fetch(`https://texify.xyz/api/check?q=${number}`);
-        const data = await response.json();
-        if (data.success && data.total > 0) {
-          resultDiv.innerHTML = renderSuccessResult(data.data[0], 'Server 1');
-        } else { showError("No data found on Server 1."); }
-      } catch(err) {
-          console.error("Server 1 Error:", err);
-          showError("Error connecting to Server 1.");
-      }
-    }
-    
-    async function queryServer2(number) {
-        // ✅ CORS FIX: Using a more reliable proxy without an API key
-        const proxyUrl = 'https://corsproxy.io/?';
-        const targetUrl = 'https://livetrackersimdata.online/sim-owner-check.php';
-
-        const boundary = "----WebKitFormBoundary" + Math.random().toString(16).slice(2);
-        const body = `--${boundary}\r\nContent-Disposition: form-data; name="searchNumber"\r\n\r\n${number}\r\n--${boundary}--\r\n`;
-        try {
-          const response = await fetch(proxyUrl + encodeURIComponent(targetUrl), {
-            method: "POST", 
-            headers: { "Content-Type": `multipart/form-data; boundary=${boundary}` }, 
-            body 
-          });
-          if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-          const data = await response.json();
-          if (data.status === 'success' && data.data && data.data.length > 0) {
-              resultDiv.innerHTML = renderSuccessResult(data.data[0], 'Server 2');
-          } else { showError("No data found on Server 2."); }
-        } catch (err) {
-          console.error("Server 2 Error:", err);
-          showError("Error connecting to Server 2.");
-        }
-    }
-    
-    async function queryServer3(number) {
-        // ✅ CORS FIX: Using a more reliable proxy without an API key
-        const proxyUrl = 'https://corsproxy.io/?';
-        const targetUrl = 'https://simownershipdata.info/sim-owner-check.php';
-
-        const boundary = "----WebKitFormBoundaryPg3R8LEnYcld1XkP";
-        const body = `--${boundary}\r\nContent-Disposition: form-data; name="searchNumber"\r\n\r\n${number}\r\n--${boundary}--\r\n`;
-        try {
-          const response = await fetch(proxyUrl + encodeURIComponent(targetUrl), {
-            method: "POST", 
-            headers: { "Content-Type": `multipart/form-data; boundary=${boundary}` }, 
-            body 
-          });
-          if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-          const responseText = await response.text();
-          try {
-              const data = JSON.parse(responseText);
-              if ((data.status === 'success' || data.status === 'Success') && data.data && data.data.length > 0) {
-                  resultDiv.innerHTML = renderSuccessResult(data.data[0], 'Server 3');
-              } else { showError("No data found on Server 3."); }
-          } catch (jsonError) {
-               if(responseText.trim()){
-                   resultDiv.innerHTML = `<div class="result-card p-5 rounded-lg bg-black/20 border-cyan-500/20"><h3 class="text-xl font-semibold text-white mb-4 border-b border-gray-600/50 pb-2">Raw Output [Server 3]</h3><pre class="whitespace-pre-wrap text-sm text-gray-200">${responseText.trim()}</pre></div>`;
-               } else { showError("Server 3 returned an empty response."); }
-          }
-        } catch (err) {
-          console.error("Server 3 Error:", err);
-          showError("Error connecting to Server 3.");
-        }
-    }
-  });
+  init();
+});
 </script>
 </body>
-  </html>
-  
+</html>
