@@ -101,139 +101,158 @@
 </main>
 
 <script>
-  const ICONS = {
-      user: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-cyan-400 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" /></svg>`,
-      card: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-cyan-400 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor"><path d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V8a2 2 0 00-2-2h-5L9 4H4z" /></svg>`,
-      location: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-cyan-400 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" /></svg>`,
-      phone: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-cyan-400 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" /></svg>`,
-      copy: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>`
-  };
+  document.addEventListener('DOMContentLoaded', () => {
+    const ICONS = {
+        user: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-cyan-400 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" /></svg>`,
+        card: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-cyan-400 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor"><path d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V8a2 2 0 00-2-2h-5L9 4H4z" /></svg>`,
+        location: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-cyan-400 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" /></svg>`,
+        phone: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-cyan-400 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" /></svg>`,
+        copy: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>`
+    };
 
-  const numberInput = document.getElementById('numberInput');
-  const resultDiv = document.getElementById('result');
-  const serverSelector = document.getElementById('server-selector');
-  const serverGlider = document.getElementById('server-glider');
-  const serverButtons = serverSelector.querySelectorAll('.server-toggle-btn');
-  const toast = document.getElementById('toast-notification');
-  
-  function updateGlider() {
-    const activeButton = serverSelector.querySelector('.active');
-    if (activeButton) {
-        serverGlider.style.width = `${activeButton.offsetWidth}px`;
-        serverGlider.style.transform = `translateX(${activeButton.offsetLeft - serverButtons[0].offsetLeft}px)`;
+    const numberInput = document.getElementById('numberInput');
+    const resultDiv = document.getElementById('result');
+    const serverSelector = document.getElementById('server-selector');
+    const serverGlider = document.getElementById('server-glider');
+    const serverButtons = serverSelector.querySelectorAll('.server-toggle-btn');
+    const toast = document.getElementById('toast-notification');
+    
+    // Make checkSim globally accessible for the onclick attribute
+    window.checkSim = async function() {
+      const number = numberInput.value.trim();
+      if (number) numberInput.classList.remove('input-error');
+      const selectedServer = serverSelector.querySelector('.active').dataset.server;
+      if (!number) { showError("Please enter a phone number first!"); return; }
+      showLoader();
+      try {
+          if (selectedServer === '1') await queryServer1(number);
+          else if (selectedServer === '2') await queryServer2(number);
+          else await queryServer3(number);
+      } catch (error) {
+          console.error("General Error:", error);
+          showError("An unexpected error occurred.");
+      }
     }
-  }
-  serverButtons.forEach(button => {
-    button.addEventListener('click', () => {
-        serverButtons.forEach(btn => btn.classList.remove('active'));
-        button.classList.add('active');
-        updateGlider();
+
+    function updateGlider() {
+      const activeButton = serverSelector.querySelector('.active');
+      if (activeButton) {
+          serverGlider.style.width = `${activeButton.offsetWidth}px`;
+          serverGlider.style.transform = `translateX(${activeButton.offsetLeft - serverButtons[0].offsetLeft}px)`;
+      }
+    }
+    serverButtons.forEach(button => {
+      button.addEventListener('click', () => {
+          serverSelector.querySelector('.active')?.classList.remove('active');
+          button.classList.add('active');
+          updateGlider();
+      });
     });
-  });
-  window.addEventListener('load', () => setTimeout(updateGlider, 100));
-  
-  function showToast(message) {
-      toast.textContent = message;
-      toast.classList.add('show');
-      setTimeout(() => { toast.classList.remove('show'); }, 2500);
-  }
+    
+    updateGlider(); // Initial position
 
-  function copyToClipboard(text) {
-      navigator.clipboard.writeText(text).then(() => { showToast('Copied to clipboard!'); })
-      .catch(err => { console.error('Failed to copy text: ', err); showToast('Failed to copy!'); });
-  }
-  
-  function showLoader() { resultDiv.innerHTML = `<div class="skeleton-loader p-4 rounded-xl space-y-3 border border-gray-700/50"><div class="line h-6 w-3/4 rounded"></div><div class="line h-6 w-full rounded"></div><div class="line h-6 w-5/6 rounded"></div></div>`; }
-  
-  function showError(message) { 
-      resultDiv.innerHTML = `<div class="result-card bg-red-500/10 text-red-300 p-4 rounded-xl border border-red-500/30 flex items-center gap-3"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg><span>${message}</span></div>`; 
-      numberInput.classList.add('input-error');
-      setTimeout(() => numberInput.classList.remove('input-error'), 2500);
-  }
-  
-  function renderSuccessResult(info, serverName) {
-      return `
-        <div class="result-card p-5 rounded-2xl bg-black/20 border border-cyan-500/20">
-            <h3 class="text-xl font-semibold text-white mb-4 border-b border-gray-600/50 pb-2">Result from ${serverName}</h3>
-            <div class="space-y-4 text-gray-200">
-                <div class="flex items-center justify-between gap-3"> <div class="flex items-start gap-3"> ${ICONS.phone} <div class="min-w-0"><strong>Number:</strong> <span class="text-white break-words">${info.number || info.phone || 'N/A'}</span></div></div> <button class="copy-btn" onclick="copyToClipboard('${info.number || info.phone || ''}')">${ICONS.copy}</button> </div>
-                <div class="flex items-center justify-between gap-3"> <div class="flex items-start gap-3"> ${ICONS.user} <div class="min-w-0"><strong>Name:</strong> <span class="text-white break-words">${info.name || 'N/A'}</span></div></div> <button class="copy-btn" onclick="copyToClipboard('${info.name || ''}')">${ICONS.copy}</button> </div>
-                <div class="flex items-center justify-between gap-3"> <div class="flex items-start gap-3"> ${ICONS.card} <div class="min-w-0"><strong>CNIC:</strong> <span class="text-white break-words">${info.cnic || 'N/A'}</span></div></div> <button class="copy-btn" onclick="copyToClipboard('${info.cnic || ''}')">${ICONS.copy}</button> </div>
-                <div class="flex items-center justify-between gap-3"> <div class="flex items-start gap-3"> ${ICONS.location} <div class="min-w-0"><strong>Address:</strong> <span class="text-white break-words">${info.address || 'N/A'}</span></div></div> <button class="copy-btn" onclick="copyToClipboard('${info.address || ''}')">${ICONS.copy}</button> </div>
-            </div>
-        </div>`;
-  }
-  
-  async function checkSim() {
-    const number = numberInput.value.trim();
-    if (number) numberInput.classList.remove('input-error');
-    const selectedServer = serverSelector.querySelector('.active').dataset.server;
-    if (!number) { showError("Please enter a phone number first!"); return; }
-    showLoader();
-    try {
-        if (selectedServer === '1') await queryServer1(number);
-        else if (selectedServer === '2') await queryServer2(number);
-        else await queryServer3(number);
-    } catch (error) {
-        console.error("General Error:", error);
-        showError("An unexpected error occurred.");
+    function showToast(message) {
+        toast.textContent = message;
+        toast.classList.add('show');
+        setTimeout(() => { toast.classList.remove('show'); }, 2500);
     }
-  }
 
-  // --- SERVER FUNCTIONS ---
-  async function queryServer1(number) {
-    try {
-      const response = await fetch(`https://texify.xyz/api/check?q=${number}`);
-      const data = await response.json();
-      if (data.success && data.total > 0) {
-        resultDiv.innerHTML = renderSuccessResult(data.data[0], 'Server 1');
-      } else { showError("No data found on Server 1."); }
-    } catch(err) {
-        console.error("Server 1 Error:", err);
-        showError("Error connecting to Server 1.");
+    window.copyToClipboard = function(text) {
+        navigator.clipboard.writeText(text).then(() => { showToast('Copied to clipboard!'); })
+        .catch(err => { console.error('Failed to copy text: ', err); showToast('Failed to copy!'); });
     }
-  }
-  
-  async function queryServer2(number) {
-      const boundary = "----WebKitFormBoundary" + Math.random().toString(16).slice(2);
-      const body = `--${boundary}\r\nContent-Disposition: form-data; name="searchNumber"\r\n\r\n${number}\r\n--${boundary}--\r\n`;
+    
+    function showLoader() { resultDiv.innerHTML = `<div class="skeleton-loader p-4 rounded-xl space-y-3 border border-gray-700/50"><div class="line h-6 w-3/4 rounded"></div><div class="line h-6 w-full rounded"></div><div class="line h-6 w-5/6 rounded"></div></div>`; }
+    
+    function showError(message) { 
+        resultDiv.innerHTML = `<div class="result-card bg-red-500/10 text-red-300 p-4 rounded-xl border border-red-500/30 flex items-center gap-3"><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg><span>${message}</span></div>`; 
+        numberInput.classList.add('input-error');
+        setTimeout(() => numberInput.classList.remove('input-error'), 2500);
+    }
+    
+    function renderSuccessResult(info, serverName) {
+        return `
+          <div class="result-card p-5 rounded-2xl bg-black/20 border border-cyan-500/20">
+              <h3 class="text-xl font-semibold text-white mb-4 border-b border-gray-600/50 pb-2">Result from ${serverName}</h3>
+              <div class="space-y-4 text-gray-200">
+                  <div class="flex items-center justify-between gap-3"> <div class="flex items-start gap-3"> ${ICONS.phone} <div class="min-w-0"><strong>Number:</strong> <span class="text-white break-words">${info.number || info.phone || 'N/A'}</span></div></div> <button class="copy-btn" onclick="copyToClipboard('${info.number || info.phone || ''}')">${ICONS.copy}</button> </div>
+                  <div class="flex items-center justify-between gap-3"> <div class="flex items-start gap-3"> ${ICONS.user} <div class="min-w-0"><strong>Name:</strong> <span class="text-white break-words">${info.name || 'N/A'}</span></div></div> <button class="copy-btn" onclick="copyToClipboard('${info.name || ''}')">${ICONS.copy}</button> </div>
+                  <div class="flex items-center justify-between gap-3"> <div class="flex items-start gap-3"> ${ICONS.card} <div class="min-w-0"><strong>CNIC:</strong> <span class="text-white break-words">${info.cnic || 'N/A'}</span></div></div> <button class="copy-btn" onclick="copyToClipboard('${info.cnic || ''}')">${ICONS.copy}</button> </div>
+                  <div class="flex items-center justify-between gap-3"> <div class="flex items-start gap-3"> ${ICONS.location} <div class="min-w-0"><strong>Address:</strong> <span class="text-white break-words">${info.address || 'N/A'}</span></div></div> <button class="copy-btn" onclick="copyToClipboard('${info.address || ''}')">${ICONS.copy}</button> </div>
+              </div>
+          </div>`;
+    }
+
+    // --- SERVER FUNCTIONS ---
+    async function queryServer1(number) {
       try {
-        const response = await fetch("https://livetrackersimdata.online/sim-owner-check.php", {
-          method: "POST", headers: { "Content-Type": `multipart/form-data; boundary=${boundary}` }, body });
-        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+        const response = await fetch(`https://texify.xyz/api/check?q=${number}`);
         const data = await response.json();
-        if (data.status === 'success' && data.data && data.data.length > 0) {
-            resultDiv.innerHTML = renderSuccessResult(data.data[0], 'Server 2');
-        } else { showError("No data found on Server 2."); }
-      } catch (err) {
-        console.error("Server 2 Error:", err);
-        showError("Error connecting to Server 2.");
+        if (data.success && data.total > 0) {
+          resultDiv.innerHTML = renderSuccessResult(data.data[0], 'Server 1');
+        } else { showError("No data found on Server 1."); }
+      } catch(err) {
+          console.error("Server 1 Error:", err);
+          showError("Error connecting to Server 1.");
       }
-  }
-  
-  async function queryServer3(number) {
-      const boundary = "----WebKitFormBoundaryPg3R8LEnYcld1XkP";
-      const body = `--${boundary}\r\nContent-Disposition: form-data; name="searchNumber"\r\n\r\n${number}\r\n--${boundary}--\r\n`;
-      try {
-        const response = await fetch("https://simownershipdata.info/sim-owner-check.php", {
-          method: "POST", headers: { "Content-Type": `multipart/form-data; boundary=${boundary}`, "Origin": "https://simownershipdata.info", "Referer": "https://simownershipdata.info/" }, body });
-        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-        const responseText = await response.text();
+    }
+    
+    async function queryServer2(number) {
+        // ✅ CORS FIX: Using a more reliable proxy without an API key
+        const proxyUrl = 'https://corsproxy.io/?';
+        const targetUrl = 'https://livetrackersimdata.online/sim-owner-check.php';
+
+        const boundary = "----WebKitFormBoundary" + Math.random().toString(16).slice(2);
+        const body = `--${boundary}\r\nContent-Disposition: form-data; name="searchNumber"\r\n\r\n${number}\r\n--${boundary}--\r\n`;
         try {
-            const data = JSON.parse(responseText);
-            if ((data.status === 'success' || data.status === 'Success') && data.data && data.data.length > 0) {
-                resultDiv.innerHTML = renderSuccessResult(data.data[0], 'Server 3');
-            } else { showError("No data found on Server 3."); }
-        } catch (jsonError) {
-             if(responseText.trim()){
-                 resultDiv.innerHTML = `<div class="result-card p-5 rounded-lg bg-black/20 border-cyan-500/20"><h3 class="text-xl font-semibold text-white mb-4 border-b border-gray-600/50 pb-2">Raw Output [Server 3]</h3><pre class="whitespace-pre-wrap text-sm text-gray-200">${responseText.trim()}</pre></div>`;
-             } else { showError("Server 3 returned an empty response."); }
+          const response = await fetch(proxyUrl + encodeURIComponent(targetUrl), {
+            method: "POST", 
+            headers: { "Content-Type": `multipart/form-data; boundary=${boundary}` }, 
+            body 
+          });
+          if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+          const data = await response.json();
+          if (data.status === 'success' && data.data && data.data.length > 0) {
+              resultDiv.innerHTML = renderSuccessResult(data.data[0], 'Server 2');
+          } else { showError("No data found on Server 2."); }
+        } catch (err) {
+          console.error("Server 2 Error:", err);
+          showError("Error connecting to Server 2.");
         }
-      } catch (err) {
-        console.error("Server 3 Error:", err);
-        showError("Error connecting to Server 3.");
-      }
-  }
+    }
+    
+    async function queryServer3(number) {
+        // ✅ CORS FIX: Using a more reliable proxy without an API key
+        const proxyUrl = 'https://corsproxy.io/?';
+        const targetUrl = 'https://simownershipdata.info/sim-owner-check.php';
+
+        const boundary = "----WebKitFormBoundaryPg3R8LEnYcld1XkP";
+        const body = `--${boundary}\r\nContent-Disposition: form-data; name="searchNumber"\r\n\r\n${number}\r\n--${boundary}--\r\n`;
+        try {
+          const response = await fetch(proxyUrl + encodeURIComponent(targetUrl), {
+            method: "POST", 
+            headers: { "Content-Type": `multipart/form-data; boundary=${boundary}` }, 
+            body 
+          });
+          if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+          const responseText = await response.text();
+          try {
+              const data = JSON.parse(responseText);
+              if ((data.status === 'success' || data.status === 'Success') && data.data && data.data.length > 0) {
+                  resultDiv.innerHTML = renderSuccessResult(data.data[0], 'Server 3');
+              } else { showError("No data found on Server 3."); }
+          } catch (jsonError) {
+               if(responseText.trim()){
+                   resultDiv.innerHTML = `<div class="result-card p-5 rounded-lg bg-black/20 border-cyan-500/20"><h3 class="text-xl font-semibold text-white mb-4 border-b border-gray-600/50 pb-2">Raw Output [Server 3]</h3><pre class="whitespace-pre-wrap text-sm text-gray-200">${responseText.trim()}</pre></div>`;
+               } else { showError("Server 3 returned an empty response."); }
+          }
+        } catch (err) {
+          console.error("Server 3 Error:", err);
+          showError("Error connecting to Server 3.");
+        }
+    }
+  });
 </script>
 </body>
-</html>
+  </html>
+  
