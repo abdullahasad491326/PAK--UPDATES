@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="The 11th Class results for 2025 for all Punjab boards have been announced! Check the official result gazettes for Lahore, Faisalabad, Multan, and more.">
+    <title>Punjab Boards - 11th Class Results 2025 ANNOUNCED!</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        :root {
+            /* Light Theme */
+            --bg-color: #f4f7fe;
+            --card-bg: rgba(255, 255, 255, 0.6);
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --primary-accent: #4f46e5;
+            --primary-accent-text: #ffffff;
+            --secondary-button-bg: #e2e8f0;
+            --secondary-button-text: #334155;
+            --shadow-color: rgba(71, 85, 105, 0.1);
+            --border-color: rgba(255, 255, 255, 0.8);
+
+            /* Universal */
+            --whatsapp-bg: #25D366;
+            --font-main: 'Poppins', sans-serif;
+        }
+
+        [data-theme="dark"] {
+            /* Dark Theme */
+            --bg-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.6);
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --primary-accent: #818cf8;
+            --primary-accent-text: #0f172a;
+            --secondary-button-bg: #334155;
+            --secondary-button-text: #e2e8f0;
+            --shadow-color: rgba(0, 0, 0, 0.2);
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-color);
+            background-image: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 15px; /* Reduced body padding */
+            color: var(--text-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* === HEADER & THEME TOGGLE (More Compact) === */
+        .header-container {
+            text-align: center;
+            margin-bottom: 30px; /* Reduced margin */
+            padding: 25px 20px; /* Reduced padding */
+            background: var(--card-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 20px; /* Slightly smaller radius */
+            border: 1px solid var(--border-color);
+            box-shadow: 0 8px 32px 0 var(--shadow-color);
+            position: relative;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .theme-switcher {
+            position: absolute;
+            top: 15px; /* Adjusted position */
+            right: 15px;
+            width: 40px; /* Smaller button */
+            height: 40px;
+            background-color: var(--secondary-button-bg);
+            color: var(--secondary-button-text);
+            border: none;
+            border-radius: 50%;
+            font-size: 16px; /* Smaller icon */
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        .theme-switcher:hover {
+            transform: scale(1.1) rotate(15deg);
+        }
+        .theme-switcher .fa-sun { display: none; }
+        [data-theme="dark"] .theme-switcher .fa-sun { display: block; }
+        [data-theme="dark"] .theme-switcher .fa-moon { display: none; }
+
+        .header-container h1 {
+            font-size: 2rem; /* Reduced font size */
+            font-weight: 800;
+            margin: 0 0 10px 0; /* Reduced margin */
+            color: var(--text-primary);
+        }
+
+        .header-container p {
+            font-size: 1rem; /* Reduced font size */
+            color: var(--text-secondary);
+            max-width: 500px;
+            margin: 0 auto 20px auto; /* Reduced margin */
+        }
+        
+        .whatsapp-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 20px; /* Reduced padding */
+            background-color: var(--whatsapp-bg);
+            color: white;
+            font-size: 0.9rem; /* Reduced font size */
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 10px; /* Smaller radius */
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            gap: 8px; /* Reduced gap */
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+        }
+        .whatsapp-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+        }
+        .whatsapp-button .fa-whatsapp { font-size: 1.3em; }
+
+        /* === CARDS (More Compact) === */
+        .card-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px; /* Reduced gap */
+        }
+
+        .board-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--border-color);
+            border-radius: 16px; /* Smaller radius */
+            padding: 20px; /* Reduced padding */
+            text-align: center;
+            box-shadow: 0 8px 32px 0 var(--shadow-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeInUp 0.8s ease-out;
+            animation-fill-mode: both;
+        }
+        .board-card:hover {
+            transform: translateY(-8px); /* Slightly less lift */
+            box-shadow: 0 10px 35px 0 var(--shadow-color);
+        }
+
+        .board-card h3 {
+            margin: 0 0 15px 0; /* Reduced margin */
+            font-size: 1.4rem; /* Reduced font size */
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .card-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px; /* Reduced gap */
+        }
+
+        .link-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 18px; /* Reduced padding */
+            border-radius: 8px; /* Smaller radius */
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem; /* Reduced font size */
+            transition: all 0.3s ease;
+            border: none;
+        }
+        
+        .link-button.primary {
+            background-color: var(--primary-accent);
+            color: var(--primary-accent-text);
+        }
+        .link-button.secondary {
+            background-color: var(--secondary-button-bg);
+            color: var(--secondary-button-text);
+        }
+        .link-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px var(--shadow-color);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 15px;
+            color: var(--text-primary);
+            opacity: 0.8;
+            font-size: 0.85rem;
+        }
+
+        /* === MEDIA QUERIES (Mobile First) === */
+        @media (min-width: 600px) {
+            .card-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .header-container h1 { font-size: 2.5rem; }
+        }
+
+        @media (min-width: 992px) {
+            body { padding: 40px; }
+            .card-container {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 20px;
+            }
+            .header-container h1 { font-size: 2.8rem; }
+        }
+
+        /* === KEYFRAME ANIMATIONS === */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header class="header-container">
+            <button class="theme-switcher" id="theme-toggle" aria-label="Toggle dark mode">
+                <i class="fas fa-moon"></i>
+                <i class="fas fa-sun"></i>
+            </button>
+
+            <h1>Results Announced!</h1>
+            <p>Select your board to view the gazette. Join our channel for updates.</p>
+            
+            <a href="https://whatsapp.com/channel/0029Vb9shWp4o7qPSrCXS603" target="_blank" rel="noopener noreferrer" class="whatsapp-button">
+              <i class="fab fa-whatsapp"></i> Join WhatsApp
+            </a>
+        </header>
+
+        <main class="card-container">
+            <div class="board-card">
+                <h3>BISE Lahore</h3>
+                <div class="card-links">
+                    <a href="#" class="link-button primary"><i class="fas fa-book-open"></i> View Gazette</a>
+                    <a href="http://biselahore.com" target="_blank" class="link-button secondary"><i class="fas fa-globe"></i> Website</a>
+                </div>
+            </div>
+
+            <div class="board-card">
+                <h3>BISE Gujranwala</h3>
+                <div class="card-links">
+                    <a href="#" class="link-button primary"><i class="fas fa-book-open"></i> View Gazette</a>
+                    <a href="http://bisegrw.edu.pk" target="_blank" class="link-button secondary"><i class="fas fa-globe"></i> Website</a>
+                </div>
+            </div>
+
+            <div class="board-card">
+                <h3>BISE Multan</h3>
+                <div class="card-links">
+                    <a href="#" class="link-button primary"><i class="fas fa-book-open"></i> View Gazette</a>
+                    <a href="http://bisemultan.edu.pk" target="_blank" class="link-button secondary"><i class="fas fa-globe"></i> Website</a>
+                </div>
+            </div>
+
+            <div class="board-card">
+                <h3>BISE Faisalabad</h3>
+                <div class="card-links">
+                    <a href="#" class="link-button primary"><i class="fas fa-book-open"></i> View Gazette</a>
+                    <a href="http://bisefsd.edu.pk" target="_blank" class="link-button secondary"><i class="fas fa-globe"></i> Website</a>
+                </div>
+            </div>
+
+            <div class="board-card">
+                <h3>BISE Sargodha</h3>
+                <div class="card-links">
+                    <a href="#" class="link-button primary"><i class="fas fa-book-open"></i> View Gazette</a>
+                    <a href="http://bisesargodha.edu.pk" target="_blank" class="link-button secondary"><i class="fas fa-globe"></i> Website</a>
+                </div>
+            </div>
+
+            <div class="board-card">
+                <h3>BISE Rawalpindi</h3>
+                <div class="card-links">
+                    <a href="#" class="link-button primary"><i class="fas fa-book-open"></i> View Gazette</a>
+                    <a href="http://biserwp.edu.pk" target="_blank" class="link-button secondary"><i class="fas fa-globe"></i> Website</a>
+                </div>
+            </div>
+
+            <div class="board-card">
+                <h3>BISE Bahawalpur</h3>
+                <div class="card-links">
+                    <a href="#" class="link-button primary"><i class="fas fa-book-open"></i> View Gazette</a>
+                    <a href="http://bisebwp.edu.pk" target="https://drive.google.com/file/d/1DCo0pr802mD4UKEUA5TDCJCdDrl9u8g-/view?usp=sharing" class="link-button secondary"><i class="fas fa-globe"></i> Website</a>
+                </div>
+            </div>
+
+            <div class="board-card">
+                <h3>BISE DG Khan</h3>
+                <div class="card-links">
+                    <a href="#" class="link-button primary"><i class="fas fa-book-open"></i> View Gazette</a>
+                    <a href="http://bisedgkhan.edu.pk" target="_blank" class="link-button secondary"><i class="fas fa-globe"></i> Website</a>
+                </div>
+            </div>
+            
+            <div class="board-card">
+                <h3>BISE Sahiwal</h3>
+                <div class="card-links">
+                    <a href="#" class="link-button primary"><i class="fas fa-book-open"></i> View Gazette</a>
+                    <a href="http://bisesahiwal.edu.pk" target="_blank" class="link-button secondary"><i class="fas fa-globe"></i> Website</a>
+                </div>
+            </div>
+        </main>
+        
+        <footer>
+            <p>&copy; 2025 Punjab Boards Results. Verify from official sources.</p>
+        </footer>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // === DARK MODE TOGGLE ===
+            const themeToggle = document.getElementById('theme-toggle');
+            const htmlEl = document.documentElement;
+            const currentTheme = localStorage.getItem('theme');
+
+            if (currentTheme) {
+                htmlEl.setAttribute('data-theme', currentTheme);
+            } else {
+                // Default to light theme if no preference is saved
+                htmlEl.setAttribute('data-theme', 'light');
+            }
+
+            themeToggle.addEventListener('click', () => {
+                let newTheme = htmlEl.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+                htmlEl.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+            });
+        });
+    </script>
+</body>
+  </html>
+  
