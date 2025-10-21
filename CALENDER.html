@@ -412,8 +412,8 @@
     animation: pulse 1.5s infinite;
   }
 </style>
-  </head>
-  <body>
+</head>
+<body>
 
 <div class="bg-animation"></div>
 
@@ -438,7 +438,7 @@
     <div class="card" id="timeCard">
       <div class="card-header">Current Time</div>
       <p id="timeNow" class="big-text">--:--:--</p>
-      <p id.="dateNow" class="muted">Loading date…</p>
+      <p id="dateNow" class="muted">Loading date…</p>
     </div>
 
     <div class="card" id="prayerCard">
@@ -558,7 +558,6 @@ const app = {
     settingsForm: document.getElementById("settingsForm"),
     cityInput: document.getElementById("cityInput"),
     countryInput: document.getElementById("countryInput"),
-    // NEW: Copy buttons
     copyAyatBtn: document.getElementById("copyAyatBtn"),
     copyTransBtn: document.getElementById("copyTransBtn"),
   }
@@ -567,7 +566,6 @@ const app = {
 // Get current time in the user-specified timezone
 const now = () => new Date(new Date().toLocaleString("en-US", { timeZone: app.state.timezone }));
 const pad = n => String(n).padStart(2, '0');
-// Helper to get Day of the Year (1-366)
 const getDOY = date => (Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()) - Date.UTC(date.getFullYear(), 0, 0)) / 24 / 60 / 60 / 1000;
 
 
@@ -585,12 +583,18 @@ function updateTime() {
   });
 }
 
-// 2. Prayer Times
+// 2. Prayer Times (FIXED)
 async function fetchPrayers(city, country) {
+  // FIX: Trim whitespace from inputs to prevent API errors from "Islamabad "
+  const cleanCity = city.trim();
+  const cleanCountry = country.trim();
+
   app.el.prayersList.innerHTML = '<div class="pulsing">Loading prayer times...</div>';
-  app.el.prayerLocation.textContent = `Prayer Times (${city})`;
+  // Use the cleaned city name for the header
+  app.el.prayerLocation.textContent = `Prayer Times (${cleanCity})`;
   try {
-    const res = await fetch(`https://api.aladhan.com/v1/timingsByCity?city=${city}&country=${country}&method=2`);
+    // Use cleaned variables in the API call
+    const res = await fetch(`https://api.aladhan.com/v1/timingsByCity?city=${cleanCity}&country=${cleanCountry}&method=2`);
     if (!res.ok) throw new Error("City not found or API error");
     const data = await res.json();
     
@@ -605,16 +609,15 @@ async function fetchPrayers(city, country) {
     }
     app.el.prayersList.innerHTML = html;
     
-    // Update Hijri Date
     const hijri = data.data.date.hijri;
     app.el.hijriDate.textContent = `Hijri: ${hijri.day} ${hijri.month.en} ${hijri.year}`;
 
-    // Run first update for time and countdown
     updateTime();
     updateNextPrayer();
 
   } catch (e) {
-    app.el.prayersList.textContent = `Failed to load times for ${city}. Please check spelling.`;
+    // This error message will now show the cleaned name
+    app.el.prayersList.textContent = `Failed to load times for ${cleanCity}. Please check spelling.`;
     console.error(e);
   }
 }
@@ -626,9 +629,8 @@ function updateNextPrayer() {
   const nowTotalSeconds = n.getHours() * 3600 + n.getMinutes() * 60 + n.getSeconds();
   
   let nextPrayerName = null;
-  let nextPrayerTime = 1e9; // A very large number
+  let nextPrayerTime = 1e9;
   let found = false;
-
   const prayerOrder = ["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"];
   
   for (let key of prayerOrder) {
@@ -645,7 +647,6 @@ function updateNextPrayer() {
 
   let diff;
   if (!found) {
-    // Next prayer is Fajr of the next day
     nextPrayerName = "Fajr";
     const [h, m] = (app.state.prayers.Fajr || "00:00").split(":").map(Number);
     const prayerTotalSeconds = h * 3600 + m * 60;
@@ -662,13 +663,10 @@ function updateNextPrayer() {
   app.el.countdown.textContent = `${pad(h)}:${pad(m)}:${pad(s)}`;
 }
 
-// 3. Daily Ayat (UPDATED for Urdu Translation)
+// 3. Daily Ayat
 async function fetchAyat() {
   try {
-    // 1. Get a random Ayah number (total ayahs in Quran is 6236)
     const randomAyahNum = Math.floor(Math.random() * 6236) + 1;
-    
-    // 2. Fetch Arabic (quran-uthmani) and Urdu (ur.maududi) editions
     const res = await fetch(`https://api.alquran.cloud/v1/ayah/${randomAyahNum}/editions/quran-uthmani,ur.maududi`);
     if (!res.ok) throw new Error("Failed to fetch Ayah");
     
@@ -677,7 +675,7 @@ async function fetchAyat() {
     const urduData = j.data[1];
 
     app.el.ayatArabic.textContent = arabicData.text;
-    app.el.ayatTrans.textContent = urduData.text; // This is now Urdu
+    app.el.ayatTrans.textContent = urduData.text;
     app.el.ayatRef.textContent = `[${arabicData.surah.englishName} ${arabicData.surah.number}:${arabicData.numberInSurah}]`;
 
   } catch (e) {
@@ -704,7 +702,7 @@ function loadHadees() {
   app.el.hadeesRef.textContent = "– " + hadithList[idx].ref;
 }
 
-// 5. Asma ul Husna (New Feature)
+// 5. Asma ul Husna
 function loadAsma() {
   const asma = [
     { name: "الرحمن", trans: "Ar-Rahman", meaning: "The Beneficent" },
@@ -804,6 +802,7 @@ function loadSettings() {
 function saveSettings(city, country) {
   app.state.city = city;
   app.state.country = country;
+  // Save the user's original typed input, even with spaces
   localStorage.setItem("islamic_dashboard_city", city);
   localStorage.setItem("islamic_dashboard_country", country);
 }
@@ -819,8 +818,10 @@ app.el.settingsModal.addEventListener("click", (e) => {
 
 app.el.settingsForm.addEventListener("submit", (e) => {
   e.preventDefault();
+  // Get the raw values from the form
   const city = app.el.cityInput.value;
   const country = app.el.countryInput.value;
+  // Save the raw values (the fetch function will clean them)
   saveSettings(city, country);
   fetchPrayers(city, country);
   app.el.settingsModal.classList.remove("show");
@@ -831,7 +832,7 @@ document.addEventListener("DOMContentLoaded", () => {
   loadTheme();
   loadSettings();
   
-  // Initial data fetch
+  // Initial data fetch (will use the cleaned values)
   fetchPrayers(app.state.city, app.state.country);
   fetchAyat();
   loadHadees();
@@ -841,7 +842,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setInterval(updateTime, 1000);
   setInterval(updateNextPrayer, 1000);
   
-  // NEW: Copy Button Listeners
+  // Copy Button Listeners
   app.el.copyAyatBtn.addEventListener('click', () => {
     navigator.clipboard.writeText(app.el.ayatArabic.textContent);
     app.el.copyAyatBtn.textContent = "Copied!";
@@ -866,4 +867,4 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 </body>
   </html>
-    
+  
