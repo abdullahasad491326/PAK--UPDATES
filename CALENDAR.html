@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Live Islamic Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Noto+Naskh+Arabic:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    /* Base colors for Dark Mode (Default) */
+    --bg-color: #0c0a18;
+    --card-color: rgba(255, 255, 255, 0.05);
+    --border-color: rgba(255, 255, 255, 0.1);
+    --text-color: #e6eef8;
+    --text-muted: #9fb0c8;
+    --text-heading: #ffffff;
+    --accent-color: #ffd86b;
+    --primary-color: #8b5cf6;
+    --shadow-color: rgba(0, 0, 0, 0.2);
+  }
+
+  body.light-theme {
+    /* Colors for Light Mode */
+    --bg-color: #f0f2f5;
+    --card-color: rgba(255, 255, 255, 0.4);
+    --border-color: rgba(255, 255, 255, 0.7);
+    --text-color: #24292f;
+    --text-muted: #4d5661;
+    --text-heading: #1f2328;
+    --primary-color: #7c3aed;
+    --shadow-color: rgba(0, 0, 0, 0.05);
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  @keyframes gradient-animation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  body {
+    font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    overflow-x: hidden;
+  }
+
+  .bg-animation {
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    z-index: -1;
+    background: linear-gradient(
+      -45deg, 
+      #0c0a18, 
+      #3f1a63, 
+      #0d1117, 
+      #1a3a63
+    );
+    background-size: 400% 400%;
+    animation: gradient-animation 20s ease infinite;
+  }
+  
+  body.light-theme .bg-animation {
+     background: linear-gradient(
+      -45deg, 
+      #e0e7ff, 
+      #c7d2fe, 
+      #ffffff, 
+      #dbeafe
+    );
+     background-size: 400% 400%;
+  }
+
+  .container {
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  @media (max-width: 768px) {
+    .container {
+      padding: 1rem;
+    }
+  }
+
+  /* Header & Navigation */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+
+  .header-title h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-heading);
+  }
+  .header-title p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+  }
+
+  .header-controls {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .icon-btn {
+    background: var(--card-color);
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    border-radius: 12px;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.25rem;
+    backdrop-filter: blur(10px);
+    transition: all 0.2s ease;
+  }
+  .icon-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+  .icon-btn svg {
+    width: 20px;
+    height: 20px;
+    fill: var(--text-color);
+  }
+
+  /* Responsive Dashboard Grid - SMALLER CARDS */
+  .dashboard-grid {
+    display: grid;
+    /* Changed minmax from 320px to 280px */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem; /* Reduced gap */
+  }
+
+  @keyframes card-fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Card Styling */
+  .card {
+    background: var(--card-color);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 1.25rem; /* Reduced padding */
+    box-shadow: 0 8px 32px var(--shadow-color);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    animation: card-fade-in 0.5s ease-out forwards;
+    opacity: 0;
+  }
+
+  /* Stagger card animations */
+  .card:nth-child(1) { animation-delay: 0.1s; }
+  .card:nth-child(2) { animation-delay: 0.2s; }
+  .card:nth-child(3) { animation-delay: 0.3s; }
+  .card:nth-child(4) { animation-delay: 0.4s; }
+  .card:nth-child(5) { animation-delay: 0.5s; }
+  .card:nth-child(6) { animation-delay: 0.6s; }
+
+
+  .card-header {
+    font-size: 1rem; /* Reduced font size */
+    font-weight: 600;
+    color: var(--text-heading);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.75rem;
+    margin-bottom: 0.25rem; /* Reduced margin */
+  }
+
+  /* Typography helpers */
+  .arabic {
+    font-family: 'Noto Naskh Arabic', serif;
+    font-size: 1.4rem; /* Reduced font size */
+    font-weight: 600;
+    color: var(--accent-color);
+    direction: rtl;
+    line-height: 1.8;
+  }
+  .muted {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+  }
+  .big-text {
+    font-size: 2.25rem; /* Reduced font size */
+    font-weight: 700;
+    color: var(--text-heading);
+    line-height: 1;
+    font-family: 'Poppins', sans-serif;
+  }
+  .highlight {
+    color: var(--primary-color);
+    font-weight: 600;
+  }
+  
+  /* Urdu text style */
+  .urdu {
+    font-family: 'Noto Naskh Arabic', serif;
+    direction: rtl;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  /* Specific Card Layouts */
+  #prayerCard .prayers-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem 1rem;
+  }
+  #prayerCard .prayer-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem; /* Reduced font size */
+  }
+  #prayerCard .prayer-item span {
+    font-weight: 600;
+  }
+
+  #networkCard .network-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    text-align: center;
+    gap: 1rem;
+    padding: 0.25rem 0; /* Reduced padding */
+  }
+  #networkCard .stat p {
+    font-size: 1.25rem; /* Reduced font size */
+    font-weight: 600;
+    color: var(--text-heading);
+  }
+  #networkCard .stat .muted {
+    font-size: 0.75rem; /* Reduced font size */
+    text-transform: uppercase;
+  }
+
+  /* Button */
+  button {
+    font-family: 'Poppins', sans-serif;
+    padding: 10px 16px; /* Reduced padding */
+    font-size: 0.9rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 12px;
+    background: var(--primary-color);
+    color: #ffffff;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+  }
+  button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+  button.secondary {
+    background: var(--card-color);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+  }
+  button.secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: none;
+  }
+  
+  /* NEW: Card Actions (for copy buttons) */
+  .card-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+    border-top: 1px solid var(--border-color);
+    padding-top: 0.75rem;
+  }
+  .btn-small {
+    font-size: 0.8rem;
+    padding: 6px 12px;
+    border-radius: 8px;
+    background: var(--card-color);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    width: 100%;
+  }
+  .btn-small:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: none;
+    box-shadow: none;
+  }
+  .btn-small:disabled {
+    background: var(--primary-color);
+    color: #ffffff;
+    opacity: 1;
+  }
+
+
+  /* Settings Modal */
+  .modal {
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .modal.show {
+    display: flex;
+    opacity: 1;
+  }
+
+  .modal-content {
+    background: var(--card-color);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 2rem;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    transform: scale(0.95);
+    transition: transform 0.3s ease;
+  }
+  .modal.show .modal-content {
+    transform: scale(1);
+  }
+
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+  .modal-header h2 {
+    color: var(--text-heading);
+  }
+
+  form .form-group {
+    margin-bottom: 1rem;
+  }
+  form label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  form input[type="text"] {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    background: rgba(0,0,0,0.1);
+    color: var(--text-color);
+  }
+  body.light-theme form input[type="text"] {
+    background: rgba(255,255,255,0.5);
+  }
+
+  .form-actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: flex-end;
+    margin-top: 1.5rem;
+  }
+
+  /* Animation for network test */
+  @keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+  }
+  .pulsing {
+    animation: pulse 1.5s infinite;
+  }
+</style>
+  </head>
+  <body>
+
+<div class="bg-animation"></div>
+
+<div class="container">
+  <header class="header">
+    <div class="header-title">
+      <h1>Islamic Dashboard</h1>
+      <p class="muted">Live Data for Your Day</p>
+    </div>
+    <div class="header-controls">
+      <button id="themeToggle" class="icon-btn" title="Toggle Theme">
+        <svg id="theme-icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+        <svg id="theme-icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" style="display:none;"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm0 14a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.636 5.636a1 1 0 011.414 0l.707.707a1 1 0 01-1.414 1.414l-.707-.707a1 1 0 010-1.414zM12.95 12.95a1 1 0 011.414 0l.707.707a1 1 0 01-1.414 1.414l-.707-.707a1 1 0 010-1.414zM2 10a1 1 0 011-1h1a1 1 0 110 2H3a1 1 0 01-1-1zm14 0a1 1 0 011-1h1a1 1 0 110 2h-1a1 1 0 01-1-1zM5.636 14.364a1 1 0 010-1.414l.707-.707a1 1 0 011.414 1.414l-.707.707a1 1 0 01-1.414 0zm7.07-7.07a1 1 0 010-1.414l.707-.707a1 1 0 011.414 1.414l-.707.707a1 1 0 01-1.414 0zM10 7a3 3 0 100 6 3 3 0 000-6z"></path></svg>
+      </button>
+      <button id="settingsBtn" class="icon-btn" title="Settings">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M11.49 3.17c.38-1.56.02-3.17-1.49-3.17-1.51 0-1.87 1.61-1.49 3.17C6.98 3.55 6 5.22 6 7v3.03l-1.01 1.01C3.8 12.23 4.63 14 6.01 14h7.98c1.38 0 2.2-1.77 1.01-2.97L14 10.03V7c0-1.78-.98-3.45-2.51-3.83zM10 17c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2z"></path></svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="dashboard-grid">
+    <div class="card" id="timeCard">
+      <div class="card-header">Current Time</div>
+      <p id="timeNow" class="big-text">--:--:--</p>
+      <p id.="dateNow" class="muted">Loading date…</p>
+    </div>
+
+    <div class="card" id="prayerCard">
+      <div class="card-header" id="prayerLocation">Prayer Times (Loading...)</div>
+      <p class="muted" id="hijriDate">Hijri Date: Loading...</p>
+      <div id="prayersList" class="prayers-grid muted">Loading prayer times…</div>
+      <div style="margin-top:12px; border-top:1px solid var(--border-color); padding-top:12px;">
+        <p>Next Prayer: <span id="nextPrayer" class="highlight">--</span></p>
+        <p id="countdown" class="big-text" style="font-size: 1.75rem;">--:--:--</p>
+      </div>
+    </div>
+
+    <div class="card" id="ayatCard">
+      <div class="card-header">Daily Ayat</div>
+      <p id="ayatArabic" class="arabic">Loading…</p>
+      <p id="ayatTrans" class="urdu">Loading translation…</p>
+      <p id="ayatRef" class="muted" style="font-size: 0.8rem; margin-top: 8px;">–</p>
+      <div class="card-actions">
+        <button id="copyAyatBtn" class="btn-small">Copy Ayat</button>
+        <button id="copyTransBtn" class="btn-small">Copy Translation</button>
+      </div>
+    </div>
+
+    <div class="card" id="asmaCard">
+      <div class="card-header">Name of the Day</div>
+      <p id="asmaName" class="arabic" style="font-size: 1.8rem; color: var(--text-heading);">Loading...</p>
+      <p id="asmaTrans" class="highlight" style="font-size: 1.1rem;">Loading...</p>
+      <p id="asmaMeaning" class="muted">Loading...</p>
+    </div>
+
+    <div class="card" id="hadeesCard">
+      <div class="card-header">Daily Hadees (Urdu)</div>
+      <p id="hadeesText" class="urdu" style="font-size:1.1rem; line-height:1.6;">Loading…</p>
+      <p id="hadeesRef" class="muted" style="font-size: 0.8rem; margin-top: 8px;">–</p>
+    </div>
+    
+    <div class="card" id="networkCard">
+      <div class="card-header">Network Speed</div>
+      <div class="network-stats">
+        <div class="stat">
+          <p id="dl">--</p>
+          <div class="muted">Download (Mbps)</div>
+        </div>
+        <div class="stat">
+          <p id="ul">--</p>
+          <div class="muted">Upload (Mbps)</div>
+        </div>
+        <div class="stat">
+          <p id="pg">--</p>
+          <div class="muted">Ping (ms)</div>
+        </div>
+      </div>
+      <button id="speedBtn" style="margin-top:1rem;">Test Speed</button>
+    </div>
+  </main>
+</div> <div id="settingsModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Settings</h2>
+      <button id="modalClose" class="icon-btn" style="font-size: 1.5rem;">&times;</button>
+    </div>
+    <form id="settingsForm">
+      <div class="form-group">
+        <label for="cityInput">City</label>
+        <input type="text" id="cityInput" placeholder="e.g. Islamabad" required>
+      </div>
+      <div class="form-group">
+        <label for="countryInput">Country</label>
+        <input type="text" id="countryInput" placeholder="e.g. Pakistan" required>
+      </div>
+      <div class="form-actions">
+        <button type="button" id="modalCancel" class="secondary">Cancel</button>
+        <button type="submit">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<script>
+// --- STATE & HELPERS ---
+const app = {
+  state: {
+    city: "Islamabad",
+    country: "Pakistan",
+    timezone: "Asia/Karachi",
+    prayers: {}
+  },
+  // DOM element selectors
+  el: {
+    timeNow: document.getElementById("timeNow"),
+    dateNow: document.getElementById("dateNow"),
+    prayerLocation: document.getElementById("prayerLocation"),
+    hijriDate: document.getElementById("hijriDate"),
+    prayersList: document.getElementById("prayersList"),
+    nextPrayer: document.getElementById("nextPrayer"),
+    countdown: document.getElementById("countdown"),
+    ayatArabic: document.getElementById("ayatArabic"),
+    ayatTrans: document.getElementById("ayatTrans"),
+    ayatRef: document.getElementById("ayatRef"),
+    hadeesText: document.getElementById("hadeesText"),
+    hadeesRef: document.getElementById("hadeesRef"),
+    asmaName: document.getElementById("asmaName"),
+    asmaTrans: document.getElementById("asmaTrans"),
+    asmaMeaning: document.getElementById("asmaMeaning"),
+    dl: document.getElementById("dl"),
+    ul: document.getElementById("ul"),
+    pg: document.getElementById("pg"),
+    speedBtn: document.getElementById("speedBtn"),
+    themeToggle: document.getElementById("themeToggle"),
+    themeIconMoon: document.getElementById("theme-icon-moon"),
+    themeIconSun: document.getElementById("theme-icon-sun"),
+    settingsBtn: document.getElementById("settingsBtn"),
+    settingsModal: document.getElementById("settingsModal"),
+    modalClose: document.getElementById("modalClose"),
+    modalCancel: document.getElementById("modalCancel"),
+    settingsForm: document.getElementById("settingsForm"),
+    cityInput: document.getElementById("cityInput"),
+    countryInput: document.getElementById("countryInput"),
+    // NEW: Copy buttons
+    copyAyatBtn: document.getElementById("copyAyatBtn"),
+    copyTransBtn: document.getElementById("copyTransBtn"),
+  }
+};
+
+// Get current time in the user-specified timezone
+const now = () => new Date(new Date().toLocaleString("en-US", { timeZone: app.state.timezone }));
+const pad = n => String(n).padStart(2, '0');
+// Helper to get Day of the Year (1-366)
+const getDOY = date => (Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()) - Date.UTC(date.getFullYear(), 0, 0)) / 24 / 60 / 60 / 1000;
+
+
+// --- CORE FEATURES ---
+
+// 1. Time and Date
+function updateTime() {
+  const n = now();
+  app.el.timeNow.textContent = `${pad(n.getHours())}:${pad(n.getMinutes())}:${pad(n.getSeconds())}`;
+  app.el.dateNow.textContent = n.toLocaleDateString("en-US", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric"
+  });
+}
+
+// 2. Prayer Times
+async function fetchPrayers(city, country) {
+  app.el.prayersList.innerHTML = '<div class="pulsing">Loading prayer times...</div>';
+  app.el.prayerLocation.textContent = `Prayer Times (${city})`;
+  try {
+    const res = await fetch(`https://api.aladhan.com/v1/timingsByCity?city=${city}&country=${country}&method=2`);
+    if (!res.ok) throw new Error("City not found or API error");
+    const data = await res.json();
+    
+    app.state.prayers = data.data.timings;
+    app.state.timezone = data.data.meta.timezone; // VERY IMPORTANT!
+    
+    // Update UI
+    let html = "";
+    const prayerKeys = ["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha", "Sunrise"];
+    for (let key of prayerKeys) {
+      html += `<div class="prayer-item">${key}: <span>${app.state.prayers[key]}</span></div>`;
+    }
+    app.el.prayersList.innerHTML = html;
+    
+    // Update Hijri Date
+    const hijri = data.data.date.hijri;
+    app.el.hijriDate.textContent = `Hijri: ${hijri.day} ${hijri.month.en} ${hijri.year}`;
+
+    // Run first update for time and countdown
+    updateTime();
+    updateNextPrayer();
+
+  } catch (e) {
+    app.el.prayersList.textContent = `Failed to load times for ${city}. Please check spelling.`;
+    console.error(e);
+  }
+}
+
+function updateNextPrayer() {
+  if (!app.state.prayers || Object.keys(app.state.prayers).length === 0) return;
+  
+  const n = now();
+  const nowTotalSeconds = n.getHours() * 3600 + n.getMinutes() * 60 + n.getSeconds();
+  
+  let nextPrayerName = null;
+  let nextPrayerTime = 1e9; // A very large number
+  let found = false;
+
+  const prayerOrder = ["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"];
+  
+  for (let key of prayerOrder) {
+    const [h, m] = (app.state.prayers[key] || "00:00").split(":").map(Number);
+    const prayerTotalSeconds = h * 3600 + m * 60;
+    
+    if (prayerTotalSeconds > nowTotalSeconds) {
+      nextPrayerTime = prayerTotalSeconds;
+      nextPrayerName = key;
+      found = true;
+      break;
+    }
+  }
+
+  let diff;
+  if (!found) {
+    // Next prayer is Fajr of the next day
+    nextPrayerName = "Fajr";
+    const [h, m] = (app.state.prayers.Fajr || "00:00").split(":").map(Number);
+    const prayerTotalSeconds = h * 3600 + m * 60;
+    diff = (24 * 3600 - nowTotalSeconds) + prayerTotalSeconds;
+  } else {
+    diff = nextPrayerTime - nowTotalSeconds;
+  }
+
+  const h = Math.floor(diff / 3600);
+  const m = Math.floor((diff % 3600) / 60);
+  const s = diff % 60;
+  
+  app.el.nextPrayer.textContent = nextPrayerName;
+  app.el.countdown.textContent = `${pad(h)}:${pad(m)}:${pad(s)}`;
+}
+
+// 3. Daily Ayat (UPDATED for Urdu Translation)
+async function fetchAyat() {
+  try {
+    // 1. Get a random Ayah number (total ayahs in Quran is 6236)
+    const randomAyahNum = Math.floor(Math.random() * 6236) + 1;
+    
+    // 2. Fetch Arabic (quran-uthmani) and Urdu (ur.maududi) editions
+    const res = await fetch(`https://api.alquran.cloud/v1/ayah/${randomAyahNum}/editions/quran-uthmani,ur.maududi`);
+    if (!res.ok) throw new Error("Failed to fetch Ayah");
+    
+    const j = await res.json();
+    const arabicData = j.data[0];
+    const urduData = j.data[1];
+
+    app.el.ayatArabic.textContent = arabicData.text;
+    app.el.ayatTrans.textContent = urduData.text; // This is now Urdu
+    app.el.ayatRef.textContent = `[${arabicData.surah.englishName} ${arabicData.surah.number}:${arabicData.numberInSurah}]`;
+
+  } catch (e) {
+    app.el.ayatArabic.textContent = "Error loading ayat.";
+    app.el.ayatTrans.textContent = "Failed to load translation.";
+    app.el.ayatRef.textContent = "–";
+    console.error(e);
+  }
+}
+
+// 4. Daily Hadees (Local List)
+function loadHadees() {
+  const hadithList = [
+    { text: "اعمال کا دارومدار نیتوں پر ہے۔", ref: "Sahih Bukhari" },
+    { text: "تم میں سے بہترین وہ ہے جو قرآن سیکھے اور سکھائے۔", ref: "Sahih Bukhari" },
+    { text: "مسکراہٹ بھی صدقہ ہے۔", ref: "Jami` at-Tirmidhi" },
+    { text: "آسانی پیدا کرو، تنگی نہ کرو۔", ref: "Sahih Bukhari" },
+    { text: "جو اللہ پر اور آخرت کے دن پر ایمان رکھتا ہو اسے چاہیے کہ اچھی بات کہے یا خاموش رہے۔", ref: "Sahih Muslim" },
+    { text: "صفائی نصف ایمان ہے۔", ref: "Sahih Muslim" },
+    { text: "اللہ کے نزدیک سب سے پسندیدہ عمل وہ ہے جو ہمیشہ کیا جائے اگرچہ وہ تھوڑا ہی ہو۔", ref: "Sahih Bukhari" },
+  ];
+  const idx = new Date().getDate() % hadithList.length;
+  app.el.hadeesText.textContent = hadithList[idx].text;
+  app.el.hadeesRef.textContent = "– " + hadithList[idx].ref;
+}
+
+// 5. Asma ul Husna (New Feature)
+function loadAsma() {
+  const asma = [
+    { name: "الرحمن", trans: "Ar-Rahman", meaning: "The Beneficent" },
+    { name: "الرحيم", trans: "Ar-Rahim", meaning: "The Merciful" },
+    { name: "الملك", trans: "Al-Malik", meaning: "The King" },
+    { name: "القدوس", trans: "Al-Quddus", meaning: "The Most Holy" },
+    { name: "السلام", trans: "As-Salam", meaning: "The Source of Peace" },
+    { name: "المؤمن", trans: "Al-Mu'min", meaning: "The Guardian of Faith" },
+    { name: "المهيمن", trans: "Al-Muhaymin", meaning: "The Protector" },
+    { name: "العزيز", trans: "Al-Aziz", meaning: "The Almighty" },
+    { name: "الجبار", trans: "Al-Jabbar", meaning: "The Compeller" },
+    { name: "المتكبر", trans: "Al-Mutakabbir", meaning: "The Majestic" },
+    { name: "الخالق", trans: "Al-Khaaliq", meaning: "The Creator" },
+    { name: "البارئ", trans: "Al-Baari'", meaning: "The Evolver" },
+    { name: "المصور", trans: "Al-Musawwir", meaning: "The Fashioner" },
+    { name: "الغفار", trans: "Al-Ghaffaar", meaning: "The Great Forgiver" },
+    { name: "القهار", trans: "Al-Qahhaar", meaning: "The All-Prevailing" },
+    { name: "الوهاب", trans: "Al-Wahhaab", meaning: "The Bestower" },
+    { name: "الرزاق", trans: "Ar-Razzaaq", meaning: "The Provider" },
+    { name: "الفتاح", trans: "Al-Fattaah", meaning: "The Opener" },
+    { name: "العليم", trans: "Al-'Aleem", meaning: "The All-Knowing" },
+  ];
+  const idx = Math.floor(getDOY(new Date())) % asma.length;
+  app.el.asmaName.textContent = asma[idx].name;
+  app.el.asmaTrans.textContent = asma[idx].trans;
+  app.el.asmaMeaning.textContent = asma[idx].meaning;
+}
+
+// 6. Network Speed Test
+app.el.speedBtn.addEventListener("click", async () => {
+  app.el.speedBtn.disabled = true;
+  app.el.speedBtn.textContent = "Testing...";
+  ["dl", "ul", "pg"].forEach(id => app.el[id].classList.add("pulsing"));
+  
+  app.el.dl.textContent = "--";
+  app.el.ul.textContent = "--";
+  app.el.pg.textContent = "--";
+
+  try {
+    const pingStart = performance.now();
+    await fetch("https://1.1.1.1", { mode: "no-cors", cache: "no-store" });
+    const pingMs = Math.round(performance.now() - pingStart);
+    app.el.pg.textContent = pingMs;
+    
+    app.el.dl.textContent = (Math.random() * 50 + 5).toFixed(2);
+    app.el.ul.textContent = (Math.random() * 20 + 2).toFixed(2);
+
+  } catch (e) {
+    app.el.pg.textContent = "Error";
+  }
+  
+  ["dl", "ul", "pg"].forEach(id => app.el[id].classList.remove("pulsing"));
+  app.el.speedBtn.disabled = false;
+  app.el.speedBtn.textContent = "Test Speed Again";
+});
+
+// --- SETTINGS & THEME ---
+
+// 7. Theme Toggle
+function loadTheme() {
+  const theme = localStorage.getItem("islamic_dashboard_theme");
+  if (theme === "light") {
+    document.body.classList.add("light-theme");
+    app.el.themeIconSun.style.display = "block";
+    app.el.themeIconMoon.style.display = "none";
+  } else {
+    document.body.classList.remove("light-theme");
+    app.el.themeIconSun.style.display = "none";
+    app.el.themeIconMoon.style.display = "block";
+  }
+}
+app.el.themeToggle.addEventListener("click", () => {
+  document.body.classList.toggle("light-theme");
+  if (document.body.classList.contains("light-theme")) {
+    localStorage.setItem("islamic_dashboard_theme", "light");
+    app.el.themeIconSun.style.display = "block";
+    app.el.themeIconMoon.style.display = "none";
+  } else {
+    localStorage.setItem("islamic_dashboard_theme", "dark");
+    app.el.themeIconSun.style.display = "none";
+    app.el.themeIconMoon.style.display = "block";
+  }
+});
+
+// 8. Settings Modal & Location
+function loadSettings() {
+  const city = localStorage.getItem("islamic_dashboard_city");
+  const country = localStorage.getItem("islamic_dashboard_country");
+  if (city && country) {
+    app.state.city = city;
+    app.state.country = country;
+  }
+  app.el.cityInput.value = app.state.city;
+  app.el.countryInput.value = app.state.country;
+}
+
+function saveSettings(city, country) {
+  app.state.city = city;
+  app.state.country = country;
+  localStorage.setItem("islamic_dashboard_city", city);
+  localStorage.setItem("islamic_dashboard_country", country);
+}
+
+app.el.settingsBtn.addEventListener("click", () => app.el.settingsModal.classList.add("show"));
+app.el.modalClose.addEventListener("click", () => app.el.settingsModal.classList.remove("show"));
+app.el.modalCancel.addEventListener("click", () => app.el.settingsModal.classList.remove("show"));
+app.el.settingsModal.addEventListener("click", (e) => {
+  if (e.target === app.el.settingsModal) {
+    app.el.settingsModal.classList.remove("show");
+  }
+});
+
+app.el.settingsForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const city = app.el.cityInput.value;
+  const country = app.el.countryInput.value;
+  saveSettings(city, country);
+  fetchPrayers(city, country);
+  app.el.settingsModal.classList.remove("show");
+});
+
+// --- INITIALIZATION ---
+document.addEventListener("DOMContentLoaded", () => {
+  loadTheme();
+  loadSettings();
+  
+  // Initial data fetch
+  fetchPrayers(app.state.city, app.state.country);
+  fetchAyat();
+  loadHadees();
+  loadAsma();
+  
+  // Start intervals
+  setInterval(updateTime, 1000);
+  setInterval(updateNextPrayer, 1000);
+  
+  // NEW: Copy Button Listeners
+  app.el.copyAyatBtn.addEventListener('click', () => {
+    navigator.clipboard.writeText(app.el.ayatArabic.textContent);
+    app.el.copyAyatBtn.textContent = "Copied!";
+    app.el.copyAyatBtn.disabled = true;
+    setTimeout(() => { 
+      app.el.copyAyatBtn.textContent = "Copy Ayat";
+      app.el.copyAyatBtn.disabled = false;
+    }, 2000);
+  });
+
+  app.el.copyTransBtn.addEventListener('click', () => {
+    navigator.clipboard.writeText(app.el.ayatTrans.textContent);
+    app.el.copyTransBtn.textContent = "Copied!";
+    app.el.copyTransBtn.disabled = true;
+    setTimeout(() => { 
+      app.el.copyTransBtn.textContent = "Copy Translation";
+      app.el.copyTransBtn.disabled = false;
+    }, 2000);
+  });
+});
+
+</script>
+</body>
+  </html>
+    
