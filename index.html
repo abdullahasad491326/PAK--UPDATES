@@ -10,27 +10,21 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg-color: #f4f7fa;
-    --card-bg: rgba(255, 255, 255, 0.7);
-    --text-color: #1a202c;
-    --text-muted-color: #4a5568;
-    --border-color: rgba(0, 0, 0, 0.08);
-    --aurora-color-1: rgba(59, 130, 246, 0.2);
-    --aurora-color-2: rgba(147, 51, 234, 0.2);
-    --accent-color: #3b82f6;
-    --accent-glow: rgba(59, 130, 246, 0.4);
-    --neon-cyan: #0ea5e9;
+    --bg-color: #f0f2f5;
+    --card-bg: #ffffff;
+    --text-color: #111827;
+    --text-muted-color: #6b7280;
+    --border-color: #e5e7eb;
+    --accent-color: #2563eb;
+    --neon-cyan: #2563eb; /* Use blue for light mode */
   }
   html.dark {
-    --bg-color: #0b1120;
-    --card-bg: rgba(15, 23, 42, 0.5);
-    --text-color: #e2e8f0;
-    --text-muted-color: #94a3b8;
-    --border-color: rgba(255, 255, 255, 0.1);
-    --aurora-color-1: rgba(22, 163, 74, 0.25);
-    --aurora-color-2: rgba(34, 211, 238, 0.25);
-    --accent-color: #22d3ee;
-    --accent-glow: rgba(34, 211, 238, 0.4);
+    --bg-color: #0d0d0f; /* Near black */
+    --card-bg: #131317; /* Off-black */
+    --text-color: #f0f0f0;
+    --text-muted-color: #737373;
+    --border-color: #27272a; /* Zinc 800 */
+    --accent-color: #22d3ee; /* Neon cyan */
     --neon-cyan: #22d3ee;
   }
   body { 
@@ -39,118 +33,171 @@
     color: var(--text-color); 
     overflow-x: hidden; 
     transition: background-color 0.3s ease;
-    background-image: linear-gradient(rgba(128,128,128,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(128,128,128,0.03) 1px, transparent 1px);
-    background-size: 20px 20px;
   }
   
-  /* Background & Cards */
-  #aurora-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -2; overflow: hidden; }
-  #aurora-container::before, #aurora-container::after { content: ''; position: absolute; top: 50%; left: 50%; width: 120vmax; height: 120vmax; background: radial-gradient(circle, var(--aurora-color-1), transparent 50%); border-radius: 50%; transform: translate(-50%, -50%); animation: aurora-move 20s infinite linear alternate; }
-  #aurora-container::after { background: radial-gradient(circle, var(--aurora-color-2), transparent 50%); animation: aurora-move-2 20s infinite linear alternate; animation-delay: -10s; }
-  @keyframes aurora-move { from { transform: translate(-55%, -60%) rotate(0deg); } to { transform: translate(-45%, -40%) rotate(360deg); } }
-  @keyframes aurora-move-2 { from { transform: translate(-45%, -40%) rotate(0deg); } to { transform: translate(-55%, -50%) rotate(-360deg); } }
-  .glass-card { background: var(--card-bg); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid var(--border-color); animation: fadeIn 1s ease-out; }
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-  
-  /* Input & Server Status */
-  .input-wrapper .validation-icon { position: absolute; right: 0.75rem; top: 50%; transform: translateY(-50%) scale(0); transition: transform 0.2s ease; }
-  .input-wrapper.valid .icon-valid, .input-wrapper.invalid .icon-invalid { transform: translateY(-50%) scale(1); }
-  .status-dot { height: 8px; width: 8px; border-radius: 50%; transition: background-color 0.3s; }
-  .status-dot.online { background-color: #22c55e; box-shadow: 0 0 6px #22c55e; animation: pulse-green 2s infinite; }
-  .status-dot.slow { background-color: #f59e0b; box-shadow: 0 0 6px #f59e0b; }
-  .status-dot.offline { background-color: #ef4444; }
-  @keyframes pulse-green { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+  /* Input & Validation */
+  .input-wrapper .validation-icon { 
+    position: absolute; 
+    right: 0.75rem; 
+    top: 50%; 
+    transform: translateY(-50%) scale(0); 
+    transition: transform 0.2s ease; 
+  }
+  .input-wrapper.valid .icon-valid, 
+  .input-wrapper.invalid .icon-invalid { 
+    transform: translateY(-50%) scale(1); 
+  }
 
-  /* Buttons & Utilities */
-  .btn-primary { background-color: var(--accent-color); color: white; transition: all 0.2s ease; }
-  .btn-primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 4px 20px var(--accent-glow); }
-  .btn-primary:disabled { cursor: not-allowed; background-color: var(--text-muted-color); opacity: 0.7; }
-  .btn-ghost { background: transparent; border: 1px solid var(--border-color); color: var(--text-muted-color); transition: all 0.2s ease; }
-  .btn-ghost:hover { color: var(--accent-color); border-color: var(--accent-color); background-color: rgba(128,128,128,0.05); }
-  .spinner { border: 2px solid #ffffff30; border-top: 2px solid #fff; border-radius: 50%; width: 1.25rem; height: 1.25rem; animation: spin 1s linear infinite; }
+  /* Base Button Style */
+  .btn { 
+    padding-top: 0.75rem; 
+    padding-bottom: 0.75rem; 
+    border-radius: 0.75rem; 
+    font-weight: 600; 
+    transition: all 0.2s ease; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    gap: 0.5rem; 
+    border: 2px solid transparent;
+  }
+
+  /* Spinner for buttons */
+  .spinner { 
+    border: 2px solid #ffffff30; 
+    border-top: 2px solid #fff; 
+    border-radius: 50%; 
+    width: 1.25rem; 
+    height: 1.25rem; 
+    animation: spin 1s linear infinite; 
+  }
+  
+  /* Spinner for main loader */
+  .loader { 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
+    gap: 1rem; 
+    padding: 2rem; 
+  }
+  .loader-spinner { 
+    width: 2.5rem; 
+    height: 2.5rem; 
+    border-radius: 50%; 
+    border: 3px solid var(--border-color); 
+    border-top-color: var(--accent-color); 
+    animation: spin 1s linear infinite; 
+  }
   @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-  #toast-notification { position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%); z-index: 100; transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); }
+
+  /* Toast Notification */
+  #toast-notification { 
+    position: fixed; 
+    bottom: -100px; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    z-index: 100; 
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); 
+  }
   #toast-notification.show { bottom: 30px; }
-  .result-card { animation: fadeIn 0.5s ease; }
+  
+  /* Result Card Styling */
+  .result-card-item { 
+    display: flex; 
+    align-items: center; 
+    gap: 0.75rem; 
+  }
+  .result-card-item svg { 
+    width: 1.25rem; 
+    height: 1.25rem; 
+    color: var(--accent-color); 
+    flex-shrink: 0; 
+  }
+
+  /* Card Fade-in */
+  .card-fade-in {
+    animation: fadeIn 0.5s ease-out;
+  }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
 </style>
 </head>
-<body class="p-4 sm:p-6">
+<body>
 
-<div id="aurora-container"></div>
 <div id="toast-notification"></div>
 
-<div class="container mx-auto max-w-2xl space-y-6">
+<div class="container mx-auto max-w-2xl space-y-6 px-4 py-8 sm:py-12">
   
   <header class="flex flex-col sm:flex-row justify-between items-center gap-2">
-    <h1 class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-cyan-400 dark:from-cyan-300 dark:to-green-400">SIM Database AI</h1>
+    <div class="flex items-center">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 mr-2 text-[var(--neon-cyan)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+      </svg>
+      <h1 class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[var(--accent-color)] to-[var(--neon-cyan)]">SIM Database AI</h1>
+    </div>
     <div class="flex items-center gap-4">
-      <div id="pakistan-time" class="text-sm font-semibold text-muted-color text-right"></div>
+      <div id="pakistan-time" class="text-sm font-semibold text-[var(--text-muted-color)] text-right"></div>
       <button id="theme-toggle" class="p-2 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-500/10" title="Toggle Theme"></button>
     </div>
   </header>
 
-  <main class="glass-card rounded-2xl p-6 shadow-lg">
+  <main class="bg-[var(--card-bg)] border border-[var(--border-color)] rounded-xl shadow-lg p-6 card-fade-in">
     <div class="input-wrapper relative mb-4">
-      <input id="search-input" type="tel" placeholder="Enter number or CNIC..." class="w-full p-4 pl-5 pr-12 rounded-xl border bg-white/50 dark:bg-black/20 border-[var(--border-color)] focus:ring-2 focus:ring-[var(--accent-color)] outline-none transition">
+      <input id="search-input" type="tel" placeholder="Enter number (03xxxxxxxxx)..." class="w-full p-4 pl-5 pr-12 rounded-xl border-2 bg-[var(--bg-color)] border-[var(--border-color)] focus:border-[var(--accent-color)] focus:ring-0 outline-none transition">
       <div class="validation-icon">
         <svg class="icon-valid h-6 w-6 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
         <svg class="icon-invalid h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
       </div>
     </div>
 
-    <div class="grid sm:grid-cols-2 gap-4 mt-4">
-      <div id="server-selector" class="p-1 rounded-lg flex justify-between bg-gray-500/10">
-        <button data-server="1" class="server-btn flex-1 py-2 text-sm font-semibold rounded-md flex items-center justify-center gap-2"><div class="status-dot"></div><span>S1</span></button>
-        <button data-server="2" class="server-btn flex-1 py-2 text-sm font-semibold rounded-md flex items-center justify-center gap-2"><div class="status-dot"></div><span>S2</span></button>
-        <button data-server="3" class="server-btn flex-1 py-2 text-sm font-semibold rounded-md flex items-center justify-center gap-2"><div class="status-dot"></div><span>S3</span></button>
-      </div>
-      <button id="search-btn" class="w-full py-3 rounded-xl btn-primary flex items-center justify-center gap-2 font-semibold">
-        <span id="search-btn-text">Search</span>
-        <div id="search-btn-spinner" class="spinner hidden"></div>
-      </button>
-    </div>
+    <button id="search-btn" class="w-full btn bg-[var(--accent-color)] text-black font-bold hover:brightness-110 disabled:opacity-50">
+      <span id="search-btn-text">Search</span>
+      <div id="search-btn-spinner" class="spinner !border-t-black !border-b-black/20 !border-l-black/20 !border-r-black/20 hidden"></div>
+    </button>
   </main>
   
-  <a href="https://whatsapp.com/channel/0029Vb9shWp4o7qPSrCXS603" target="_blank" rel="noopener noreferrer" class="w-full py-3 rounded-xl btn-ghost flex items-center justify-center gap-3 font-semibold">
+  <a href="https://whatsapp.com/channel/0029Vb9shWp4o7qPSrCXS603" target="_blank" rel="noopener noreferrer" class="w-full btn border-2 border-[var(--border-color)] text-[var(--text-muted-color)] hover:text-[var(--text-color)] hover:border-[var(--text-color)] card-fade-in">
     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.894 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.886-.001 2.267.655 4.398 1.908 6.161l.216.324-1.256 4.587 4.672-1.225.308.212z"/></svg>
     <span>Join WhatsApp Channel</span>
   </a>
 
-  <section class="grid md:grid-cols-2 gap-6">
-    <div id="dashboard-card" class="glass-card rounded-2xl p-6 shadow-lg">
+  <section class="grid md:grid-cols-2 gap-6 card-fade-in">
+    <div id="dashboard-card" class="bg-[var(--card-bg)] border border-[var(--border-color)] rounded-xl shadow-lg p-6">
       <h2 class="font-bold mb-4 text-lg">Session Analytics</h2>
       <div class="grid grid-cols-2 gap-4 text-center">
-        <div class="bg-gray-500/5 p-4 rounded-lg">
+        <div class="bg-[var(--bg-color)] p-4 rounded-lg border border-[var(--border-color)]">
           <div id="stats-total" class="text-3xl font-bold text-[var(--accent-color)]">0</div>
-          <p class="text-sm text-muted-color">Total Searches</p>
+          <p class="text-sm text-[var(--text-muted-color)]">Total Searches</p>
         </div>
-        <div class="bg-gray-500/5 p-4 rounded-lg">
+        <div class="bg-[var(--bg-color)] p-4 rounded-lg border border-[var(--border-color)]">
           <div id="stats-success" class="text-3xl font-bold text-[var(--accent-color)]">0%</div>
-          <p class="text-sm text-muted-color">Success Rate</p>
+          <p class="text-sm text-[var(--text-muted-color)]">Success Rate</p>
         </div>
       </div>
     </div>
-    <div id="history-panel" class="glass-card rounded-2xl p-6 shadow-lg hidden">
+    <div id="history-panel" class="bg-[var(--card-bg)] border border-[var(--border-color)] rounded-xl shadow-lg p-6 hidden">
       <div class="flex justify-between items-center mb-2">
         <h3 class="font-bold text-lg">Search History</h3>
-        <button id="clear-history-btn" class="text-sm text-blue-500 hover:underline">Clear</button>
+        <button id="clear-history-btn" class="text-sm text-[var(--accent-color)] hover:underline">Clear</button>
       </div>
       <div id="history-list" class="space-y-1 text-sm max-h-24 overflow-y-auto pr-2"></div>
     </div>
   </section>
 
   <div id="result-container" class="mt-4"></div>
-  </div>
-  <script>
+  
+  <footer class="text-center mt-6 pb-4">
+    <p class="text-xs text-[var(--text-muted-color)]">Powered by AI Toolkit</p>
+  </footer>
+      </div>
+          <script>
 document.addEventListener('DOMContentLoaded', () => {
   // --- STATE MANAGEMENT ---
   const state = {
     isLoading: false,
-    selectedServer: '1',
     servers: {
-      '1': { status: 'unknown', url: 'https://texify.xyz/api/check' },
-      '2': { status: 'unknown', url: 'https://livetrackersimdata.online/sim-owner-check.php' },
-      '3': { status: 'unknown', url: 'https://simownershipdata.info/sim-owner-check.php' }
+      '1': { status: 'unknown', url: 'https://afsimdata.site/index.php' }
     },
     analytics: JSON.parse(localStorage.getItem('simDbAnalytics')) || { total: 0, success: 0 },
     history: JSON.parse(localStorage.getItem('simDbHistory')) || []
@@ -161,7 +208,6 @@ document.addEventListener('DOMContentLoaded', () => {
     themeToggle: document.getElementById('theme-toggle'),
     pakistanTime: document.getElementById('pakistan-time'),
     searchInput: document.getElementById('search-input'),
-    serverSelector: document.getElementById('server-selector'),
     searchBtn: document.getElementById('search-btn'),
     searchBtnText: document.getElementById('search-btn-text'),
     searchBtnSpinner: document.getElementById('search-btn-spinner'),
@@ -184,8 +230,10 @@ document.addEventListener('DOMContentLoaded', () => {
   };
   
   const showToast = (message, type = 'info') => {
+    let bgColor = type === 'error' ? 'bg-red-500' : 'bg-[var(--accent-color)]';
+    let textColor = type === 'error' ? 'text-white' : 'text-black';
     DOMElements.toast.textContent = message;
-    DOMElements.toast.className = `py-3 px-6 rounded-lg z-50 shadow-lg font-semibold ${type === 'error' ? 'bg-red-500 text-white' : 'bg-[var(--accent-color)] text-white'}`;
+    DOMElements.toast.className = `py-3 px-6 rounded-lg z-50 shadow-lg font-semibold ${bgColor} ${textColor}`;
     DOMElements.toast.classList.add('show');
     setTimeout(() => DOMElements.toast.classList.remove('show'), 3000);
   };
@@ -218,90 +266,171 @@ document.addEventListener('DOMContentLoaded', () => {
   const handleSearch = async () => {
     const query = DOMElements.searchInput.value.trim();
     if (!validateQuery(query)) {
-      showToast('Invalid input format. Use 03xxxxxxxxx or a 13-digit CNIC.', 'error');
+      showToast('Invalid input. Please use the format 03xxxxxxxxx.', 'error');
       return;
     }
     
     setLoading(true);
+    // Show loader in result area
+    DOMElements.resultContainer.innerHTML = `
+      <div class="bg-[var(--card-bg)] border border-[var(--border-color)] rounded-xl p-6 loader card-fade-in">
+        <div class="loader-spinner"></div>
+        <p class="text-[var(--text-muted-color)]">Fetching data...</p>
+      </div>`;
+      
     try {
-      DOMElements.resultContainer.innerHTML = '';
       const result = await fetchApi(query);
       updateAnalytics(result.success);
-      renderResult(result);
+      renderResult(result); // Render success, info, or error card
       if (result.success) updateHistory(query);
     } catch (error) {
       console.error("An unexpected error occurred during search:", error);
-      showToast("An unexpected error occurred.", "error");
+      renderResult({ success: false, error: "An unexpected error occurred." });
     } finally {
       setLoading(false);
     }
   };
 
   const fetchApi = async (query) => {
-    const server = state.servers[state.selectedServer];
-    let url = server.url;
-    let options = { method: 'GET' };
-
-    if (state.selectedServer === '1') {
-      url = `${url}?q=${query}`;
-    } else {
-      options.method = 'POST';
-      const formData = new FormData();
-      formData.append('searchNumber', query);
-      options.body = formData;
+    const server = state.servers['1'];
+    const url = server.url;
+    
+    const extract = (field, oneLineHtml) => {
+      const re = new RegExp('<th\\s*>\\s*' + field + '\\s*<\\/th>\\s*<td\\s*>\\s*([^<]+?)\\s*<\\/td>', 'i');
+      const m = oneLineHtml.match(re);
+      return m ? m[1].trim() : null;
     }
 
     try {
-      const response = await fetch(`https://corsproxy.io/?${encodeURIComponent(url)}`, options);
-      if (!response.ok) throw new Error('Network error');
-      const data = await response.json();
-      if ((data.success || data.status === 'success') && (data.data?.length > 0 || data.total > 0)) {
-        return { success: true, data: data.data[0] };
+      const response = await fetch(`https://corsproxy.io/?${encodeURIComponent(url)}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'search_term=' + encodeURIComponent(query),
+      });
+
+      if (!response.ok) throw new Error(`Network error: ${response.status} ${response.statusText}`);
+
+      const html = await response.text();
+      const oneLine = html.replace(/\r?\n/g, ' ');
+
+      const name = extract('Name', oneLine);
+      const cnic = extract('CNIC', oneLine);
+      const address = extract('Address', oneLine);
+
+      if (name || cnic || address) {
+        return { 
+          success: true, 
+          data: { 
+            name: name, 
+            cnic: cnic, 
+            address: address, 
+            number: query 
+          } 
+        };
+      } else {
+        return { success: false, error: 'No record found for this number.' };
       }
-      return { success: false, error: 'No data found' };
     } catch (error) {
-      console.error(`API Error on Server ${state.selectedServer}:`, error);
-      return { success: false, error: 'Failed to fetch data' };
+      console.error(`API Error on Server 1:`, error);
+      return { success: false, error: 'API Error: ' + error.message };
     }
   };
 
   const renderResult = (result) => {
-    if (!result.success) {
-      DOMElements.resultContainer.innerHTML = `<div class="result-card glass-card text-center p-6 rounded-xl text-red-500">${result.error || 'An unknown error occurred.'}</div>`;
-      return;
-    }
-    const data = result.data;
-    const cardHTML = `
-      <div class="result-card glass-card rounded-xl p-6 border shadow-sm">
-        <h3 class="text-lg font-bold mb-4 border-b border-[var(--border-color)] pb-2">Search Result</h3>
-        <div class="space-y-3 text-sm">
-          <p><strong>Name:</strong> ${data.name || 'N/A'}</p>
-          <p><strong>Number:</strong> ${data.number || data.phone || 'N/A'}</p>
-          <p><strong>CNIC:</strong> ${data.cnic || 'N/A'}</p>
-          <p><strong>Address:</strong> ${data.address || 'N/A'}</p>
+    // Helper to check for N/A values
+    const val = (field) => field || `<span class="text-[var(--text-muted-color)]">N/A</span>`;
+    
+    if (result.success) {
+      // --- SUCCESS CARD ---
+      const data = result.data;
+      const cardHTML = `
+        <div class="bg-[var(--card-bg)] border border-[var(--border-color)] rounded-xl p-6 shadow-lg card-fade-in">
+          <h3 class="text-lg font-bold mb-4 border-b border-[var(--border-color)] pb-2 flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-[var(--accent-color)]" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" /></svg>
+            Search Result
+          </h3>
+          <div class="space-y-4">
+            <div class="result-card-item">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A1.5 1.5 0 0118 21.75H6a1.5 1.5 0 01-1.499-1.632z" /></svg>
+              <div><strong>Name:</strong> ${val(data.name)}</div>
+            </div>
+            <div class="result-card-item">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" /></svg>
+              <div><strong>Number:</strong> ${val(data.number)}</div>
+            </div>
+            <div class="result-card-item">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" /></svg>
+              <div><strong>CNIC:</strong> ${val(data.cnic)}</div>
+            </div>
+            <div class="result-card-item">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" /></svg>
+              <div><strong>Address:</strong> ${val(data.address)}</div>
+            </div>
+          </div>
+          <button id="copy-btn" class="w-full btn border-2 border-[var(--border-color)] text-[var(--text-muted-color)] hover:text-[var(--text-color)] hover:border-[var(--text-color)] mt-6">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+            Copy Details
+          </button>
         </div>
-      </div>
-    `;
-    DOMElements.resultContainer.innerHTML = cardHTML;
+      `;
+      DOMElements.resultContainer.innerHTML = cardHTML;
+      
+    } else if (result.error === 'No record found for this number.') {
+      // --- INFO CARD (No Record) ---
+      DOMElements.resultContainer.innerHTML = `
+        <div class="bg-[var(--card-bg)] border border-[var(--border-color)] rounded-xl p-6 text-center card-fade-in">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-[var(--accent-color)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+          <h3 class="font-semibold text-lg mt-2">No Record Found</h3>
+          <p class="text-[var(--text-muted-color)] text-sm">${result.error}</p>
+        </div>`;
+        
+    } else {
+      // --- ERROR CARD (API/Network) ---
+      DOMElements.resultContainer.innerHTML = `
+        <div class="bg-[var(--card-bg)] border border-[var(--border-color)] rounded-xl p-6 text-center card-fade-in">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126z" /></svg>
+          <h3 class="font-semibold text-lg mt-2 text-red-400">Error</h3>
+          <p class="text-[var(--text-muted-color)] text-sm">${result.error || 'An unknown error occurred.'}</p>
+        </div>`;
+    }
   };
   
   // --- UI & EVENT HANDLERS ---
   const setupEventListeners = () => {
     DOMElements.themeToggle.addEventListener('click', toggleTheme);
-    DOMElements.serverSelector.addEventListener('click', handleServerSelect);
     DOMElements.searchBtn.addEventListener('click', handleSearch);
     DOMElements.searchInput.addEventListener('input', (e) => validateInput(e.target));
     DOMElements.searchInput.addEventListener('keyup', (e) => { if (e.key === 'Enter') handleSearch(); });
     DOMElements.clearHistoryBtn.addEventListener('click', clearHistory);
     DOMElements.historyList.addEventListener('click', handleHistoryClick);
+    
+    // Event delegation for dynamic copy button
+    DOMElements.resultContainer.addEventListener('click', (e) => {
+      if (e.target.closest('#copy-btn')) {
+        copyResultToClipboard();
+      }
+    });
   };
   
-  const handleServerSelect = (e) => {
-      const btn = e.target.closest('.server-btn');
-      if (!btn) return;
-      document.querySelectorAll('.server-btn').forEach(b => b.classList.remove('bg-black/10', 'dark:bg-white/10'));
-      btn.classList.add('bg-black/10', 'dark:bg-white/10');
-      state.selectedServer = btn.dataset.server;
+  const copyResultToClipboard = () => {
+    const resultItems = DOMElements.resultContainer.querySelectorAll('.result-card-item');
+    if (!resultItems.length) return;
+    
+    let textToCopy = "--- SIM DB AI Result ---\n";
+    resultItems.forEach(item => {
+      const strong = item.querySelector('strong')?.textContent || '';
+      const value = item.querySelector('div')?.textContent.replace(strong, '').trim() || 'N/A';
+      textToCopy += `${strong} ${value}\n`;
+    });
+
+    navigator.clipboard.writeText(textToCopy.trim())
+      .then(() => {
+        showToast('Details copied to clipboard!', 'info');
+      })
+      .catch(err => {
+        console.error('Failed to copy: ', err);
+        showToast('Failed to copy text.', 'error');
+      });
   };
 
   const validateInput = (input) => {
@@ -312,7 +441,7 @@ document.addEventListener('DOMContentLoaded', () => {
     wrapper.classList.toggle('invalid', value.length > 0 && !isValid);
   };
 
-  const validateQuery = (query) => /^(03\d{9})$|^\d{13}$/.test(query);
+  const validateQuery = (query) => /^(03\d{9})$/.test(query);
 
   const updateHistory = (query) => {
       state.history = state.history.filter(item => item !== query);
@@ -323,9 +452,14 @@ document.addEventListener('DOMContentLoaded', () => {
   };
   
   const renderHistory = () => {
-      if (state.history.length === 0) { DOMElements.historyPanel.classList.add('hidden'); return; }
+      if (state.history.length === 0) { 
+        DOMElements.historyPanel.classList.add('hidden'); 
+        return; 
+      }
       DOMElements.historyPanel.classList.remove('hidden');
-      DOMElements.historyList.innerHTML = state.history.map(item => `<div class="history-item p-2 rounded-md hover:bg-gray-500/10 cursor-pointer">${item}</div>`).join('');
+      DOMElements.historyList.innerHTML = state.history.map(item => 
+        `<div class="history-item p-2 rounded-md hover:bg-[var(--bg-color)] cursor-pointer text-[var(--text-muted-color)] hover:text-[var(--text-color)]">${item}</div>`
+      ).join('');
   };
   
   const clearHistory = () => {
@@ -342,8 +476,6 @@ document.addEventListener('DOMContentLoaded', () => {
           handleSearch();
       }
   };
-
-  const pingAllServers = async () => { /* ... server ping logic remains the same ... */ };
 
   // --- TIME & THEME ---
   const updatePakistanTime = () => {
@@ -378,13 +510,11 @@ document.addEventListener('DOMContentLoaded', () => {
     updateThemeUI(isDark);
 
     updatePakistanTime();
-    setInterval(updatePakistanTime, 1000); // Update the clock every second
+    setInterval(updatePakistanTime, 1000); 
 
-    document.querySelector('.server-btn[data-server="1"]').classList.add('bg-black/10', 'dark:bg-white/10');
     updateAnalytics();
     renderHistory();
     setupEventListeners();
-    pingAllServers();
   };
 
   init();
