@@ -16,15 +16,15 @@
     --text-muted-color: #6b7280;
     --border-color: #e5e7eb;
     --accent-color: #2563eb;
-    --neon-cyan: #2563eb; 
+    --neon-cyan: #2563eb; /* Use blue for light mode */
   }
   html.dark {
-    --bg-color: #0d0d0f; 
-    --card-bg: #131317; 
+    --bg-color: #0d0d0f; /* Near black */
+    --card-bg: #131317; /* Off-black */
     --text-color: #f0f0f0;
     --text-muted-color: #737373;
-    --border-color: #27272a; 
-    --accent-color: #22d3ee; 
+    --border-color: #27272a; /* Zinc 800 */
+    --accent-color: #22d3ee; /* Neon cyan */
     --neon-cyan: #22d3ee;
   }
   body { 
@@ -35,25 +35,17 @@
     transition: background-color 0.3s ease;
   }
   
-  /* Input & Validation Icons */
-  .input-wrapper .icon { 
+  /* Input & Validation */
+  .input-wrapper .validation-icon { 
     position: absolute; 
     right: 0.75rem; 
     top: 50%; 
     transform: translateY(-50%) scale(0); 
-    transition: all 0.2s ease; 
-    cursor: pointer;
+    transition: transform 0.2s ease; 
   }
   .input-wrapper.valid .icon-valid, 
   .input-wrapper.invalid .icon-invalid { 
     transform: translateY(-50%) scale(1); 
-  }
-  /* Show clear button when input has text, but hide if valid/invalid icons are shown */
-  .input-wrapper.has-text:not(.valid):not(.invalid) .icon-clear {
-    transform: translateY(-50%) scale(1);
-  }
-  .input-wrapper .icon-clear:hover {
-    color: var(--text-color);
   }
 
   /* Base Button Style */
@@ -152,12 +144,10 @@
 
   <main class="bg-[var(--card-bg)] border border-[var(--border-color)] rounded-xl shadow-lg p-6 card-fade-in">
     <div class="input-wrapper relative mb-4">
-      <input id="search-input" type="tel" placeholder="Enter number (03xxxxxxxxx)..." maxlength="11" class="w-full p-4 pl-5 pr-12 rounded-xl border-2 bg-[var(--bg-color)] border-[var(--border-color)] focus:border-[var(--accent-color)] focus:ring-0 outline-none transition">
-      
+      <input id="search-input" type="tel" placeholder="Enter number (03xxxxxxxxx)..." class="w-full p-4 pl-5 pr-12 rounded-xl border-2 bg-[var(--bg-color)] border-[var(--border-color)] focus:border-[var(--accent-color)] focus:ring-0 outline-none transition">
       <div class="validation-icon">
-        <svg id="clear-search-btn" class="icon icon-clear h-6 w-6 text-[var(--text-muted-color)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
-        <svg class="icon icon-valid h-6 w-6 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-        <svg class="icon icon-invalid h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+        <svg class="icon-valid h-6 w-6 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+        <svg class="icon-invalid h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
       </div>
     </div>
 
@@ -198,10 +188,10 @@
   </section>
 
   <footer class="text-center mt-6 pb-4">
-    <p class="text-xs text-[var(--text-muted-color)]">Powered by AI Toolkit</p>
+    <p class="text-xs text-[var(--text-muted-color)]">Powered by AI Pak-Cyber</p>
   </footer>
-  </div>
-    <script>
+    </div>
+        <script>
 document.addEventListener('DOMContentLoaded', () => {
   // --- STATE MANAGEMENT ---
   const state = {
@@ -227,8 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
     historyPanel: document.getElementById('history-panel'),
     historyList: document.getElementById('history-list'),
     clearHistoryBtn: document.getElementById('clear-history-btn'),
-    toast: document.getElementById('toast-notification'),
-    clearSearchBtn: document.getElementById('clear-search-btn') // ADDED
+    toast: document.getElementById('toast-notification')
   };
 
   // --- CORE FUNCTIONS ---
@@ -348,9 +337,11 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   const renderResult = (result) => {
+    // Helper to check for N/A values
     const val = (field) => field || `<span class="text-[var(--text-muted-color)]">N/A</span>`;
     
     if (result.success) {
+      // --- SUCCESS CARD ---
       const data = result.data;
       const cardHTML = `
         <div class="bg-[var(--card-bg)] border border-[var(--border-color)] rounded-xl p-6 shadow-lg card-fade-in">
@@ -378,7 +369,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
           <button id="copy-btn" class="w-full btn border-2 border-[var(--border-color)] text-[var(--text-muted-color)] hover:text-[var(--text-color)] hover:border-[var(--text-color)] mt-6">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
-            <span class="copy-btn-text">Copy Details</span>
+            Copy Details
           </button>
         </div>
       `;
@@ -412,26 +403,16 @@ document.addEventListener('DOMContentLoaded', () => {
     DOMElements.searchInput.addEventListener('keyup', (e) => { if (e.key === 'Enter') handleSearch(); });
     DOMElements.clearHistoryBtn.addEventListener('click', clearHistory);
     DOMElements.historyList.addEventListener('click', handleHistoryClick);
-    DOMElements.clearSearchBtn.addEventListener('click', handleClearSearch); // ADDED
     
     // Event delegation for dynamic copy button
     DOMElements.resultContainer.addEventListener('click', (e) => {
-      const copyBtn = e.target.closest('#copy-btn');
-      if (copyBtn) {
-        copyResultToClipboard(copyBtn); // Pass the button itself
+      if (e.target.closest('#copy-btn')) {
+        copyResultToClipboard();
       }
     });
   };
   
-  // ADDED
-  const handleClearSearch = () => {
-    DOMElements.searchInput.value = '';
-    validateInput(DOMElements.searchInput); // Re-run validation to hide icons
-    DOMElements.searchInput.focus(); // Keep focus on the input
-  };
-
-  // UPDATED
-  const copyResultToClipboard = (copyBtn) => {
+  const copyResultToClipboard = () => {
     const resultItems = DOMElements.resultContainer.querySelectorAll('.result-card-item');
     if (!resultItems.length) return;
     
@@ -444,15 +425,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     navigator.clipboard.writeText(textToCopy.trim())
       .then(() => {
-        showToast('Copied to clipboard!', 'info');
-        // Give visual feedback on the button
-        const btnText = copyBtn.querySelector('.copy-btn-text');
-        if (btnText) {
-          btnText.textContent = 'Copied!';
-          setTimeout(() => {
-            btnText.textContent = 'Copy Details';
-          }, 2000);
-        }
+        showToast('Details copied to clipboard!', 'info');
       })
       .catch(err => {
         console.error('Failed to copy: ', err);
@@ -460,14 +433,12 @@ document.addEventListener('DOMContentLoaded', () => {
       });
   };
 
-  // UPDATED
   const validateInput = (input) => {
     const value = input.value.trim();
     const isValid = validateQuery(value);
-    const wrapper = input.parentElement.parentElement; // Get .input-wrapper
+    const wrapper = input.parentElement;
     wrapper.classList.toggle('valid', isValid);
     wrapper.classList.toggle('invalid', value.length > 0 && !isValid);
-    wrapper.classList.toggle('has-text', value.length > 0); // For clear button
   };
 
   const validateQuery = (query) => /^(03\d{9})$/.test(query);
@@ -486,7 +457,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return; 
       }
       DOMElements.historyPanel.classList.remove('hidden');
-      // ADDED hover effect class
       DOMElements.historyList.innerHTML = state.history.map(item => 
         `<div class="history-item p-2 rounded-md hover:bg-[var(--bg-color)] cursor-pointer text-[var(--text-muted-color)] hover:text-[var(--text-color)]">${item}</div>`
       ).join('');
@@ -551,5 +521,4 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 </body>
-  </html>
-  
+</html>
