@@ -423,4 +423,102 @@ document.addEventListener('DOMContentLoaded', () => {
       textToCopy += `${strong} ${value}\n`;
     });
 
-    navigator.clipboard.
+    navigator.clipboard.writeText(textToCopy.trim())
+      .then(() => {
+        showToast('Details copied to clipboard!', 'info');
+      })
+      .catch(err => {
+        console.error('Failed to copy: ', err);
+        showToast('Failed to copy text.', 'error');
+      });
+  };
+
+  const validateInput = (input) => {
+    const value = input.value.trim();
+    const isValid = validateQuery(value);
+    const wrapper = input.parentElement;
+    wrapper.classList.toggle('valid', isValid);
+    wrapper.classList.toggle('invalid', value.length > 0 && !isValid);
+  };
+
+  const validateQuery = (query) => /^(03\d{9})$/.test(query);
+
+  const updateHistory = (query) => {
+      state.history = state.history.filter(item => item !== query);
+      state.history.unshift(query);
+      if (state.history.length > 5) state.history.pop();
+      localStorage.setItem('simDbHistory', JSON.stringify(state.history));
+      renderHistory();
+  };
+  
+  const renderHistory = () => {
+      if (state.history.length === 0) { 
+        DOMElements.historyPanel.classList.add('hidden'); 
+        return; 
+      }
+      DOMElements.historyPanel.classList.remove('hidden');
+      DOMElements.historyList.innerHTML = state.history.map(item => 
+        `<div class="history-item p-2 rounded-md hover:bg-[var(--bg-color)] cursor-pointer text-[var(--text-muted-color)] hover:text-[var(--text-color)]">${item}</div>`
+      ).join('');
+  };
+  
+  const clearHistory = () => {
+      state.history = [];
+      localStorage.removeItem('simDbHistory');
+      renderHistory();
+  };
+
+  const handleHistoryClick = (e) => {
+      const item = e.target.closest('.history-item');
+      if (item) {
+          DOMElements.searchInput.value = item.textContent;
+          validateInput(DOMElements.searchInput);
+          handleSearch();
+      }
+  };
+
+  // --- TIME & THEME ---
+  const updatePakistanTime = () => {
+    const now = new Date();
+    const timeString = now.toLocaleTimeString('en-US', {
+      timeZone: 'Asia/Karachi',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: true
+    });
+    DOMElements.pakistanTime.textContent = `${timeString} (PKT)`;
+  };
+
+  const toggleTheme = () => {
+    const isDark = document.documentElement.classList.toggle('dark');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    updateThemeUI(isDark);
+  };
+  const updateThemeUI = (isDark) => {
+    DOMElements.themeToggle.innerHTML = isDark 
+      ? `<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>`
+      : `<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>`;
+  };
+  
+  // --- INITIALIZATION ---
+  const init = () => {
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const isDark = savedTheme === 'dark' || (savedTheme === null && prefersDark);
+    if (isDark) document.documentElement.classList.add('dark');
+    updateThemeUI(isDark);
+
+    updatePakistanTime();
+    setInterval(updatePakistanTime, 1000); 
+
+    updateAnalytics();
+    renderHistory();
+    setupEventListeners();
+  };
+
+  init();
+});
+</script>
+</body>
+</html>
