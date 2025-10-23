@@ -38,7 +38,7 @@
   /* Input & Validation */
   .input-wrapper .validation-icon { 
     position: absolute; 
-    right: 0.75rem; 
+    right: 3.25rem; /* Adjusted for clear button */
     top: 50%; 
     transform: translateY(-50%) scale(0); 
     transition: transform 0.2s ease; 
@@ -144,7 +144,12 @@
 
   <main class="bg-[var(--card-bg)] border border-[var(--border-color)] rounded-xl shadow-lg p-6 card-fade-in">
     <div class="input-wrapper relative mb-4">
-      <input id="search-input" type="tel" placeholder="Enter number (03xxxxxxxxx)..." class="w-full p-4 pl-5 pr-12 rounded-xl border-2 bg-[var(--bg-color)] border-[var(--border-color)] focus:border-[var(--accent-color)] focus:ring-0 outline-none transition">
+      <input id="search-input" type="tel" placeholder="Enter number (03xxxxxxxxx)..." class="w-full p-4 pl-5 pr-20 rounded-xl border-2 bg-[var(--bg-color)] border-[var(--border-color)] focus:border-[var(--accent-color)] focus:ring-0 outline-none transition" maxlength="11">
+      
+      <button id="clear-input-btn" class="absolute right-4 top-1/2 -translate-y-1/2 text-[var(--text-muted-color)] hover:text-[var(--text-color)] hidden" title="Clear input">
+        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+      </button>
+
       <div class="validation-icon">
         <svg class="icon-valid h-6 w-6 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
         <svg class="icon-invalid h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
@@ -162,7 +167,7 @@
     <span>Join WhatsApp Channel</span>
   </a>
 
-  <div id="result-container" class="mt-4"></div>
+  <div id="result-container" class="my-6"></div>
 
   <section class="grid md:grid-cols-2 gap-6 card-fade-in">
     <div id="dashboard-card" class="bg-[var(--card-bg)] border border-[var(--border-color)] rounded-xl shadow-lg p-6">
@@ -186,12 +191,11 @@
       <div id="history-list" class="space-y-1 text-sm max-h-24 overflow-y-auto pr-2"></div>
     </div>
   </section>
-
+  
   <footer class="text-center mt-6 pb-4">
-    <p class="text-xs text-[var(--text-muted-color)]">Powered by AI Pak-Cyber</p>
+    <p class="text-xs text-[var(--text-muted-color)]">Powered by Pak-Cyber ♥️</p>
   </footer>
-    </div>
-        <script>
+     <script>
 document.addEventListener('DOMContentLoaded', () => {
   // --- STATE MANAGEMENT ---
   const state = {
@@ -217,7 +221,8 @@ document.addEventListener('DOMContentLoaded', () => {
     historyPanel: document.getElementById('history-panel'),
     historyList: document.getElementById('history-list'),
     clearHistoryBtn: document.getElementById('clear-history-btn'),
-    toast: document.getElementById('toast-notification')
+    toast: document.getElementById('toast-notification'),
+    clearInputBtn: document.getElementById('clear-input-btn') // NEW
   };
 
   // --- CORE FUNCTIONS ---
@@ -403,6 +408,7 @@ document.addEventListener('DOMContentLoaded', () => {
     DOMElements.searchInput.addEventListener('keyup', (e) => { if (e.key === 'Enter') handleSearch(); });
     DOMElements.clearHistoryBtn.addEventListener('click', clearHistory);
     DOMElements.historyList.addEventListener('click', handleHistoryClick);
+    DOMElements.clearInputBtn.addEventListener('click', clearSearchInput); // NEW
     
     // Event delegation for dynamic copy button
     DOMElements.resultContainer.addEventListener('click', (e) => {
@@ -433,12 +439,23 @@ document.addEventListener('DOMContentLoaded', () => {
       });
   };
 
+  // NEW: Function to clear the search input
+  const clearSearchInput = () => {
+    DOMElements.searchInput.value = '';
+    validateInput(DOMElements.searchInput); // This will re-run validation and hide the clear btn
+    DOMElements.searchInput.focus();
+  };
+
+  // UPDATED: To show/hide clear button
   const validateInput = (input) => {
     const value = input.value.trim();
     const isValid = validateQuery(value);
     const wrapper = input.parentElement;
     wrapper.classList.toggle('valid', isValid);
     wrapper.classList.toggle('invalid', value.length > 0 && !isValid);
+    
+    // NEW: Show/hide clear button
+    DOMElements.clearInputBtn.classList.toggle('hidden', value.length === 0);
   };
 
   const validateQuery = (query) => /^(03\d{9})$/.test(query);
@@ -521,4 +538,5 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 </body>
-</html>
+  </html>
+</div>
